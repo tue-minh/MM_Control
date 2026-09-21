@@ -1,0 +1,16 @@
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:79:17:crc16_ccitt	24	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:92:8:cdc_encode	24	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:126:5:cdc_decode	40	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:195:22:cdc_proto_stats	4	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:221:13:safe_state_enter	16	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:231:13:safe_state_exit	4	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:247:12:seq_check	24	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:270:5:cdc_send	240	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:284:5:cdc_send_ack	232	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:309:13:send_boot_banner	216	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:357:13:parser_reset	16	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:372:12:parser_feed	16	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:475:13:dispatch_frame	232	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:533:13:CommsTask	256	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:598:13:TxSenderTask	32	static
+D:/MM_Control/firmware/Core/Src/cdc_proto.c:637:6:cdc_proto_init	24	static

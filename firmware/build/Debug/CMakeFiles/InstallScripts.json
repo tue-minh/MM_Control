@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/MM_Control/firmware/build/Debug/cmake_install.cmake",
+		"D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

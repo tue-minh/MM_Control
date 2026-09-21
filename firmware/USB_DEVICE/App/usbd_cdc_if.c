@@ -22,7 +22,9 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "FreeRTOS.h"
+#include "stream_buffer.h"
+extern StreamBufferHandle_t s_rxStream;
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -261,8 +263,14 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
+  /* Forward received bytes to the CDC protocol RX stream buffer. */
+  BaseType_t hp = pdFALSE;
+  if (s_rxStream != NULL) {
+    xStreamBufferSendFromISR(s_rxStream, Buf, *Len, &hp);
+  }
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  portYIELD_FROM_ISR(hp);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
