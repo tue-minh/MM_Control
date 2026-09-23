@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"D:/MM_Control/firmware/build/Release/cmake_install.cmake",
-		"D:/MM_Control/firmware/build/Release/cmake/stm32cubemx/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

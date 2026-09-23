@@ -1,8 +1,0 @@
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:598:13:TxSenderTask	24	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:92:8:cdc_encode	24	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:126:5:cdc_decode	24	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:195:22:cdc_proto_stats	0	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:270:5:cdc_send	224	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:284:5:cdc_send_ack	224	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:533:13:CommsTask	456	static
-D:/MM_Control/firmware/Core/Src/cdc_proto.c:637:6:cdc_proto_init	216	static

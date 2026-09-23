@@ -1,4 +1,0 @@
-D:/MM_Control/firmware/Core/Src/spi.c:31:6:MX_SPI1_Init	8	static
-D:/MM_Control/firmware/Core/Src/spi.c:63:6:MX_SPI3_Init	8	static
-D:/MM_Control/firmware/Core/Src/spi.c:95:6:HAL_SPI_MspInit	56	static
-D:/MM_Control/firmware/Core/Src/spi.c:157:6:HAL_SPI_MspDeInit	8	static

@@ -1,8 +1,8 @@
-D:/MM_Control/firmware/build/Debug/CMakeFiles/MM_control.dir
-D:/MM_Control/firmware/build/Debug/CMakeFiles/edit_cache.dir
-D:/MM_Control/firmware/build/Debug/CMakeFiles/rebuild_cache.dir
-D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
-D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir
-D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir
-D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
-D:/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/CMakeFiles/MM_control.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/CMakeFiles/edit_cache.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/CMakeFiles/rebuild_cache.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+D:/Project_Kicad/MM_Control/firmware/build/Debug/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
