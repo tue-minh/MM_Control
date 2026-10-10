@@ -35,8 +35,7 @@
 					"targetIndexes" : 
 					[
 						0,
-						2,
-						3
+						2
 					]
 				}
 			],
@@ -54,8 +53,7 @@
 					[
 						0,
 						1,
-						2,
-						3
+						2
 					]
 				}
 			],
@@ -64,29 +62,22 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "FreeRTOS::@768a070a0fe75716b479",
-					"jsonFile" : "target-FreeRTOS-Debug-4fbf438e6a5193b5fb77.json",
+					"jsonFile" : "target-FreeRTOS-Debug-51796651351ae72974c5.json",
 					"name" : "FreeRTOS",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "MM_control::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-MM_control-Debug-c7f693cb65724f44252d.json",
+					"jsonFile" : "target-MM_control-Debug-833ab2a6ad9e575d7384.json",
 					"name" : "MM_control",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "STM32_Drivers::@768a070a0fe75716b479",
-					"jsonFile" : "target-STM32_Drivers-Debug-8e9b53df6297a881aa14.json",
+					"jsonFile" : "target-STM32_Drivers-Debug-287408d1c2c7ce18f660.json",
 					"name" : "STM32_Drivers",
-					"projectIndex" : 0
-				},
-				{
-					"directoryIndex" : 1,
-					"id" : "USB_Device_Library::@768a070a0fe75716b479",
-					"jsonFile" : "target-USB_Device_Library-Debug-7a6c29e06545a40fb953.json",
-					"name" : "USB_Device_Library",
 					"projectIndex" : 0
 				}
 			]

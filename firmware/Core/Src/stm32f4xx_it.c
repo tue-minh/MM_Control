@@ -55,13 +55,11 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi3;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
-extern TIM_HandleTypeDef htim9;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim14;
@@ -177,7 +175,6 @@ void TIM1_BRK_TIM9_IRQHandler(void)
 
   /* USER CODE END TIM1_BRK_TIM9_IRQn 0 */
   HAL_TIM_IRQHandler(&htim1);
-  HAL_TIM_IRQHandler(&htim9);
   /* USER CODE BEGIN TIM1_BRK_TIM9_IRQn 1 */
 
   /* USER CODE END TIM1_BRK_TIM9_IRQn 1 */
@@ -293,20 +290,6 @@ void SPI3_IRQHandler(void)
   /* USER CODE BEGIN SPI3_IRQn 1 */
 
   /* USER CODE END SPI3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USB On The Go FS global interrupt.
-  */
-void OTG_FS_IRQHandler(void)
-{
-  /* USER CODE BEGIN OTG_FS_IRQn 0 */
-
-  /* USER CODE END OTG_FS_IRQn 0 */
-  HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
-  /* USER CODE BEGIN OTG_FS_IRQn 1 */
-
-  /* USER CODE END OTG_FS_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

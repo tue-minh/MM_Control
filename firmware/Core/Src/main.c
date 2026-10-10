@@ -24,7 +24,7 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "usb_device.h"
+#include "usb_otg.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -50,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile uint32_t tick = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,7 +103,7 @@ int main(void)
   MX_SPI3_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
-  MX_TIM9_Init();
+  MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */

@@ -62,7 +62,6 @@ const osThreadAttr_t Task1_attributes = {
 
 void StartDefaultTask(void *argument);
 
-extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -114,14 +113,13 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  cdc_proto_init();
+  // cdc_proto_init();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    HAL_GPIO_TogglePin(LED_MCU_GPIO_Port, LED_MCU_Pin);
+    osDelay(500);
   }
   /* USER CODE END StartDefaultTask */
 }
