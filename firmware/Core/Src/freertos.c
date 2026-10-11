@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "cdc_proto.h"
+#include "tue_usb.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,6 +62,7 @@ const osThreadAttr_t Task1_attributes = {
 
 void StartDefaultTask(void *argument);
 
+extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -113,13 +114,15 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+  /* init code for USB_DEVICE */
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  // cdc_proto_init();
+  tue_usb_init();
+
   /* Infinite loop */
   for(;;)
   {
-    HAL_GPIO_TogglePin(LED_MCU_GPIO_Port, LED_MCU_Pin);
-    osDelay(100);
+    osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }

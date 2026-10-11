@@ -1,0 +1,12 @@
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:121:10:tue_usb_crc16	32	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:130:14:tue_usb_register_command	32	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:163:6:tue_usb_init	64	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:195:6:tue_usb_on_cdc_rx	24	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:204:14:tue_usb_send_response	40	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:285:6:tue_usb_feed_byte	32	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:378:17:tue_usb_calculate_frame_crc	24	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:394:13:tue_usb_process_frame	40	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:427:13:tue_usb_task_entry	88	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:448:21:handle_sys_ping	24	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:465:21:handle_sys_get_info	32	static
+D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_usb.c:498:21:handle_sys_led_ctrl	32	static

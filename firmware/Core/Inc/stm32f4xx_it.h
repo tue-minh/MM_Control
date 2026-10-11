@@ -61,6 +61,7 @@ void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 void TIM8_TRG_COM_TIM14_IRQHandler(void);
 void SPI3_IRQHandler(void);
+void OTG_FS_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
