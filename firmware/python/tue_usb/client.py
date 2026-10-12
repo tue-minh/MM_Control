@@ -14,7 +14,16 @@ try:
 except ImportError:
     serial = None  # type: ignore
 
-from .defs import CommandId, LedMode, StatusCode
+from .defs import (
+    CommandId,
+    DcBrakeMode,
+    DcDirection,
+    LedMode,
+    StatusCode,
+    StepperMode,
+    StepperStopMode,
+    Sts3215Reg,
+)
 from .exceptions import (
     TueConnectionError,
     TueError,
@@ -24,10 +33,40 @@ from .exceptions import (
 from .protocol import (
     TueFrame,
     TueFrameParser,
+    decode_dc_get_status_response,
+    decode_dc_set_duty_response,
+    decode_dc_set_pid_response,
+    decode_dc_stop_response,
     decode_info_response,
     decode_led_response,
+    decode_servo_get_feedback_response,
+    decode_servo_ping_response,
+    decode_servo_read_reg_response,
+    decode_servo_set_pos_response,
+    decode_servo_torque_enable_response,
+    decode_servo_write_reg_response,
+    decode_step_enable_response,
+    decode_step_get_pos_response,
+    decode_step_move_response,
+    decode_step_set_homing_response,
+    decode_step_stop_response,
+    encode_dc_get_status,
+    encode_dc_set_duty,
+    encode_dc_set_pid,
+    encode_dc_stop,
     encode_frame,
     encode_led_cmd,
+    encode_servo_get_feedback,
+    encode_servo_ping,
+    encode_servo_read_reg,
+    encode_servo_set_pos,
+    encode_servo_torque_enable,
+    encode_servo_write_reg,
+    encode_step_enable,
+    encode_step_get_pos,
+    encode_step_move,
+    encode_step_set_homing,
+    encode_step_stop,
 )
 
 
@@ -242,3 +281,329 @@ class TueClient:
         resp = self.send_command(CommandId.SYS_LED_CTRL, payload=payload)
         _, current_state = decode_led_response(resp.payload)
         return bool(current_state)
+
+    # ==========================================================================
+    # DC Motor APIs (0x10–0x13)
+    # ==========================================================================
+
+    def dc_set_duty(
+        self,
+        motor_id: int,
+        direction: Union[int, DcDirection],
+        duty: int,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Set DC motor direction and PWM duty cycle.
+
+        Args:
+            motor_id: Motor channel (1..4).
+            direction: Direction mode (FLOAT=0, CW=1, CCW=2, BRAKE=3).
+            duty: PWM duty cycle (0..10000 = 0.00%..100.00%).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (motor_id, ack_code: 0=OK).
+        """
+        payload = encode_dc_set_duty(motor_id, direction, duty)
+        resp = self.send_command(CommandId.DC_SET_DUTY, payload=payload, timeout=timeout)
+        return decode_dc_set_duty_response(resp.payload)
+
+    def dc_stop(
+        self,
+        motor_id: int = 0,
+        brake_mode: Union[int, DcBrakeMode] = DcBrakeMode.ACTIVE,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Stop or brake DC motor.
+
+        Args:
+            motor_id: Motor channel (0 = all motors, 1..4 = specific channel).
+            brake_mode: Brake mode (COAST=0, ACTIVE=1).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (motor_id, ack_code: 0=OK).
+        """
+        payload = encode_dc_stop(motor_id, brake_mode)
+        resp = self.send_command(CommandId.DC_STOP, payload=payload, timeout=timeout)
+        return decode_dc_stop_response(resp.payload)
+
+    def dc_get_status(
+        self,
+        motor_id: int,
+        timeout: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """Get DC motor status.
+
+        Args:
+            motor_id: Motor channel (1..4).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Dictionary with motor_id, direction, duty, fault, current_ma.
+        """
+        payload = encode_dc_get_status(motor_id)
+        resp = self.send_command(CommandId.DC_GET_STATUS, payload=payload, timeout=timeout)
+        return decode_dc_get_status_response(resp.payload)
+
+    def dc_set_pid(
+        self,
+        motor_id: int,
+        kp: float,
+        ki: float,
+        kd: float,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Configure velocity PID parameters for a DC motor.
+
+        Args:
+            motor_id: Motor channel (1..4).
+            kp: Proportional coefficient.
+            ki: Integral coefficient.
+            kd: Derivative coefficient.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (motor_id, ack_code: 0=OK).
+        """
+        payload = encode_dc_set_pid(motor_id, kp, ki, kd)
+        resp = self.send_command(CommandId.DC_SET_PID, payload=payload, timeout=timeout)
+        return decode_dc_set_pid_response(resp.payload)
+
+    # ==========================================================================
+    # Stepper Motor APIs (0x20–0x24)
+    # ==========================================================================
+
+    def step_enable(
+        self,
+        stepper_id: int = 0,
+        enable: bool = True,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Enable or disable stepper driver outputs.
+
+        Args:
+            stepper_id: Stepper channel (0 = all, 1..4 = specific channel).
+            enable: True to enable drivers, False to disable.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (stepper_id, ack_code: 0=OK).
+        """
+        payload = encode_step_enable(stepper_id, enable)
+        resp = self.send_command(CommandId.STEP_ENABLE, payload=payload, timeout=timeout)
+        return decode_step_enable_response(resp.payload)
+
+    def step_move(
+        self,
+        stepper_id: int,
+        target_steps: int,
+        speed_hz: int = 1000,
+        accel: int = 500,
+        is_relative: bool = True,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Command stepper to move steps with target speed and acceleration profile.
+
+        Args:
+            stepper_id: Stepper channel (1..4).
+            target_steps: Step distance or target coordinate (signed 32-bit).
+            speed_hz: Maximum pulse frequency in steps/second.
+            accel: Acceleration/deceleration rate in steps/second².
+            is_relative: True for relative move, False for absolute position move.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (stepper_id, ack_code: 0=OK).
+        """
+        payload = encode_step_move(stepper_id, target_steps, speed_hz, accel, is_relative)
+        resp = self.send_command(CommandId.STEP_MOVE, payload=payload, timeout=timeout)
+        return decode_step_move_response(resp.payload)
+
+    def step_stop(
+        self,
+        stepper_id: int = 0,
+        hard_stop: bool = False,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Stop stepper motion.
+
+        Args:
+            stepper_id: Stepper channel (0 = all, 1..4 = specific channel).
+            hard_stop: False for deceleration stop, True for immediate emergency stop.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (stepper_id, ack_code: 0=OK).
+        """
+        payload = encode_step_stop(stepper_id, hard_stop)
+        resp = self.send_command(CommandId.STEP_STOP, payload=payload, timeout=timeout)
+        return decode_step_stop_response(resp.payload)
+
+    def step_get_pos(
+        self,
+        stepper_id: int,
+        timeout: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """Get stepper current position and motion status.
+
+        Args:
+            stepper_id: Stepper channel (1..4).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Dictionary with stepper_id, current_steps, is_moving, fault.
+        """
+        payload = encode_step_get_pos(stepper_id)
+        resp = self.send_command(CommandId.STEP_GET_POS, payload=payload, timeout=timeout)
+        return decode_step_get_pos_response(resp.payload)
+
+    def step_set_homing(
+        self,
+        stepper_id: int,
+        direction: int = 0,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Initiate homing sequence / reset position to zero.
+
+        Args:
+            stepper_id: Stepper channel (1..4).
+            direction: Homing mode or direction flag.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (stepper_id, ack_code: 0=OK).
+        """
+        payload = encode_step_set_homing(stepper_id, direction)
+        resp = self.send_command(CommandId.STEP_SET_HOMING, payload=payload, timeout=timeout)
+        return decode_step_set_homing_response(resp.payload)
+
+    # ==========================================================================
+    # STS3215 Bus Servo APIs (0x30–0x35)
+    # ==========================================================================
+
+    def servo_ping(
+        self,
+        servo_id: int,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Ping an STS3215 servo by bus ID.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (servo_id, ack_code: 0=OK).
+        """
+        payload = encode_servo_ping(servo_id)
+        resp = self.send_command(CommandId.SERVO_PING, payload=payload, timeout=timeout)
+        return decode_servo_ping_response(resp.payload)
+
+    def servo_read_reg(
+        self,
+        servo_id: int,
+        reg_addr: Union[int, Sts3215Reg],
+        read_len: int,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int, bytes]:
+        """Read arbitrary registers from an STS3215 servo memory table.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            reg_addr: Memory table starting register address (0..0x45).
+            read_len: Number of bytes to read (1..64).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (servo_id, reg_addr, data_bytes).
+        """
+        payload = encode_servo_read_reg(servo_id, int(reg_addr), read_len)
+        resp = self.send_command(CommandId.SERVO_READ_REG, payload=payload, timeout=timeout)
+        return decode_servo_read_reg_response(resp.payload)
+
+    def servo_write_reg(
+        self,
+        servo_id: int,
+        reg_addr: Union[int, Sts3215Reg],
+        data: bytes,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Write arbitrary registers to an STS3215 servo memory table.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            reg_addr: Memory table starting register address (0..0x45).
+            data: Raw bytes to write into registers.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (servo_id, ack_code: 0=OK).
+        """
+        payload = encode_servo_write_reg(servo_id, int(reg_addr), data)
+        resp = self.send_command(CommandId.SERVO_WRITE_REG, payload=payload, timeout=timeout)
+        return decode_servo_write_reg_response(resp.payload)
+
+    def servo_set_pos(
+        self,
+        servo_id: int,
+        position: int,
+        speed: int = 0,
+        accel: int = 0,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Command STS3215 servo to goal position with target speed and acceleration profile.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            position: Goal position in steps (0..4095 in position mode, signed 16-bit).
+            speed: Speed limit in steps/s (0 = maximum speed).
+            accel: Acceleration profile (0..254).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (servo_id, ack_code: 0=OK).
+        """
+        payload = encode_servo_set_pos(servo_id, position, speed, accel)
+        resp = self.send_command(CommandId.SERVO_SET_POS, payload=payload, timeout=timeout)
+        return decode_servo_set_pos_response(resp.payload)
+
+    def servo_get_feedback(
+        self,
+        servo_id: int,
+        timeout: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """Query STS3215 servo comprehensive status feedback telemetry.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Dictionary with telemetry: position, speed, load_percent, voltage_v,
+            temperature_degc, status_mask, current_ma, is_moving.
+        """
+        payload = encode_servo_get_feedback(servo_id)
+        resp = self.send_command(CommandId.SERVO_GET_FEEDBACK, payload=payload, timeout=timeout)
+        return decode_servo_get_feedback_response(resp.payload)
+
+    def servo_torque_enable(
+        self,
+        servo_id: int,
+        enable: Union[bool, int] = True,
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, int]:
+        """Enable or disable servo torque.
+
+        Args:
+            servo_id: Servo bus ID (0..253).
+            enable: True to enable torque, False to disable torque,
+                    or 128 to calibrate middle position to 2048.
+            timeout: Optional response timeout in seconds.
+
+        Returns:
+            Tuple of (servo_id, ack_code: 0=OK).
+        """
+        payload = encode_servo_torque_enable(servo_id, enable)
+        resp = self.send_command(CommandId.SERVO_TORQUE_ENABLE, payload=payload, timeout=timeout)
+        return decode_servo_torque_enable_response(resp.payload)

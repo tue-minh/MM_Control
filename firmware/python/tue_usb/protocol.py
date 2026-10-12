@@ -17,8 +17,12 @@ from .defs import (
     MIN_FRAME_SIZE,
     SOF1,
     SOF2,
+    DcBrakeMode,
+    DcDirection,
     LedMode,
     StatusCode,
+    StepperMode,
+    StepperStopMode,
 )
 from .exceptions import TueCrcError, TueError
 
@@ -337,3 +341,427 @@ def decode_info_response(payload: bytes) -> Dict[str, Any]:
         "version_str": f"{fw_major}.{fw_minor}.{fw_patch}",
         "mcu_uid": uid_hex,
     }
+
+
+# ==============================================================================
+# DC Motor Payloads (0x10–0x13)
+# ==============================================================================
+
+
+def encode_dc_set_duty(
+    motor_id: int,
+    direction: Union[int, DcDirection],
+    duty: int,
+) -> bytes:
+    """Encode payload for CMD_DC_SET_DUTY (0x10).
+
+    Args:
+        motor_id: Motor channel (1..4).
+        direction: Direction mode (FLOAT=0, CW=1, CCW=2, BRAKE=3).
+        duty: PWM duty cycle (0..10000 = 0.00%..100.00%).
+
+    Returns:
+        4-byte serialized request payload.
+    """
+    if not (1 <= motor_id <= 4):
+        raise ValueError(f"Invalid motor_id {motor_id}: must be 1..4")
+    if not (0 <= duty <= 10000):
+        raise ValueError(f"Invalid duty {duty}: must be 0..10000 (0.01% units)")
+    return struct.pack("<BBH", motor_id & 0xFF, int(direction) & 0xFF, duty & 0xFFFF)
+
+
+def decode_dc_set_duty_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_DC_SET_DUTY.
+
+    Returns:
+        Tuple of (motor_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"DC set duty response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_dc_stop(
+    motor_id: int = 0,
+    brake_mode: Union[int, DcBrakeMode] = DcBrakeMode.ACTIVE,
+) -> bytes:
+    """Encode payload for CMD_DC_STOP (0x11).
+
+    Args:
+        motor_id: Motor channel (0 = all motors, 1..4 = specific channel).
+        brake_mode: Brake mode (COAST=0, ACTIVE=1).
+
+    Returns:
+        2-byte serialized request payload.
+    """
+    return struct.pack("<BB", motor_id & 0xFF, int(brake_mode) & 0xFF)
+
+
+def decode_dc_stop_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_DC_STOP.
+
+    Returns:
+        Tuple of (motor_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"DC stop response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_dc_get_status(motor_id: int) -> bytes:
+    """Encode payload for CMD_DC_GET_STATUS (0x12).
+
+    Args:
+        motor_id: Motor channel (1..4).
+    """
+    if not (1 <= motor_id <= 4):
+        raise ValueError(f"Invalid motor_id {motor_id}: must be 1..4")
+    return struct.pack("<B", motor_id & 0xFF)
+
+
+def decode_dc_get_status_response(payload: bytes) -> Dict[str, Any]:
+    """Decode response for CMD_DC_GET_STATUS (8 bytes).
+
+    Returns:
+        Dictionary with motor_id, direction, duty, fault, current_ma.
+    """
+    if len(payload) < 8:
+        raise TueError(f"DC status response too short: expected 8 bytes, got {len(payload)}")
+    motor_id, direction, duty, fault, current_ma, _ = struct.unpack_from("<BBHBHB", payload, 0)
+    return {
+        "motor_id": motor_id,
+        "direction": DcDirection(direction) if direction in DcDirection._value2member_map_ else direction,
+        "duty": duty,
+        "fault": bool(fault),
+        "current_ma": current_ma,
+    }
+
+
+def encode_dc_set_pid(
+    motor_id: int,
+    kp: float,
+    ki: float,
+    kd: float,
+) -> bytes:
+    """Encode payload for CMD_DC_SET_PID (0x13).
+
+    Args:
+        motor_id: Motor channel (1..4).
+        kp: Proportional gain (float32).
+        ki: Integral gain (float32).
+        kd: Derivative gain (float32).
+    """
+    if not (1 <= motor_id <= 4):
+        raise ValueError(f"Invalid motor_id {motor_id}: must be 1..4")
+    return struct.pack("<BfffB", motor_id & 0xFF, float(kp), float(ki), float(kd), 0)
+
+
+def decode_dc_set_pid_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_DC_SET_PID.
+
+    Returns:
+        Tuple of (motor_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"DC set PID response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+# ==============================================================================
+# Stepper Motor Payloads (0x20–0x24)
+# ==============================================================================
+
+
+def encode_step_enable(stepper_id: int = 0, enable: bool = True) -> bytes:
+    """Encode payload for CMD_STEP_ENABLE (0x20).
+
+    Args:
+        stepper_id: Stepper channel (0 = all, 1..4 = specific channel).
+        enable: True to enable drivers, False to disable.
+    """
+    return struct.pack("<BB", stepper_id & 0xFF, 1 if enable else 0)
+
+
+def decode_step_enable_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_STEP_ENABLE.
+
+    Returns:
+        Tuple of (stepper_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Stepper enable response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_step_move(
+    stepper_id: int,
+    target_steps: int,
+    speed_hz: int = 1000,
+    accel: int = 500,
+    is_relative: bool = True,
+) -> bytes:
+    """Encode payload for CMD_STEP_MOVE (0x21).
+
+    Args:
+        stepper_id: Stepper channel (1..4).
+        target_steps: Target microsteps (signed 32-bit).
+        speed_hz: Step pulse rate in Hz (steps/s).
+        accel: Acceleration rate in steps/s².
+        is_relative: True for relative move, False for absolute move.
+    """
+    if not (1 <= stepper_id <= 4):
+        raise ValueError(f"Invalid stepper_id {stepper_id}: must be 1..4")
+    return struct.pack(
+        "<BBiII",
+        stepper_id & 0xFF,
+        1 if is_relative else 0,
+        int(target_steps),
+        int(speed_hz),
+        int(accel),
+    )
+
+
+def decode_step_move_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_STEP_MOVE.
+
+    Returns:
+        Tuple of (stepper_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Stepper move response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_step_stop(stepper_id: int = 0, hard_stop: bool = False) -> bytes:
+    """Encode payload for CMD_STEP_STOP (0x22).
+
+    Args:
+        stepper_id: Stepper channel (0 = all, 1..4 = specific channel).
+        hard_stop: False for deceleration stop, True for immediate emergency stop.
+    """
+    return struct.pack("<BB", stepper_id & 0xFF, 1 if hard_stop else 0)
+
+
+def decode_step_stop_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_STEP_STOP.
+
+    Returns:
+        Tuple of (stepper_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Stepper stop response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_step_get_pos(stepper_id: int) -> bytes:
+    """Encode payload for CMD_STEP_GET_POS (0x23).
+
+    Args:
+        stepper_id: Stepper channel (1..4).
+    """
+    if not (1 <= stepper_id <= 4):
+        raise ValueError(f"Invalid stepper_id {stepper_id}: must be 1..4")
+    return struct.pack("<B", stepper_id & 0xFF)
+
+
+def decode_step_get_pos_response(payload: bytes) -> Dict[str, Any]:
+    """Decode response for CMD_STEP_GET_POS (9 bytes).
+
+    Returns:
+        Dictionary with stepper_id, current_steps, is_moving, fault.
+    """
+    if len(payload) < 9:
+        raise TueError(f"Stepper get pos response too short: expected 9 bytes, got {len(payload)}")
+    stepper_id, current_steps, is_moving, fault, _ = struct.unpack_from("<BiBBH", payload, 0)
+    return {
+        "stepper_id": stepper_id,
+        "current_steps": current_steps,
+        "is_moving": bool(is_moving),
+        "fault": fault,
+    }
+
+
+def encode_step_set_homing(stepper_id: int, direction: int = 0) -> bytes:
+    """Encode payload for CMD_STEP_SET_HOMING (0x24).
+
+    Args:
+        stepper_id: Stepper channel (1..4).
+        direction: Homing direction/mode flag.
+    """
+    if not (1 <= stepper_id <= 4):
+        raise ValueError(f"Invalid stepper_id {stepper_id}: must be 1..4")
+    return struct.pack("<BB", stepper_id & 0xFF, direction & 0xFF)
+
+
+def decode_step_set_homing_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_STEP_SET_HOMING.
+
+    Returns:
+        Tuple of (stepper_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Stepper homing response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+# ==============================================================================
+# STS3215 Bus Servo Payloads (0x30–0x35)
+# ==============================================================================
+
+
+def encode_servo_ping(servo_id: int) -> bytes:
+    """Encode payload for CMD_SERVO_PING (0x30).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+    """
+    return struct.pack("<B", servo_id & 0xFF)
+
+
+def decode_servo_ping_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_SERVO_PING.
+
+    Returns:
+        Tuple of (servo_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Servo ping response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_servo_read_reg(servo_id: int, reg_addr: int, read_len: int) -> bytes:
+    """Encode payload for CMD_SERVO_READ_REG (0x31).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+        reg_addr: Memory table starting register address (0..0x45).
+        read_len: Number of bytes to read (1..64).
+    """
+    return struct.pack("<BBB", servo_id & 0xFF, reg_addr & 0xFF, read_len & 0xFF)
+
+
+def decode_servo_read_reg_response(payload: bytes) -> Tuple[int, int, bytes]:
+    """Decode response for CMD_SERVO_READ_REG.
+
+    Returns:
+        Tuple of (servo_id, reg_addr, data_bytes).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Servo read reg response too short: expected >= 2 bytes, got {len(payload)}")
+    servo_id, reg_addr = struct.unpack_from("<BB", payload, 0)
+    return servo_id, reg_addr, payload[2:]
+
+
+def encode_servo_write_reg(servo_id: int, reg_addr: int, data: bytes) -> bytes:
+    """Encode payload for CMD_SERVO_WRITE_REG (0x32).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+        reg_addr: Memory table starting register address (0..0x45).
+        data: Raw bytes to write into registers.
+    """
+    return struct.pack("<BB", servo_id & 0xFF, reg_addr & 0xFF) + data
+
+
+def decode_servo_write_reg_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_SERVO_WRITE_REG.
+
+    Returns:
+        Tuple of (servo_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Servo write reg response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_servo_set_pos(
+    servo_id: int,
+    position: int,
+    speed: int = 0,
+    accel: int = 0,
+) -> bytes:
+    """Encode payload for CMD_SERVO_SET_POS (0x33).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+        position: Goal position in steps (0..4095 in position mode, signed 16-bit).
+        speed: Speed limit in steps/s (0 = maximum speed).
+        accel: Acceleration profile (0..254).
+    """
+    return struct.pack("<BhhBB", servo_id & 0xFF, int(position), int(speed), int(accel) & 0xFF, 0)
+
+
+def decode_servo_set_pos_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_SERVO_SET_POS.
+
+    Returns:
+        Tuple of (servo_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Servo set pos response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)
+
+
+def encode_servo_get_feedback(servo_id: int) -> bytes:
+    """Encode payload for CMD_SERVO_GET_FEEDBACK (0x34).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+    """
+    return struct.pack("<B", servo_id & 0xFF)
+
+
+def decode_servo_get_feedback_response(payload: bytes) -> Dict[str, Any]:
+    """Decode response for CMD_SERVO_GET_FEEDBACK (13 bytes).
+
+    Returns:
+        Dictionary with telemetry: position, speed, load_percent, voltage_v,
+        temperature_degc, status_mask, current_ma, is_moving.
+    """
+    if len(payload) < 13:
+        raise TueError(f"Servo feedback response too short: expected 13 bytes, got {len(payload)}")
+
+    servo_id, pos, speed, load, volt_raw, temp_degc, status_mask, curr_raw, moving = struct.unpack_from(
+        "<BhhhBBBhB", payload, 0
+    )
+
+    return {
+        "servo_id": servo_id,
+        "position": pos,
+        "speed": speed,
+        "load_percent": round(load * 0.1, 1),
+        "voltage_v": round(volt_raw * 0.1, 1),
+        "temperature_degc": temp_degc,
+        "status_mask": status_mask,
+        "current_ma": round(curr_raw * 6.5, 1),
+        "is_moving": bool(moving),
+        "voltage_raw": volt_raw,
+        "current_raw": curr_raw,
+        "load_raw": load,
+    }
+
+
+def encode_servo_torque_enable(servo_id: int, enable: Union[bool, int] = True) -> bytes:
+    """Encode payload for CMD_SERVO_TORQUE_ENABLE (0x35).
+
+    Args:
+        servo_id: Servo bus ID (0..253).
+        enable: True/1 to enable torque, False/0 to disable torque,
+                or 128 to calibrate middle position to 2048.
+    """
+    if isinstance(enable, bool):
+        val = 1 if enable else 0
+    else:
+        val = int(enable) & 0xFF
+    return struct.pack("<BB", servo_id & 0xFF, val)
+
+
+def decode_servo_torque_enable_response(payload: bytes) -> Tuple[int, int]:
+    """Decode response for CMD_SERVO_TORQUE_ENABLE.
+
+    Returns:
+        Tuple of (servo_id, ack_code: 0=OK).
+    """
+    if len(payload) < 2:
+        raise TueError(f"Servo torque response too short: expected 2 bytes, got {len(payload)}")
+    return struct.unpack_from("<BB", payload, 0)

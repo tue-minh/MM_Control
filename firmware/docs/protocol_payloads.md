@@ -136,10 +136,10 @@ Hardware mapping: 4 DC motor channels driven by TIM3/TIM4 PWM with feedback faul
 
 | ID | Name | Direction | Req Len | Resp Len | Status | Description |
 |:---|:---|:---|:---|:---|:---|:---|
-| `0x10` | `CMD_DC_SET_DUTY` | Host $\rightarrow$ MCU | 4 | 2 | Defined but not implemented | Set motor direction and PWM duty cycle |
-| `0x11` | `CMD_DC_STOP` | Host $\rightarrow$ MCU | 2 | 2 | Defined but not implemented | Stop/brake specified DC motors |
-| `0x12` | `CMD_DC_GET_STATUS` | Host $\rightarrow$ MCU | 1 | 8 | Defined but not implemented | Read fault status, active duty, current |
-| `0x13` | `CMD_DC_SET_PID` | Host $\rightarrow$ MCU | 14 | 2 | Defined but not implemented | Configure velocity PID parameters |
+| `0x10` | `CMD_DC_SET_DUTY` | Host $\rightarrow$ MCU | 4 | 2 | **Implemented** | Set motor direction and PWM duty cycle |
+| `0x11` | `CMD_DC_STOP` | Host $\rightarrow$ MCU | 2 | 2 | **Implemented** | Stop/brake specified DC motors |
+| `0x12` | `CMD_DC_GET_STATUS` | Host $\rightarrow$ MCU | 1 | 8 | **Implemented** | Read fault status, active duty, current |
+| `0x13` | `CMD_DC_SET_PID` | Host $\rightarrow$ MCU | 14 | 2 | **Implemented** | Configure velocity PID parameters |
 | `0x14`–`0x1F` | -- | -- | -- | -- | **Reserved** | Reserved for DC motor extensions |
 
 #### `0x10` `CMD_DC_SET_DUTY`
@@ -159,11 +159,11 @@ Hardware mapping: 4 Stepper channels (`STEP_1`..`STEP_4`, `STEP_DIR1`..`STEP_DIR
 
 | ID | Name | Direction | Req Len | Resp Len | Status | Description |
 |:---|:---|:---|:---|:---|:---|:---|
-| `0x20` | `CMD_STEP_ENABLE` | Host $\rightarrow$ MCU | 2 | 2 | Defined but not implemented | Enable or disable stepper drivers |
-| `0x21` | `CMD_STEP_MOVE` | Host $\rightarrow$ MCU | 14 | 2 | Defined but not implemented | Command target position/steps with velocity profile |
-| `0x22` | `CMD_STEP_STOP` | Host $\rightarrow$ MCU | 2 | 2 | Defined but not implemented | Immediately stop or decel stepper motion |
-| `0x23` | `CMD_STEP_GET_POS` | Host $\rightarrow$ MCU | 1 | 9 | Defined but not implemented | Read current position and moving flag |
-| `0x24` | `CMD_STEP_SET_HOMING`| Host $\rightarrow$ MCU | 2 | 2 | Defined but not implemented | Initiate sensor homing sequence |
+| `0x20` | `CMD_STEP_ENABLE` | Host $\rightarrow$ MCU | 2 | 2 | **Implemented** | Enable or disable stepper drivers |
+| `0x21` | `CMD_STEP_MOVE` | Host $\rightarrow$ MCU | 14 | 2 | **Implemented** | Command target position/steps with velocity profile |
+| `0x22` | `CMD_STEP_STOP` | Host $\rightarrow$ MCU | 2 | 2 | **Implemented** | Immediately stop or decel stepper motion |
+| `0x23` | `CMD_STEP_GET_POS` | Host $\rightarrow$ MCU | 1 | 9 | **Implemented** | Read current position and moving flag |
+| `0x24` | `CMD_STEP_SET_HOMING`| Host $\rightarrow$ MCU | 2 | 2 | **Implemented** | Initiate sensor homing sequence |
 | `0x25`–`0x2F` | -- | -- | -- | -- | **Reserved** | Reserved for stepper extensions |
 
 #### `0x21` `CMD_STEP_MOVE`
@@ -184,12 +184,12 @@ Hardware mapping: Half-duplex serial servo bus on PA9 (`SERVO_TX`, USART1). Para
 
 | ID | Name | Direction | Req Len | Resp Len | Status | Description |
 |:---|:---|:---|:---|:---|:---|:---|
-| `0x30` | `CMD_SERVO_PING` | Host $\rightarrow$ MCU | 1 | 2 | Defined but not implemented | Ping servo by ID (`0`–`253`) |
-| `0x31` | `CMD_SERVO_READ_REG` | Host $\rightarrow$ MCU | 3 | 3..N | Defined but not implemented | Read memory table register(s) |
-| `0x32` | `CMD_SERVO_WRITE_REG`| Host $\rightarrow$ MCU | 3..N | 2 | Defined but not implemented | Write memory table register(s) |
-| `0x33` | `CMD_SERVO_SET_POS` | Host $\rightarrow$ MCU | 7 | 2 | Defined but not implemented | Set target location (`0x2A`), speed (`0x2E`), accel (`0x29`) |
-| `0x34` | `CMD_SERVO_GET_FEEDBACK`| Host $\rightarrow$ MCU | 1 | 13 | Defined but not implemented | Read position, speed, load, voltage, temp, status |
-| `0x35` | `CMD_SERVO_TORQUE_ENABLE`| Host $\rightarrow$ MCU | 2 | 2 | Defined but not implemented | Toggle torque switch (`0x28`) |
+| `0x30` | `CMD_SERVO_PING` | Host $\rightarrow$ MCU | 1 | 2 | **Implemented** | Ping servo by ID (`0`–`253`) |
+| `0x31` | `CMD_SERVO_READ_REG` | Host $\rightarrow$ MCU | 3 | 3..N | **Implemented** | Read memory table register(s) |
+| `0x32` | `CMD_SERVO_WRITE_REG`| Host $\rightarrow$ MCU | 3..N | 2 | **Implemented** | Write memory table register(s) |
+| `0x33` | `CMD_SERVO_SET_POS` | Host $\rightarrow$ MCU | 7 | 2 | **Implemented** | Set target location (`0x2A`), speed (`0x2E`), accel (`0x29`) |
+| `0x34` | `CMD_SERVO_GET_FEEDBACK`| Host $\rightarrow$ MCU | 1 | 13 | **Implemented** | Read position, speed, load, voltage, temp, status |
+| `0x35` | `CMD_SERVO_TORQUE_ENABLE`| Host $\rightarrow$ MCU | 2 | 2 | **Implemented** | Toggle torque switch (`0x28`) |
 | `0x36`–`0x3F` | -- | -- | -- | -- | **Reserved** | Reserved for servo extensions |
 
 #### `0x34` `CMD_SERVO_GET_FEEDBACK`

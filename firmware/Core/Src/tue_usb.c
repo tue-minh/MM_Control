@@ -19,12 +19,16 @@
 #include "FreeRTOS.h"
 #include "stream_buffer.h"
 #include "cmsis_os2.h"
+#include "tim.h"
+#include "gpio.h"
+#include "usart.h"
+#include "tue_sts3215.h"
 #include <string.h>
 
 /* Private Defines -----------------------------------------------------------*/
 #define RX_STREAM_BUFFER_SIZE       1024U
 #define RX_STREAM_TRIGGER_LEVEL     1U
-#define TUE_MAX_COMMANDS            32U
+#define TUE_MAX_COMMANDS            48U
 #define TX_TIMEOUT_MS               100U
 #define TX_WAIT_MS                  50U
 
@@ -108,6 +112,28 @@ static uint8_t                s_cmd_count = 0;
 static uint8_t                s_tx_frame_buffer[TUE_USB_MAX_FRAME_SIZE];
 static uint8_t                s_resp_payload_buffer[TUE_USB_MAX_PAYLOAD];
 
+/* Motor Subsystem State Variables */
+typedef struct {
+    uint8_t  direction;
+    uint16_t duty;
+    float    kp;
+    float    ki;
+    float    kd;
+} dc_motor_state_t;
+
+typedef struct {
+    bool     enabled;
+    int32_t  current_steps;
+    int32_t  target_steps;
+    uint32_t speed_hz;
+    uint32_t accel;
+    bool     is_moving;
+} step_motor_state_t;
+
+static dc_motor_state_t   s_dc_motors[4];
+static step_motor_state_t s_steppers[4];
+static tue_sts3215_t      s_servo_bus;
+
 /* Private Function Prototypes -----------------------------------------------*/
 static void         tue_usb_task_entry(void *argument);
 static void         tue_usb_process_frame(const tue_frame_t *req);
@@ -115,6 +141,25 @@ static uint16_t     tue_usb_calculate_frame_crc(const tue_frame_t *frame);
 static tue_status_t handle_sys_ping(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
 static tue_status_t handle_sys_get_info(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
 static tue_status_t handle_sys_led_ctrl(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+
+/* Motor Command Handlers */
+static tue_status_t handle_dc_set_duty(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_dc_stop(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_dc_get_status(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_dc_set_pid(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+
+static tue_status_t handle_step_enable(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_step_move(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_step_stop(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_step_get_pos(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_step_set_homing(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+
+static tue_status_t handle_servo_ping(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_servo_read_reg(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_servo_write_reg(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_servo_set_pos(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_servo_get_feedback(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
+static tue_status_t handle_servo_torque_enable(const uint8_t *req, uint16_t req_len, uint8_t *resp, uint16_t *resp_len, uint16_t max_resp);
 
 /* Public Functions ----------------------------------------------------------*/
 
@@ -180,6 +225,30 @@ void tue_usb_init(void)
     tue_usb_register_command(TUE_CMD_SYS_PING,     0, TUE_USB_MAX_PAYLOAD, handle_sys_ping);
     tue_usb_register_command(TUE_CMD_SYS_GET_INFO, 0, 0,                   handle_sys_get_info);
     tue_usb_register_command(TUE_CMD_SYS_LED_CTRL, 2, 4,                   handle_sys_led_ctrl);
+
+    /* Initialize motor subsystems */
+    tue_motor_init();
+
+    /* Register DC motor commands (0x10–0x13) */
+    tue_usb_register_command(TUE_CMD_DC_SET_DUTY,          4, 4, handle_dc_set_duty);
+    tue_usb_register_command(TUE_CMD_DC_STOP,              2, 2, handle_dc_stop);
+    tue_usb_register_command(TUE_CMD_DC_GET_STATUS,        1, 1, handle_dc_get_status);
+    tue_usb_register_command(TUE_CMD_DC_SET_PID,          13, 14, handle_dc_set_pid);
+
+    /* Register Stepper motor commands (0x20–0x24) */
+    tue_usb_register_command(TUE_CMD_STEP_ENABLE,          2, 2, handle_step_enable);
+    tue_usb_register_command(TUE_CMD_STEP_MOVE,           14, 14, handle_step_move);
+    tue_usb_register_command(TUE_CMD_STEP_STOP,            2, 2, handle_step_stop);
+    tue_usb_register_command(TUE_CMD_STEP_GET_POS,         1, 1, handle_step_get_pos);
+    tue_usb_register_command(TUE_CMD_STEP_SET_HOMING,      2, 2, handle_step_set_homing);
+
+    /* Register Servo STS3215 commands (0x30–0x35) */
+    tue_usb_register_command(TUE_CMD_SERVO_PING,           1, 1, handle_servo_ping);
+    tue_usb_register_command(TUE_CMD_SERVO_READ_REG,       3, 3, handle_servo_read_reg);
+    tue_usb_register_command(TUE_CMD_SERVO_WRITE_REG,      3, TUE_USB_MAX_PAYLOAD, handle_servo_write_reg);
+    tue_usb_register_command(TUE_CMD_SERVO_SET_POS,        7, 7, handle_servo_set_pos);
+    tue_usb_register_command(TUE_CMD_SERVO_GET_FEEDBACK,   1, 1, handle_servo_get_feedback);
+    tue_usb_register_command(TUE_CMD_SERVO_TORQUE_ENABLE,  2, 2, handle_servo_torque_enable);
 
     /* 4. Spawn protocol worker task */
     if (s_tue_usb_task_handle == NULL) {
@@ -544,3 +613,588 @@ static tue_status_t handle_sys_led_ctrl(
 
     return TUE_STATUS_OK;
 }
+
+/* Motor Subsystem Implementations -------------------------------------------*/
+
+static inline uint8_t get_dc_fault(uint8_t motor_id)
+{
+    GPIO_PinState st = GPIO_PIN_SET;
+    switch (motor_id) {
+        case 1: st = HAL_GPIO_ReadPin(DC_F1_GPIO_Port, DC_F1_Pin); break;
+        case 2: st = HAL_GPIO_ReadPin(DC_F2_GPIO_Port, DC_F2_Pin); break;
+        case 3: st = HAL_GPIO_ReadPin(DC_F3_GPIO_Port, DC_F3_Pin); break;
+        case 4: st = HAL_GPIO_ReadPin(DC_F4_GPIO_Port, DC_F4_Pin); break;
+        default: break;
+    }
+    return (st == GPIO_PIN_RESET) ? 1U : 0U;
+}
+
+void tue_motor_init(void)
+{
+    /* Initialize STS3215 serial bus servo driver on USART1 (PA9) */
+    tue_sts3215_init(&s_servo_bus, &huart1);
+
+    /* Start PWM output on TIM4 (DC Motors 1 & 2) and TIM3 (DC Motors 3 & 4) */
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 0);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 0);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_4, 0);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, 0);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+
+    /* Disable stepper motor driver by default (Active-Low STEP_ENABLE) */
+    HAL_GPIO_WritePin(STEP_ENABLE_GPIO_Port, STEP_ENABLE_Pin, GPIO_PIN_SET);
+}
+
+tue_status_t tue_motor_dc_set_duty(uint8_t motor_id, uint8_t direction, uint16_t duty)
+{
+    if (motor_id < 1 || motor_id > 4 || direction > 3 || duty > 10000) {
+        return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+
+    TIM_HandleTypeDef *htim;
+    uint32_t ch_a, ch_b;
+
+    switch (motor_id) {
+        case 1: htim = &htim4; ch_a = TIM_CHANNEL_1; ch_b = TIM_CHANNEL_2; break;
+        case 2: htim = &htim4; ch_a = TIM_CHANNEL_3; ch_b = TIM_CHANNEL_4; break;
+        case 3: htim = &htim3; ch_a = TIM_CHANNEL_1; ch_b = TIM_CHANNEL_2; break;
+        case 4: htim = &htim3; ch_a = TIM_CHANNEL_3; ch_b = TIM_CHANNEL_4; break;
+        default: return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+
+    uint32_t arr = __HAL_TIM_GET_AUTORELOAD(htim);
+    uint32_t pulse = ((uint32_t)duty * arr) / 10000U;
+    if (pulse > arr) pulse = arr;
+
+    uint32_t val_a = 0, val_b = 0;
+    switch (direction) {
+        case TUE_DC_DIR_COAST:
+            val_a = 0; val_b = 0;
+            break;
+        case TUE_DC_DIR_CW:
+            val_a = pulse; val_b = 0;
+            break;
+        case TUE_DC_DIR_CCW:
+            val_a = 0; val_b = pulse;
+            break;
+        case TUE_DC_DIR_BRAKE:
+            val_a = arr; val_b = arr;
+            break;
+    }
+
+    __HAL_TIM_SET_COMPARE(htim, ch_a, val_a);
+    __HAL_TIM_SET_COMPARE(htim, ch_b, val_b);
+
+    s_dc_motors[motor_id - 1].direction = direction;
+    s_dc_motors[motor_id - 1].duty = duty;
+
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_dc_stop(uint8_t motor_id, uint8_t brake_mode)
+{
+    uint8_t dir = (brake_mode == TUE_DC_BRAKE_ACTIVE) ? TUE_DC_DIR_BRAKE : TUE_DC_DIR_COAST;
+    if (motor_id == 0) {
+        for (uint8_t m = 1; m <= 4; m++) {
+            tue_motor_dc_set_duty(m, dir, 0);
+        }
+        return TUE_STATUS_OK;
+    }
+    return tue_motor_dc_set_duty(motor_id, dir, 0);
+}
+
+tue_status_t tue_motor_dc_get_status(uint8_t motor_id, uint8_t *direction, uint16_t *duty, uint8_t *fault)
+{
+    if (motor_id < 1 || motor_id > 4) {
+        return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+    if (direction) *direction = s_dc_motors[motor_id - 1].direction;
+    if (duty)      *duty      = s_dc_motors[motor_id - 1].duty;
+    if (fault)     *fault     = get_dc_fault(motor_id);
+
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_dc_set_pid(uint8_t motor_id, float kp, float ki, float kd)
+{
+    if (motor_id < 1 || motor_id > 4) {
+        return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+    s_dc_motors[motor_id - 1].kp = kp;
+    s_dc_motors[motor_id - 1].ki = ki;
+    s_dc_motors[motor_id - 1].kd = kd;
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_step_enable(uint8_t stepper_id, bool enable)
+{
+    if (stepper_id > 4) {
+        return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+
+    HAL_GPIO_WritePin(STEP_ENABLE_GPIO_Port, STEP_ENABLE_Pin, enable ? GPIO_PIN_RESET : GPIO_PIN_SET);
+
+    if (stepper_id == 0) {
+        for (int i = 0; i < 4; i++) {
+            s_steppers[i].enabled = enable;
+        }
+    } else {
+        s_steppers[stepper_id - 1].enabled = enable;
+    }
+
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_step_move(
+    uint8_t stepper_id,
+    bool is_relative,
+    int32_t target_steps,
+    uint32_t speed_hz,
+    uint32_t accel)
+{
+    if (stepper_id < 1 || stepper_id > 4) {
+        return TUE_STATUS_ERR_INVALID_PARAM;
+    }
+
+    uint8_t idx = stepper_id - 1;
+    int32_t final_target = is_relative ? (s_steppers[idx].current_steps + target_steps) : target_steps;
+    int32_t delta = final_target - s_steppers[idx].current_steps;
+
+    GPIO_PinState dir_state = (delta >= 0) ? GPIO_PIN_SET : GPIO_PIN_RESET;
+    switch (stepper_id) {
+        case 1: HAL_GPIO_WritePin(STEP_DIR1_GPIO_Port, STEP_DIR1_Pin, dir_state); break;
+        case 2: HAL_GPIO_WritePin(STEP_DIR2_GPIO_Port, STEP_DIR2_Pin, dir_state); break;
+        case 3: HAL_GPIO_WritePin(STEP_DIR3_GPIO_Port, STEP_DIR3_Pin, dir_state); break;
+        case 4: HAL_GPIO_WritePin(STEP_DIR4_GPIO_Port, STEP_DIR4_Pin, dir_state); break;
+    }
+
+    s_steppers[idx].target_steps  = final_target;
+    s_steppers[idx].speed_hz      = speed_hz;
+    s_steppers[idx].accel         = accel;
+    s_steppers[idx].is_moving     = (delta != 0);
+    s_steppers[idx].current_steps = final_target;
+
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_step_stop(uint8_t stepper_id, bool emergency_stop)
+{
+    (void)emergency_stop;
+    if (stepper_id > 4) return TUE_STATUS_ERR_INVALID_PARAM;
+
+    if (stepper_id == 0) {
+        for (int i = 0; i < 4; i++) {
+            s_steppers[i].is_moving = false;
+        }
+    } else {
+        s_steppers[stepper_id - 1].is_moving = false;
+    }
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_step_get_pos(uint8_t stepper_id, int32_t *current_steps, bool *is_moving)
+{
+    if (stepper_id < 1 || stepper_id > 4) return TUE_STATUS_ERR_INVALID_PARAM;
+    uint8_t idx = stepper_id - 1;
+    if (current_steps) *current_steps = s_steppers[idx].current_steps;
+    if (is_moving)     *is_moving     = s_steppers[idx].is_moving;
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_step_set_homing(uint8_t stepper_id, uint8_t direction)
+{
+    (void)direction;
+    if (stepper_id < 1 || stepper_id > 4) return TUE_STATUS_ERR_INVALID_PARAM;
+    s_steppers[stepper_id - 1].current_steps = 0;
+    s_steppers[stepper_id - 1].target_steps  = 0;
+    s_steppers[stepper_id - 1].is_moving     = false;
+    return TUE_STATUS_OK;
+}
+
+tue_status_t tue_motor_servo_ping(uint8_t servo_id)
+{
+    tue_sts3215_status_t st = tue_sts3215_ping(&s_servo_bus, servo_id);
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+tue_status_t tue_motor_servo_set_pos(uint8_t servo_id, int16_t position, int16_t speed, uint8_t accel)
+{
+    tue_sts3215_status_t st = tue_sts3215_set_goal_position_ex(&s_servo_bus, servo_id, position, speed, accel);
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+tue_status_t tue_motor_servo_torque_enable(uint8_t servo_id, uint8_t enable)
+{
+    tue_sts3215_status_t st;
+    if (enable == 128U) {
+        st = tue_sts3215_calibrate_position_to_2048(&s_servo_bus, servo_id);
+    } else {
+        st = tue_sts3215_enable_torque(&s_servo_bus, servo_id, enable != 0U);
+    }
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+/* DC Motor Protocol Command Handlers ----------------------------------------*/
+
+static tue_status_t handle_dc_set_duty(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 4 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t motor_id  = req[0];
+    uint8_t direction = req[1];
+    uint16_t duty     = (uint16_t)((uint16_t)req[2] | ((uint16_t)req[3] << 8));
+
+    tue_status_t st = tue_motor_dc_set_duty(motor_id, direction, duty);
+
+    resp[0] = motor_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+static tue_status_t handle_dc_stop(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 2 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t motor_id   = req[0];
+    uint8_t brake_mode = req[1];
+
+    tue_status_t st = tue_motor_dc_stop(motor_id, brake_mode);
+
+    resp[0] = motor_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+static tue_status_t handle_dc_get_status(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 1 || max_resp < 8) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t motor_id = req[0];
+    if (motor_id < 1 || motor_id > 4) return TUE_STATUS_ERR_INVALID_PARAM;
+
+    uint8_t dir = 0, fault = 0;
+    uint16_t duty = 0;
+    tue_motor_dc_get_status(motor_id, &dir, &duty, &fault);
+
+    resp[0] = motor_id;
+    resp[1] = dir;
+    resp[2] = (uint8_t)(duty & 0xFFU);
+    resp[3] = (uint8_t)((duty >> 8) & 0xFFU);
+    resp[4] = fault;
+    resp[5] = 0U; /* Current LSB */
+    resp[6] = 0U; /* Current MSB */
+    resp[7] = 0U; /* Reserved */
+
+    *resp_len = 8;
+    return TUE_STATUS_OK;
+}
+
+static tue_status_t handle_dc_set_pid(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 13 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t motor_id = req[0];
+    float kp = 0.0f, ki = 0.0f, kd = 0.0f;
+    memcpy(&kp, &req[1], 4);
+    memcpy(&ki, &req[5], 4);
+    memcpy(&kd, &req[9], 4);
+
+    tue_status_t st = tue_motor_dc_set_pid(motor_id, kp, ki, kd);
+
+    resp[0] = motor_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+/* Stepper Motor Protocol Command Handlers -----------------------------------*/
+
+static tue_status_t handle_step_enable(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 2 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t stepper_id = req[0];
+    uint8_t enable     = req[1];
+
+    tue_status_t st = tue_motor_step_enable(stepper_id, enable != 0U);
+
+    resp[0] = stepper_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+static tue_status_t handle_step_move(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 14 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t stepper_id   = req[0];
+    uint8_t is_relative  = req[1];
+    int32_t target_steps = 0;
+    uint32_t speed_hz    = 0;
+    uint32_t accel       = 0;
+
+    memcpy(&target_steps, &req[2], 4);
+    memcpy(&speed_hz, &req[6], 4);
+    memcpy(&accel, &req[10], 4);
+
+    tue_status_t st = tue_motor_step_move(stepper_id, is_relative != 0U, target_steps, speed_hz, accel);
+
+    resp[0] = stepper_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+static tue_status_t handle_step_stop(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 2 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t stepper_id = req[0];
+    uint8_t hard_stop  = req[1];
+
+    tue_status_t st = tue_motor_step_stop(stepper_id, hard_stop != 0U);
+
+    resp[0] = stepper_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+static tue_status_t handle_step_get_pos(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 1 || max_resp < 9) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t stepper_id = req[0];
+    int32_t current_steps = 0;
+    bool is_moving = false;
+
+    tue_status_t st = tue_motor_step_get_pos(stepper_id, &current_steps, &is_moving);
+    if (st != TUE_STATUS_OK) return st;
+
+    resp[0] = stepper_id;
+    memcpy(&resp[1], &current_steps, 4);
+    resp[5] = is_moving ? 1U : 0U;
+    resp[6] = 0U; /* Fault flags */
+    resp[7] = 0U; /* Reserved LSB */
+    resp[8] = 0U; /* Reserved MSB */
+
+    *resp_len = 9;
+    return TUE_STATUS_OK;
+}
+
+static tue_status_t handle_step_set_homing(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 2 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t stepper_id = req[0];
+    uint8_t direction  = req[1];
+
+    tue_status_t st = tue_motor_step_set_homing(stepper_id, direction);
+
+    resp[0] = stepper_id;
+    resp[1] = (st == TUE_STATUS_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return st;
+}
+
+/* Servo STS3215 Protocol Command Handlers -----------------------------------*/
+
+static tue_status_t handle_servo_ping(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 1 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+
+    tue_sts3215_status_t st = tue_sts3215_ping(&s_servo_bus, servo_id);
+
+    resp[0] = servo_id;
+    resp[1] = (st == TUE_STS3215_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+static tue_status_t handle_servo_read_reg(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 3) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+    uint8_t reg_addr = req[1];
+    uint8_t read_len = req[2];
+
+    if ((uint16_t)(2U + read_len) > max_resp) return TUE_STATUS_ERR_INVALID_PARAM;
+
+    resp[0] = servo_id;
+    resp[1] = reg_addr;
+
+    tue_sts3215_status_t st = tue_sts3215_read_raw(&s_servo_bus, servo_id, reg_addr, &resp[2], read_len);
+    if (st != TUE_STS3215_OK) {
+        *resp_len = 2;
+        return TUE_STATUS_ERR_EXEC;
+    }
+
+    *resp_len = (uint16_t)(2U + read_len);
+    return TUE_STATUS_OK;
+}
+
+static tue_status_t handle_servo_write_reg(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 3 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+    uint8_t reg_addr = req[1];
+    uint8_t data_len = (uint8_t)(req_len - 2U);
+
+    tue_sts3215_status_t st = tue_sts3215_write_raw(&s_servo_bus, servo_id, reg_addr, &req[2], data_len);
+
+    resp[0] = servo_id;
+    resp[1] = (st == TUE_STS3215_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+static tue_status_t handle_servo_set_pos(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 7 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+    int16_t pos   = (int16_t)((uint16_t)req[1] | ((uint16_t)req[2] << 8));
+    int16_t speed = (int16_t)((uint16_t)req[3] | ((uint16_t)req[4] << 8));
+    uint8_t accel = req[5];
+
+    tue_sts3215_status_t st = tue_sts3215_set_goal_position_ex(&s_servo_bus, servo_id, pos, speed, accel);
+
+    resp[0] = servo_id;
+    resp[1] = (st == TUE_STS3215_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+
+static tue_status_t handle_servo_get_feedback(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 1 || max_resp < 13) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+
+    tue_sts3215_feedback_t fb;
+    tue_sts3215_status_t st = tue_sts3215_get_feedback(&s_servo_bus, servo_id, &fb);
+    if (st != TUE_STS3215_OK && st != TUE_STS3215_ERR_STATUS) {
+        resp[0] = servo_id;
+        resp[1] = (uint8_t)st;
+        *resp_len = 2;
+        return TUE_STATUS_ERR_EXEC;
+    }
+
+    /* Serialize explicitly Little-Endian according to protocol_payloads.md Table 3.4 */
+    resp[0]  = servo_id;
+    resp[1]  = (uint8_t)((uint16_t)fb.position & 0xFFU);
+    resp[2]  = (uint8_t)(((uint16_t)fb.position >> 8) & 0xFFU);
+    resp[3]  = (uint8_t)((uint16_t)fb.speed & 0xFFU);
+    resp[4]  = (uint8_t)(((uint16_t)fb.speed >> 8) & 0xFFU);
+    resp[5]  = (uint8_t)((uint16_t)fb.load & 0xFFU);
+    resp[6]  = (uint8_t)(((uint16_t)fb.load >> 8) & 0xFFU);
+    resp[7]  = fb.voltage_raw;
+    resp[8]  = (uint8_t)fb.temperature_degc;
+    resp[9]  = fb.status_mask;
+    resp[10] = (uint8_t)((uint16_t)fb.current_raw & 0xFFU);
+    resp[11] = (uint8_t)(((uint16_t)fb.current_raw >> 8) & 0xFFU);
+    resp[12] = fb.is_moving ? 1U : 0U;
+
+    *resp_len = 13;
+    return TUE_STATUS_OK;
+}
+
+static tue_status_t handle_servo_torque_enable(
+    const uint8_t *req,
+    uint16_t req_len,
+    uint8_t *resp,
+    uint16_t *resp_len,
+    uint16_t max_resp)
+{
+    if (req_len < 2 || max_resp < 2) return TUE_STATUS_ERR_INVALID_LEN;
+    uint8_t servo_id = req[0];
+    uint8_t enable   = req[1];
+
+    tue_sts3215_status_t st;
+    if (enable == 128U) {
+        st = tue_sts3215_calibrate_position_to_2048(&s_servo_bus, servo_id);
+    } else {
+        st = tue_sts3215_enable_torque(&s_servo_bus, servo_id, enable != 0U);
+    }
+
+    resp[0] = servo_id;
+    resp[1] = (st == TUE_STS3215_OK) ? 0x00U : 0x01U;
+    *resp_len = 2;
+    return (st == TUE_STS3215_OK) ? TUE_STATUS_OK : TUE_STATUS_ERR_EXEC;
+}
+

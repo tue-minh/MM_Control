@@ -7,24 +7,60 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from tue_usb.crc import crc16_ccitt, verify_crc16
 from tue_usb.defs import (
-    CommandId,
-    LedMode,
-    StatusCode,
+    CRC_SIZE,
+    HEADER_SIZE,
+    MAX_PAYLOAD_SIZE,
+    MIN_FRAME_SIZE,
     SOF1,
     SOF2,
-    HEADER_SIZE,
-    CRC_SIZE,
-    MIN_FRAME_SIZE,
+    CommandId,
+    DcBrakeMode,
+    DcDirection,
+    LedMode,
+    StatusCode,
+    StepperMode,
+    StepperStopMode,
+    Sts3215Reg,
 )
 from tue_usb.exceptions import TueCrcError, TueError
 from tue_usb.protocol import (
     TueFrame,
     TueFrameParser,
+    decode_dc_get_status_response,
+    decode_dc_set_duty_response,
+    decode_dc_set_pid_response,
+    decode_dc_stop_response,
     decode_frame,
     decode_info_response,
     decode_led_response,
+    decode_servo_get_feedback_response,
+    decode_servo_ping_response,
+    decode_servo_read_reg_response,
+    decode_servo_set_pos_response,
+    decode_servo_torque_enable_response,
+    decode_servo_write_reg_response,
+    decode_step_enable_response,
+    decode_step_get_pos_response,
+    decode_step_move_response,
+    decode_step_set_homing_response,
+    decode_step_stop_response,
+    encode_dc_get_status,
+    encode_dc_set_duty,
+    encode_dc_set_pid,
+    encode_dc_stop,
     encode_frame,
     encode_led_cmd,
+    encode_servo_get_feedback,
+    encode_servo_ping,
+    encode_servo_read_reg,
+    encode_servo_set_pos,
+    encode_servo_torque_enable,
+    encode_servo_write_reg,
+    encode_step_enable,
+    encode_step_get_pos,
+    encode_step_move,
+    encode_step_set_homing,
+    encode_step_stop,
 )
 
 
@@ -224,6 +260,216 @@ class TestCommandPayloadHelpers(unittest.TestCase):
         self.assertEqual(info["fw_patch"], 0)
         self.assertEqual(info["version_str"], "1.0.0")
         self.assertEqual(info["mcu_uid"], "0102030405060708090A0B0C")
+
+
+class TestDcMotorPayloads(unittest.TestCase):
+    """Test DC motor payload encoding and decoding."""
+
+    def test_dc_set_duty_encode_decode(self):
+        payload = encode_dc_set_duty(motor_id=1, direction=DcDirection.CW, duty=7500)
+        self.assertEqual(len(payload), 4)
+        self.assertEqual(payload[0], 1)
+        self.assertEqual(payload[1], DcDirection.CW)
+        # 7500 = 0x1D4C -> 4C 1D
+        self.assertEqual(payload[2], 0x4C)
+        self.assertEqual(payload[3], 0x1D)
+
+        # Response
+        motor_id, ack = decode_dc_set_duty_response(b"\x01\x00")
+        self.assertEqual(motor_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_dc_stop_encode_decode(self):
+        payload = encode_dc_stop(motor_id=0, brake_mode=DcBrakeMode.ACTIVE)
+        self.assertEqual(payload, b"\x00\x01")
+
+        motor_id, ack = decode_dc_stop_response(b"\x00\x00")
+        self.assertEqual(motor_id, 0)
+        self.assertEqual(ack, 0)
+
+    def test_dc_get_status_encode_decode(self):
+        payload = encode_dc_get_status(motor_id=3)
+        self.assertEqual(payload, b"\x03")
+
+        # 8-byte status response: motor_id=3, dir=CCW(2), duty=5000(0x1388), fault=0, current=150mA, res=0
+        raw_resp = b"\x03\x02\x88\x13\x00\x96\x00\x00"
+        status = decode_dc_get_status_response(raw_resp)
+        self.assertEqual(status["motor_id"], 3)
+        self.assertEqual(status["direction"], DcDirection.CCW)
+        self.assertEqual(status["duty"], 5000)
+        self.assertFalse(status["fault"])
+        self.assertEqual(status["current_ma"], 150)
+
+    def test_dc_set_pid_encode_decode(self):
+        payload = encode_dc_set_pid(motor_id=2, kp=1.5, ki=0.2, kd=0.05)
+        self.assertEqual(len(payload), 14)
+        self.assertEqual(payload[0], 2)
+
+        motor_id, ack = decode_dc_set_pid_response(b"\x02\x00")
+        self.assertEqual(motor_id, 2)
+        self.assertEqual(ack, 0)
+
+    def test_dc_invalid_params_raise(self):
+        with self.assertRaises(ValueError):
+            encode_dc_set_duty(motor_id=5, direction=DcDirection.CW, duty=1000)
+        with self.assertRaises(ValueError):
+            encode_dc_set_duty(motor_id=1, direction=DcDirection.CW, duty=10001)
+        with self.assertRaises(ValueError):
+            encode_dc_get_status(motor_id=0)
+
+
+class TestStepperMotorPayloads(unittest.TestCase):
+    """Test Stepper motor payload encoding and decoding."""
+
+    def test_step_enable_encode_decode(self):
+        payload = encode_step_enable(stepper_id=0, enable=True)
+        self.assertEqual(payload, b"\x00\x01")
+
+        payload_off = encode_step_enable(stepper_id=2, enable=False)
+        self.assertEqual(payload_off, b"\x02\x00")
+
+        stepper_id, ack = decode_step_enable_response(b"\x02\x00")
+        self.assertEqual(stepper_id, 2)
+        self.assertEqual(ack, 0)
+
+    def test_step_move_encode_decode(self):
+        payload = encode_step_move(
+            stepper_id=1,
+            target_steps=10000,
+            speed_hz=2000,
+            accel=1000,
+            is_relative=True,
+        )
+        self.assertEqual(len(payload), 14)
+        self.assertEqual(payload[0], 1)
+        self.assertEqual(payload[1], 1)  # relative
+
+        stepper_id, ack = decode_step_move_response(b"\x01\x00")
+        self.assertEqual(stepper_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_step_stop_encode_decode(self):
+        payload = encode_step_stop(stepper_id=0, hard_stop=True)
+        self.assertEqual(payload, b"\x00\x01")
+
+        stepper_id, ack = decode_step_stop_response(b"\x00\x00")
+        self.assertEqual(stepper_id, 0)
+        self.assertEqual(ack, 0)
+
+    def test_step_get_pos_encode_decode(self):
+        payload = encode_step_get_pos(stepper_id=2)
+        self.assertEqual(payload, b"\x02")
+
+        # 9 bytes: stepper_id=2, pos=5000 (0x00001388), is_moving=1, fault=0, reserved=0
+        raw_resp = b"\x02\x88\x13\x00\x00\x01\x00\x00\x00"
+        pos_info = decode_step_get_pos_response(raw_resp)
+        self.assertEqual(pos_info["stepper_id"], 2)
+        self.assertEqual(pos_info["current_steps"], 5000)
+        self.assertTrue(pos_info["is_moving"])
+        self.assertEqual(pos_info["fault"], 0)
+
+    def test_step_set_homing_encode_decode(self):
+        payload = encode_step_set_homing(stepper_id=1, direction=0)
+        self.assertEqual(payload, b"\x01\x00")
+
+        stepper_id, ack = decode_step_set_homing_response(b"\x01\x00")
+        self.assertEqual(stepper_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_step_invalid_params_raise(self):
+        with self.assertRaises(ValueError):
+            encode_step_move(stepper_id=0, target_steps=100)
+        with self.assertRaises(ValueError):
+            encode_step_get_pos(stepper_id=5)
+
+
+class TestServoPayloads(unittest.TestCase):
+    """Test STS3215 Bus Servo payload encoding and decoding."""
+
+    def test_servo_ping_encode_decode(self):
+        payload = encode_servo_ping(servo_id=1)
+        self.assertEqual(payload, b"\x01")
+
+        servo_id, ack = decode_servo_ping_response(b"\x01\x00")
+        self.assertEqual(servo_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_servo_read_reg_encode_decode(self):
+        payload = encode_servo_read_reg(servo_id=1, reg_addr=Sts3215Reg.ID, read_len=1)
+        self.assertEqual(payload, b"\x01\x05\x01")
+
+        # Response: servo_id=1, reg=0x05, data=[0x01]
+        servo_id, reg_addr, data = decode_servo_read_reg_response(b"\x01\x05\x01")
+        self.assertEqual(servo_id, 1)
+        self.assertEqual(reg_addr, 0x05)
+        self.assertEqual(data, b"\x01")
+
+    def test_servo_write_reg_encode_decode(self):
+        payload = encode_servo_write_reg(servo_id=1, reg_addr=Sts3215Reg.TORQUE_SWITCH, data=b"\x01")
+        self.assertEqual(payload, b"\x01\x28\x01")
+
+        servo_id, ack = decode_servo_write_reg_response(b"\x01\x00")
+        self.assertEqual(servo_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_servo_set_pos_encode_decode(self):
+        payload = encode_servo_set_pos(servo_id=1, position=2048, speed=1000, accel=50)
+        self.assertEqual(len(payload), 7)
+        self.assertEqual(payload[0], 1)
+        # 2048 = 0x0800 -> 00 08
+        self.assertEqual(payload[1:3], b"\x00\x08")
+        # 1000 = 0x03E8 -> E8 03
+        self.assertEqual(payload[3:5], b"\xE8\x03")
+        self.assertEqual(payload[5], 50)
+        self.assertEqual(payload[6], 0)
+
+        servo_id, ack = decode_servo_set_pos_response(b"\x01\x00")
+        self.assertEqual(servo_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_servo_get_feedback_encode_decode(self):
+        payload = encode_servo_get_feedback(servo_id=1)
+        self.assertEqual(payload, b"\x01")
+
+        # 13-byte response:
+        # id=1, pos=2048, spd=0, load=100 (10.0%), volt=120 (12.0V), temp=35°C,
+        # status=0, current=50 (325.0mA), moving=0
+        raw_fb = (
+            b"\x01"                  # servo_id = 1
+            b"\x00\x08"              # pos = 2048
+            b"\x00\x00"              # speed = 0
+            b"\x64\x00"              # load = 100
+            b"\x78"                  # volt = 120 (12.0V)
+            b"\x23"                  # temp = 35°C
+            b"\x00"                  # status = 0
+            b"\x32\x00"              # current = 50
+            b"\x00"                  # moving = 0
+        )
+        fb = decode_servo_get_feedback_response(raw_fb)
+        self.assertEqual(fb["servo_id"], 1)
+        self.assertEqual(fb["position"], 2048)
+        self.assertEqual(fb["speed"], 0)
+        self.assertEqual(fb["load_percent"], 10.0)
+        self.assertEqual(fb["voltage_v"], 12.0)
+        self.assertEqual(fb["temperature_degc"], 35)
+        self.assertEqual(fb["status_mask"], 0)
+        self.assertEqual(fb["current_ma"], 325.0)
+        self.assertFalse(fb["is_moving"])
+
+    def test_servo_torque_enable_encode_decode(self):
+        payload_on = encode_servo_torque_enable(servo_id=1, enable=True)
+        self.assertEqual(payload_on, b"\x01\x01")
+
+        payload_calib = encode_servo_torque_enable(servo_id=1, enable=128)
+        self.assertEqual(payload_calib, b"\x01\x80")
+
+        servo_id, ack = decode_servo_torque_enable_response(b"\x01\x00")
+        self.assertEqual(servo_id, 1)
+        self.assertEqual(ack, 0)
+
+    def test_servo_short_payload_raises(self):
+        with self.assertRaises(TueError):
+            decode_servo_get_feedback_response(b"\x01\x00\x00")
 
 
 if __name__ == "__main__":

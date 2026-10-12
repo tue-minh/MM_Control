@@ -93,3 +93,68 @@ class LedMode(IntEnum):
     ON = 0x01
     TOGGLE = 0x02
     QUERY = 0xFF
+
+
+class DcDirection(IntEnum):
+    """DC motor direction modes."""
+    FLOAT = 0  # Coast / High-Z
+    CW = 1     # Clockwise
+    CCW = 2    # Counter-Clockwise
+    BRAKE = 3  # Active Dynamic Brake
+
+
+class DcBrakeMode(IntEnum):
+    """DC motor stop brake modes."""
+    COAST = 0   # Coast / Float
+    ACTIVE = 1  # Active Dynamic Brake
+
+
+class StepperMode(IntEnum):
+    """Stepper motion mode."""
+    ABSOLUTE = 0
+    RELATIVE = 1
+
+
+class StepperStopMode(IntEnum):
+    """Stepper stop mode."""
+    DECEL = 0       # Decelerate / soft stop
+    IMMEDIATE = 1   # Emergency / hard stop
+
+
+class Sts3215Reg(IntEnum):
+    """STS3215 Memory Table register addresses."""
+    # EEPROM (Read-only or Read/Write)
+    FIRMWARE_MAJOR = 0x00
+    FIRMWARE_MINOR = 0x01
+    SERVO_MAJOR_VER = 0x03
+    SERVO_VER = 0x04
+    ID = 0x05
+    BAUDRATE = 0x06
+    RETURN_DELAY = 0x07
+    RESPONSE_LEVEL = 0x08
+    MIN_ANGLE_LIMIT = 0x09
+    MAX_ANGLE_LIMIT = 0x0B
+    MAX_TEMP_LIMIT = 0x0D
+    MAX_VOLT_LIMIT = 0x0E
+    MIN_VOLT_LIMIT = 0x0F
+    MAX_TORQUE = 0x10
+    PROTECTIVE_CURRENT = 0x1C
+    OPERATING_MODE = 0x21
+
+    # SRAM (Control & Feedback)
+    TORQUE_SWITCH = 0x28
+    ACCELERATION = 0x29
+    GOAL_POSITION = 0x2A
+    RUNNING_TIME = 0x2C
+    RUNNING_SPEED = 0x2E
+    TORQUE_LIMIT = 0x30
+    LOCK_SYMBOL = 0x37
+    CURRENT_POSITION = 0x38
+    CURRENT_SPEED = 0x3A
+    CURRENT_LOAD = 0x3C
+    CURRENT_VOLTAGE = 0x3E
+    CURRENT_TEMPERATURE = 0x3F
+    ASYNC_WRITE_FLAG = 0x40
+    STATUS = 0x41
+    IS_MOVING = 0x42
+    CURRENT_MA = 0x45
