@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 TUE USB Onboard LED Control Example Script.
 
@@ -30,7 +29,7 @@ Examples:
     # Interactive mode
     python led_control.py --port COM3 --interactive
 """
-
+#!/usr/bin/env python3
 import argparse
 import os
 import sys

@@ -60,49 +60,22 @@ with TueClient(port="COM3") as client:
 
 ---
 
-## Onboard LED CLI Tool (`led_control.py`)
+## Onboard LED CLI Tool & Client Commands (`led_control.py` / `TueClient`)
 
-The example script `firmware/python/examples/led_control.py` provides command-line control of the onboard LED:
+The table below lists all commands and methods provided in `TueClient` ([python/tue_usb/client.py](file:///D:/Project_Kicad/MM_Control/firmware/python/tue_usb/client.py)) along with their corresponding CLI options in `examples/led_control.py`:
 
-### Scan Serial Ports
-```bash
-python examples/led_control.py --scan
-```
-
-### Turn LED ON
-```bash
-python examples/led_control.py --port COM3 --on
-```
-
-### Turn LED OFF
-```bash
-python examples/led_control.py --port COM3 --off
-```
-
-### Toggle LED
-```bash
-python examples/led_control.py --port COM3 --toggle
-```
-
-### Query LED State
-```bash
-python examples/led_control.py --port COM3 --query
-```
-
-### Blink LED 5 Times
-```bash
-python examples/led_control.py --port COM3 --blink 5 --interval 0.2
-```
-
-### Query Device Info & MCU UID
-```bash
-python examples/led_control.py --port COM3 --info
-```
-
-### Interactive Console Mode
-```bash
-python examples/led_control.py --port COM3 --interactive
-```
+| Client Method (`TueClient`) | Command ID | CLI Option | Description | CLI Example |
+|:---|:---|:---|:---|:---|
+| `list_ports()` | — | `--scan` | Scan and list available serial COM ports | `python examples/led_control.py --scan` |
+| `set_led(led_index, True)` | `CMD_SYS_LED_CTRL` (`0x04`) | `--on` | Turn onboard LED ON | `python examples/led_control.py --port COM3 --on` |
+| `set_led(led_index, False)` | `CMD_SYS_LED_CTRL` (`0x04`) | `--off` | Turn onboard LED OFF | `python examples/led_control.py --port COM3 --off` |
+| `toggle_led(led_index)` | `CMD_SYS_LED_CTRL` (`0x04`) | `--toggle` | Toggle onboard LED state | `python examples/led_control.py --port COM3 --toggle` |
+| `get_led(led_index)` | `CMD_SYS_LED_CTRL` (`0x04`) | `--query` | Query current LED state (0 = OFF, 1 = ON) | `python examples/led_control.py --port COM3 --query` |
+| `set_led(...)` | `CMD_SYS_LED_CTRL` (`0x04`) | `--blink <N>` | Blink LED N times (`--interval <sec>`) | `python examples/led_control.py --port COM3 --blink 5 --interval 0.2` |
+| `ping(data)` | `CMD_SYS_PING` (`0x01`) | `--ping` | Send ping echo request to MCU | `python examples/led_control.py --port COM3 --ping` |
+| `get_info()` | `CMD_SYS_GET_INFO` (`0x02`) | `--info` | Query board signature, version & MCU UID | `python examples/led_control.py --port COM3 --info` |
+| `send_command(...)` | Any `CommandId` | — | Low-level synchronous command transmission | *(Python API)* |
+| — | Multiple | `--interactive`, `-i` | Launch interactive console session | `python examples/led_control.py --port COM3 --interactive` |
 
 ---
 
