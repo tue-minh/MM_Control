@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "tue_usb.h"
+#include "tue_acsi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,7 +117,10 @@ void StartDefaultTask(void *argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  tue_usb_init();
+  /* Start the ACSI command protocol over USB CDC (Virtual COM Port).
+   * It owns the Feetech STS3215 bus on USART1 (PA9, half-duplex, 1 Mbps);
+   * see docs/ACSI_PROTOCOL.md and the python/ client for host-side usage. */
+  tue_acsi_init();
 
   /* Infinite loop */
   for(;;)

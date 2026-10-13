@@ -45,8 +45,11 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
-    Core/Src/tue_usb.c
+    Core/Src/tue_sts3215_protocol.c
+    Core/Src/tue_sts3215_hal.c
     Core/Src/tue_sts3215.c
+    Core/Src/tue_acsi.c
+    Core/Src/tue_stepper.c
 )
 
 # Add include paths

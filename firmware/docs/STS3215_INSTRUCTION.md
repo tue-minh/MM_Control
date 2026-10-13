@@ -4,21 +4,35 @@
 > **Peripheral**: USART1 Half-Duplex Single-Wire Mode on `PA9` (`SERVO_TX`)  
 > **DMA Configuration**: DMA2 Stream 7 (TX) & DMA2 Stream 2 (RX) in Normal Mode with Interrupts  
 > **Protocol Reference**: [docs/MEMORY_TABLE.md](file:///D:/Project_Kicad/MM_Control/firmware/docs/MEMORY_TABLE.md)  
-> **Library Files**: [`Core/Inc/tue_sts3215.h`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Inc/tue_sts3215.h), [`Core/Src/tue_sts3215.c`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_sts3215.c)
+> **Library Files**:
+> [`Core/Inc/tue_sts3215_regs.h`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Inc/tue_sts3215_regs.h),
+> [`Core/Inc/tue_sts3215_protocol.h`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Inc/tue_sts3215_protocol.h) / [`Core/Src/tue_sts3215_protocol.c`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_sts3215_protocol.c),
+> [`Core/Inc/tue_sts3215_hal.h`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Inc/tue_sts3215_hal.h) / [`Core/Src/tue_sts3215_hal.c`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_sts3215_hal.c),
+> [`Core/Inc/tue_sts3215.h`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Inc/tue_sts3215.h) / [`Core/Src/tue_sts3215.c`](file:///D:/Project_Kicad/MM_Control/firmware/Core/Src/tue_sts3215.c)
 
 ---
 
 ## 1. Overview & Architecture
 
-The **TUE STS3215 Driver** is a production-grade, high-performance C library designed specifically for controlling Feetech STS-series serial bus servos (such as the STS3215) on the STM32F407VET6 microcontroller.
+The **TUE STS3215 Driver** controls Feetech STS-series serial bus servos (such as the STS3215) on the STM32F407VET6. It is a three-layer port of the reference C library in `reference_for_sts325/`, wrapped by a blocking facade that stays API-compatible with the ACSI servo command set.
+
+### Layer Map
+| Layer | Files | Depends on | Responsibility |
+|:---|:---|:---|:---|
+| Registers | `Core/Inc/tue_sts3215_regs.h` | — | Register map, protocol constants, enums, fault masks, defaults, unit conversions |
+| Protocol | `Core/Inc/tue_sts3215_protocol.h`, `Core/Src/tue_sts3215_protocol.c` | `regs.h` + libc | Pure packet builders + reply parser (host-testable, zero STM32 dependency) |
+| HAL | `Core/Inc/tue_sts3215_hal.h`, `Core/Src/tue_sts3215_hal.c` | `main.h` | Async half-duplex DMA state machine + weak HAL callback overrides |
+| Facade | `Core/Inc/tue_sts3215.h`, `Core/Src/tue_sts3215.c` | all above + `cmsis_os2.h` | Typed, blocking API consumed by `tue_acsi.c` |
 
 ### Key Highlights
-- **Hardware Half-Duplex DMA**: Utilizes STM32 USART Single-Wire Half-Duplex mode (`CR3_HDSEL`). Transmissions use DMA2 Stream 7; receptions use DMA2 Stream 2 with `HAL_UARTEx_ReceiveToIdle_DMA` for automatic idle-line frame termination.
-- **Zero-Latency Transceiver Turnaround**: Directional switching from Transmitter to Receiver occurs instantly inside the UART Transmission Complete (`TC`) interrupt callback, guaranteeing reception even when servo Return Delay is set to minimum.
-- **Thread-Safe & RTOS-Integrated**: Protected by CMSIS-RTOS2 mutexes and binary semaphores for non-blocking task execution. Automatically falls back to cycle-accurate millisecond polling before the FreeRTOS scheduler starts.
-- **100% Memory Table Coverage**: Implements typed, dedicated API functions for every single register (`0x00` through `0x45`) listed in [docs/MEMORY_TABLE.md](file:///D:/Project_Kicad/MM_Control/firmware/docs/MEMORY_TABLE.md).
-- **Safe EEPROM Operations**: Automatic unlocking of register `0x37` (`Lock Symbol`) during EEPROM parameter modifications to ensure settings persist across power cycles.
-- **High-Throughput Burst Feedback**: Fetches all 15 telemetry bytes (Position, Speed, Load, Voltage, Temperature, Error Status, Moving Flag, Current) in a single bus transaction.
+- **Three clean layers**: register/protocol knowledge is `STM32`-free and unit-testable on a host; the HAL owns the hardware; the facade offers the ergonomic typed API.
+- **Async HAL + blocking facade**: the HAL is a non-blocking state machine (`IDLE → TX_BUSY → RX_BUSY`) with `on_reply`/`on_error` callbacks; the facade polls it under an RTOS delay until the reply arrives or the timeout expires, preserving the synchronous `tue_sts3215_*` API.
+- **Hardware Half-Duplex DMA, adapted from the reference**: the reference library targets RS485 (DE pin). On this board USART1 runs single-wire half-duplex (`CR3_HDSEL`), so the transceiver direction is switched inside the TX-complete interrupt (`HAL_HalfDuplex_EnableReceiver`) before `HAL_UARTEx_ReceiveToIdle_DMA` arms reception on DMA2 Stream 2.
+- **Zero-Latency Transceiver Turnaround**: directional switching occurs inside the UART Transmission Complete (`TC`) interrupt callback, guaranteeing reception even when servo Return Delay is set to minimum.
+- **Multi-reply transactions**: the HAL accumulates and parses multiple reply frames per transaction, enabling broadcast `SYNC_READ` that collects one reply per servo.
+- **100% Memory Table Coverage**: typed, dedicated API functions for every register (`0x00` through `0x45`) in [docs/MEMORY_TABLE.md](file:///D:/Project_Kicad/MM_Control/firmware/docs/MEMORY_TABLE.md), plus the full instruction set (`PING`, `READ`, `WRITE`, `REG_WRITE`, `ACTION`, `SYNC_WRITE`, `SYNC_READ`, `RESET`, `RESET_TURNS`).
+- **Safe EEPROM Operations**: automatic unlocking of register `0x37` (`Lock Symbol`) during EEPROM parameter modifications so settings persist across power cycles.
+- **High-Throughput Burst Feedback**: fetches all 15 telemetry bytes (Position, Speed, Load, Voltage, Temperature, Error Status, Moving Flag, Current) in a single bus transaction.
 
 ---
 
@@ -152,6 +166,33 @@ tue_sts3215_sync_pos_t targets[3] = {
 tue_sts3215_sync_write_position(&g_servo_bus, targets, 3);
 ```
 
+### 4.6 Multi-Servo Synchronized Read (`SYNC_READ`)
+
+Read the same register block from several servos in one broadcast and collect
+each reply (up to `STS3215_SYNC_MAX_SERVOS` = 16 frames per transaction):
+
+```c
+uint8_t ids[3] = { 1, 2, 3 };
+tue_sts3215_reply_t replies[3];
+uint8_t n = 0;
+
+/* Read 2 bytes (current position) from each servo */
+if (tue_sts3215_sync_read(&g_servo_bus, STS3215_REG_CURRENT_POS, 2, ids, 3, replies, &n)
+        == TUE_STS3215_OK) {
+    for (uint8_t i = 0; i < n; i++) {
+        int16_t pos = tue_sts3215_unpack_s16_le(replies[i].data);
+        /* replies[i].id holds the responding servo ID */
+    }
+}
+```
+
+### 4.7 Clearing the Multi-Turn Counter (`RESET_TURNS`)
+
+```c
+/* Clear the volatile multi-turn cycle counter (instruction 0x0A) */
+tue_sts3215_reset_turns(&g_servo_bus, servo_id);
+```
+
 ---
 
 ## 5. Complete Memory Table & API Reference
@@ -220,6 +261,8 @@ All registers listed in [docs/MEMORY_TABLE.md](file:///D:/Project_Kicad/MM_Contr
 | `0x42` | Moving Status Sign | bool | `tue_sts3215_is_moving(dev, id, &is_moving)` |
 | `0x45` | Motor Current | 6.5mA / mA | `tue_sts3215_get_motor_current_raw(dev, id, &raw)`<br>`tue_sts3215_get_motor_current_ma(dev, id, &ma_float)` |
 | `0x38`–`0x46` | **Complete Burst Feedback**| All | `tue_sts3215_get_feedback(dev, id, &feedback_struct)` |
+| any | **Multi-Servo Read** (`SYNC_READ`) | N frames | `tue_sts3215_sync_read(dev, reg, len, ids, count, replies, &reply_count)` |
+| — | **Clear Multi-Turn Counter** (`RESET_TURNS`) | — | `tue_sts3215_reset_turns(dev, id)` |
 
 ---
 
@@ -238,7 +281,7 @@ All API functions return `tue_sts3215_status_t`:
 | `TUE_STS3215_ERR_STATUS` (6) | Hardware error reported by servo | Inspect `dev->last_servo_status` against status mask |
 | `TUE_STS3215_ERR_PARAM` (7) | Parameter out of bounds or NULL pointer | Check input arguments |
 | `TUE_STS3215_ERR_HAL` (8) | STM32 HAL / DMA error | Check UART peripheral state |
-| `TUE_STS3215_ERR_BUSY` (9) | Mutex contention | Increase transaction timeout or resolve priority inversion |
+| `TUE_STS3215_ERR_BUSY` (9) | HAL bus busy with another transfer | A previous transaction is still in flight; retry after it settles |
 
 ### Hardware Error Status Bitmask (`0x41`)
 When `TUE_STS3215_ERR_STATUS` is returned, check `dev->last_servo_status`:

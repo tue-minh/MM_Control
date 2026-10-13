@@ -27,6 +27,7 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include "tue_stepper.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -106,6 +107,9 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+  /* Steppers: TIM1 becomes the 1 us step clock and the STEP pins are turned
+   * into plain GPIO outputs. See docs/STEPPER_INSTRUCTION.md. */
+  tue_stepper_init();
 
   /* USER CODE END 2 */
 
@@ -196,6 +200,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+  /* TIM1 update interrupt = one master step (returns immediately otherwise). */
+  tue_stepper_on_timer_elapsed(htim);
 
   /* USER CODE END Callback 1 */
 }
