@@ -1,0 +1,14 @@
+tue_sts3215_hal.c:62:13:prv_arm_rx	16	static
+tue_sts3215_hal.c:114:6:tue_sts3215_hal_init	24	static
+tue_sts3215_hal.c:138:6:tue_sts3215_hal_register_instance	0	static
+tue_sts3215_hal.c:143:28:tue_sts3215_hal_send_frame	32	static
+tue_sts3215_hal.c:189:6:tue_sts3215_hal_process	8	static
+tue_sts3215_hal.c:227:6:tue_sts3215_hal_abort	8	static
+tue_sts3215_hal.c:240:25:tue_sts3215_hal_get_state	0	static
+tue_sts3215_hal.c:245:6:tue_sts3215_hal_is_idle	0	static
+tue_sts3215_hal.c:254:6:tue_sts3215_hal_tx_cplt_cb	24	static
+tue_sts3215_hal.c:275:6:tue_sts3215_hal_rx_event_cb	56	static
+tue_sts3215_hal.c:301:6:tue_sts3215_hal_error_cb	8	static
+tue_sts3215_hal.c:333:6:HAL_UART_TxCpltCallback	0	static
+tue_sts3215_hal.c:340:6:HAL_UARTEx_RxEventCallback	0	static
+tue_sts3215_hal.c:347:6:HAL_UART_ErrorCallback	0	static

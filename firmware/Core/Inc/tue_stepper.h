@@ -67,7 +67,7 @@ extern "C" {
 
 /* --- Mechanics ------------------------------------------------------------ */
 #define TUE_STEPPER_GT2_PITCH_MM        2.0f    /* GT2 belt pitch              */
-#define TUE_STEPPER_MICROSTEPS          64U     /* microstep setting per motor */
+#define TUE_STEPPER_MICROSTEPS          16U     /* microstep setting per motor */
 #define TUE_STEPPER_MOTOR_FULL_STEPS    200U    /* 1.8 deg motor               */
 #define TUE_STEPPER_XY_TEETH            20U     /* GT2 pulley teeth (X/Y)      */
 #define TUE_STEPPER_Z_LEAD_MM           8.0f    /* Z lead screw lead per turn  */
