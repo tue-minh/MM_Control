@@ -1,9 +1,0 @@
-tue_acsi.c:151:13:acsi_transmit	24	static
-tue_acsi.c:180:13:acsi_respond	264	static
-tue_acsi.c:104:12:acsi_append.constprop	20	static
-tue_acsi.c:589:13:acsi_step_pos_payload	48	static
-tue_acsi.c:777:13:acsi_handle_line.constprop	440	static
-tue_acsi.c:866:13:acsi_task	8	static
-tue_acsi.c:889:6:tue_acsi_init	72	static
-tue_acsi.c:915:6:tue_acsi_on_cdc_rx	20	static
-tue_acsi.c:926:16:tue_acsi_servo	0	static
