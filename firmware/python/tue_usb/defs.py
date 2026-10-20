@@ -120,6 +120,9 @@ class CanId(IntEnum):
     SERVO_SET_ID = 0x414
     SERVO_RESET = 0x415
 
+    # --- User custom range (host streams, firmware forwards to UART slave) ---
+    HAPTIC_TELEMETRY = 0x300
+
 
 class LedState(IntEnum):
     """LED control states."""

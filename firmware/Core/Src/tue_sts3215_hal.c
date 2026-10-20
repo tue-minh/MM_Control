@@ -30,6 +30,7 @@
   */
 
 #include "tue_sts3215_hal.h"
+#include "tue_haptic_bridge.h"
 #include <string.h>
 
 /* =========================================================================
@@ -334,21 +335,27 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
     if ((s_instance != NULL) && (s_instance->huart == huart)) {
         tue_sts3215_hal_tx_cplt_cb(s_instance);
+        return;
     }
+    tue_haptic_uart_tx_cplt_cb(huart);
 }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size)
 {
     if ((s_instance != NULL) && (s_instance->huart == huart)) {
         tue_sts3215_hal_rx_event_cb(s_instance, size);
+        return;
     }
+    tue_haptic_uart_rx_event_cb(huart, size);
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
     if ((s_instance != NULL) && (s_instance->huart == huart)) {
         tue_sts3215_hal_error_cb(s_instance);
+        return;
     }
+    tue_haptic_uart_error_cb(huart);
 }
 
 #endif /* TUE_STS3215_HAL_NO_WEAK_OVERRIDE */

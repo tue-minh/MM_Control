@@ -18,6 +18,7 @@ from .protocol import FrameParser, encode_frame, encode_request
 from .payloads import (
     Decoders,
     Encoders,
+    HapticPayload,
     PositionXYZ,
     ServoFeedback,
     ServoFeedbackDynamics,
@@ -52,6 +53,7 @@ __all__ = [
     # Payloads
     "Decoders",
     "Encoders",
+    "HapticPayload",
     "PositionXYZ",
     "ServoFeedback",
     "ServoFeedbackDynamics",

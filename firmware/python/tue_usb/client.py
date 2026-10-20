@@ -33,6 +33,7 @@ from .protocol import FrameParser
 from .payloads import (
     Decoders,
     Encoders,
+    HapticPayload,
     PositionXYZ,
     ServoFeedback,
     ServoFeedbackDynamics,
@@ -476,6 +477,35 @@ class TueUsbClient:
                     time.sleep(0.002)
 
             raise TimeoutError(f"Dual transaction timed out (got {len(collected)} frames)")
+
+    def send_haptic_telemetry(self, payload: Union[HapticPayload, bytes]) -> Frame:
+        """
+        Stream one 0x300 haptic frame to the MCU and return the sent frame.
+
+        This is fire-and-forget: the firmware forwards the frame to USART2
+        without sending a USB acknowledgement, so no response is awaited.
+        """
+        data = payload.to_bytes() if isinstance(payload, HapticPayload) else bytes(payload)
+        if len(data) != 8:
+            raise ValueError("HAPTIC telemetry payload must be exactly 8 bytes")
+
+        with self._lock:
+            if not self._is_connected:
+                raise ConnectionError("Client is not connected to a device or mock")
+
+            frame = Frame(
+                frame_type=FrameType.REQ,
+                can_id=CanId.HAPTIC_TELEMETRY,
+                payload=data,
+                seq=self._next_seq(),
+            )
+            self._dispatch_tx(frame)
+
+            if not self.mock:
+                self._serial.write(frame.to_bytes())
+                self._serial.flush()
+
+            return frame
 
     # ==========================================================================
     # High-Level System API (0x100 - 0x107)

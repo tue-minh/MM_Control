@@ -24,6 +24,7 @@
   *   0x200-0x27F  CoreXY + Z tool motion
   *   0x280-0x2FF  Raw per-motor stepping
   *   0x300-0x3FF  >>> RESERVED for user custom communication <<<
+  *   0x300        Unified tactile haptic telemetry (forwarded to UART slave)
   *   0x400-0x4FF  STS3215 bus servos
   *   0x500-0x57F  Sensors / inputs (reserved)
   *   0x600-0x6FF  DC motors / actuators (reserved)
@@ -154,6 +155,13 @@ typedef enum {
 /* --- Reserved for user custom communication (MUST NOT be used internally) - */
 #define TUE_USB_CAN_RESERVED_BASE    0x300U
 #define TUE_USB_CAN_RESERVED_LAST    0x3FFU
+
+/* --- User custom stream allocated inside the reserved range -------------- *
+ * The host streams the unified 20-byte haptic frame (DLC = 8) on 0x300 at
+ * 100 Hz. It is cached locally and forwarded verbatim to the ESP32 slave on
+ * USART2 by the haptic bridge (Core/Src/tue_haptic_bridge.c). This is the
+ * only ID in the 0x3.. range the firmware interprets. */
+#define TUE_USB_CAN_HAPTIC_TELEMETRY 0x300U
 
 /* Reserved-range guard ------------------------------------------------------*/
 /* True for the reserved user-custom ranges: standard 0x300-0x3FF, 16-bit

@@ -27,7 +27,6 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
-#include "tue_stepper.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

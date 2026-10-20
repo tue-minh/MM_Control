@@ -7,7 +7,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "stm32cubemx::@768a070a0fe75716b479",
-					"jsonFile" : "target-stm32cubemx-Debug-243bb492afe21ea5bf1f.json",
+					"jsonFile" : "target-stm32cubemx-Debug-674307e59c2af9fd9fe2.json",
 					"name" : "stm32cubemx",
 					"projectIndex" : 0
 				}
@@ -20,7 +20,7 @@
 					[
 						1
 					],
-					"jsonFile" : "directory-.-Debug-f040eec181a89de70dbe.json",
+					"jsonFile" : "directory-.-Debug-b5805d5c08fd3d92def4.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.22"
@@ -38,7 +38,7 @@
 						0
 					],
 					"build" : "cmake/stm32cubemx",
-					"jsonFile" : "directory-cmake.stm32cubemx-Debug-720efe0a241989607e76.json",
+					"jsonFile" : "directory-cmake.stm32cubemx-Debug-5b3c2a2eeda9743e1cd9.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.22"
@@ -82,28 +82,28 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "FreeRTOS::@768a070a0fe75716b479",
-					"jsonFile" : "target-FreeRTOS-Debug-8c375473b1d51b1df399.json",
+					"jsonFile" : "target-FreeRTOS-Debug-cb9c2568168a72839016.json",
 					"name" : "FreeRTOS",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "MM_control::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-MM_control-Debug-aa31c70d32a42b6c20a5.json",
+					"jsonFile" : "target-MM_control-Debug-216f34b06e7b1ce2310d.json",
 					"name" : "MM_control",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "STM32_Drivers::@768a070a0fe75716b479",
-					"jsonFile" : "target-STM32_Drivers-Debug-f51ea6743691892c1d68.json",
+					"jsonFile" : "target-STM32_Drivers-Debug-0d00181213949177b4e7.json",
 					"name" : "STM32_Drivers",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "USB_Device_Library::@768a070a0fe75716b479",
-					"jsonFile" : "target-USB_Device_Library-Debug-3a3d77e985d1437f4ddc.json",
+					"jsonFile" : "target-USB_Device_Library-Debug-1a53b9ee424e8f880de9.json",
 					"name" : "USB_Device_Library",
 					"projectIndex" : 0
 				}
@@ -119,6 +119,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 10
+		"minor" : 11
 	}
 }

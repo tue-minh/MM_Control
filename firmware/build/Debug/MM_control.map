@@ -38,7 +38,10 @@ d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../a
 Allocating common symbols
 Common symbol       size              file
 
+g_tue_haptic_payload
+                    0x8               CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
 hUsbDeviceFS        0x2dc             CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
+hdma_usart2_rx      0x60              CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
 htim4               0x48              CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
 hi2c1               0x54              CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
 hpcd_USB_OTG_FS     0x4e4             CMakeFiles/MM_control.dir/USB_DEVICE/Target/usbd_conf.c.obj
@@ -50,6 +53,7 @@ hspi3               0x58              CMakeFiles/MM_control.dir/Core/Src/spi.c.o
 hdma_usart1_tx      0x60              CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
 Task1Handle         0x4               CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
 hdma_usart1_rx      0x60              CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+hdma_usart2_tx      0x60              CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
 huart1              0x48              CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
 UserTxBufferFS      0x800             CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 htim1               0x48              CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
@@ -5799,8 +5803,6 @@ Discarded input sections
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .text          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .data          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .bss           0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
@@ -5889,8 +5891,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x16 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .debug_macro   0x00000000       0x65 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .debug_macro   0x00000000      0x20f CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
@@ -6115,7 +6115,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x16 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
  .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_macro   0x00000000      0x1a9 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x00000000      0x1b1 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/can.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/can.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/can.c.obj
@@ -6649,7 +6649,7 @@ Discarded input sections
  .data          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .bss           0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .text.HAL_UART_MspDeInit
-                0x00000000       0x84 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                0x00000000       0x98 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .debug_macro   0x00000000      0xa9c CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .debug_macro   0x00000000      0x2b3 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .debug_macro   0x00000000       0x2e CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
@@ -7310,6 +7310,7 @@ Discarded input sections
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .text          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .data          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .bss           0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
@@ -7751,6 +7752,7 @@ Discarded input sections
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .data          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss           0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
@@ -7760,7 +7762,7 @@ Discarded input sections
                 0x00000000       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.tue_usb_servo
                 0x00000000       0x14 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .rodata.vec.13001
+ .rodata.vec.13055
                 0x00000000        0xa CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000      0xa9c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
@@ -7815,7 +7817,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x74 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_macro   0x00000000      0x1a9 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_macro   0x00000000      0x1b1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x5e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x35 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
@@ -7828,6 +7830,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x333 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x35 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
@@ -7848,6 +7851,148 @@ Discarded input sections
  .debug_macro   0x00000000      0x20f CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x95 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .data          0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss           0x00000000        0x0 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.tue_haptic_reset_stats
+                0x00000000       0xa4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.tue_haptic_rx_available
+                0x00000000       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.tue_haptic_rx_pop
+                0x00000000       0x60 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0xa9c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x8e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x51 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0xef CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x6a CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x1df CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x2b3 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x2f CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x101 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000     0x1011 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x11f CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000    0x15ea5 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x6d CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000     0x3693 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x174 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x5c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x980 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x9e9 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x115 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x13e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0xa5 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x174 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x287 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x5f CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x236 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x40f CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x12c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x21e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x1b5 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0xd6 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x127 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x7e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x89 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x225 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x8ed CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x4d CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x2aa CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x293 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0xba CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x12d CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x160 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x5e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x35 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x1f CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x43 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x18e CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x333 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x35 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x349 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x74 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x00000000      0x1b1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .group         0x00000000        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
@@ -8119,6 +8264,7 @@ LOAD CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
 LOAD CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
 LOAD CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
 LOAD CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+LOAD CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
 LOAD CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 START GROUP
@@ -8144,7 +8290,7 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
                 0x08000000                g_pfnVectors
                 0x08000188                . = ALIGN (0x4)
 
-.text           0x08000190    0x147a4
+.text           0x08000190    0x14f00
                 0x08000190                . = ALIGN (0x4)
  *(.text)
  .text          0x08000190       0x40 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -9166,656 +9312,683 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
                 0x0800e390       0x90 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
                 0x0800e390                HAL_CAN_MspInit
  .text.MX_DMA_Init
-                0x0800e420       0x50 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+                0x0800e420       0x8c CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
                 0x0800e420                MX_DMA_Init
  .text.MX_I2C1_Init
-                0x0800e470       0x5c CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
-                0x0800e470                MX_I2C1_Init
+                0x0800e4ac       0x5c CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+                0x0800e4ac                MX_I2C1_Init
  .text.HAL_I2C_MspInit
-                0x0800e4cc       0x90 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
-                0x0800e4cc                HAL_I2C_MspInit
+                0x0800e508       0x90 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+                0x0800e508                HAL_I2C_MspInit
  .text.MX_SPI1_Init
-                0x0800e55c       0x6c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
-                0x0800e55c                MX_SPI1_Init
+                0x0800e598       0x6c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+                0x0800e598                MX_SPI1_Init
  .text.MX_SPI3_Init
-                0x0800e5c8       0x6c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
-                0x0800e5c8                MX_SPI3_Init
+                0x0800e604       0x6c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+                0x0800e604                MX_SPI3_Init
  .text.HAL_SPI_MspInit
-                0x0800e634      0x11c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
-                0x0800e634                HAL_SPI_MspInit
+                0x0800e670      0x11c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+                0x0800e670                HAL_SPI_MspInit
  .text.MX_TIM1_Init
-                0x0800e750      0x188 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x0800e750                MX_TIM1_Init
+                0x0800e78c      0x188 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x0800e78c                MX_TIM1_Init
  .text.MX_TIM3_Init
-                0x0800e8d8      0x130 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x0800e8d8                MX_TIM3_Init
+                0x0800e914      0x130 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x0800e914                MX_TIM3_Init
  .text.MX_TIM4_Init
-                0x0800ea08      0x130 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x0800ea08                MX_TIM4_Init
+                0x0800ea44      0x130 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x0800ea44                MX_TIM4_Init
  .text.HAL_TIM_Base_MspInit
-                0x0800eb38       0xd8 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x0800eb38                HAL_TIM_Base_MspInit
+                0x0800eb74       0xd8 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x0800eb74                HAL_TIM_Base_MspInit
  .text.HAL_TIM_MspPostInit
-                0x0800ec10      0x118 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x0800ec10                HAL_TIM_MspPostInit
+                0x0800ec4c      0x118 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x0800ec4c                HAL_TIM_MspPostInit
  .text.MX_USART1_UART_Init
-                0x0800ed28       0x54 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
-                0x0800ed28                MX_USART1_UART_Init
+                0x0800ed64       0x54 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                0x0800ed64                MX_USART1_UART_Init
  .text.MX_USART2_UART_Init
-                0x0800ed7c       0x54 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
-                0x0800ed7c                MX_USART2_UART_Init
+                0x0800edb8       0x54 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                0x0800edb8                MX_USART2_UART_Init
  .text.HAL_UART_MspInit
-                0x0800edd0      0x1e8 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
-                0x0800edd0                HAL_UART_MspInit
+                0x0800ee0c      0x2b4 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                0x0800ee0c                HAL_UART_MspInit
  .text.NMI_Handler
-                0x0800efb8        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efb8                NMI_Handler
+                0x0800f0c0        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0c0                NMI_Handler
  .text.HardFault_Handler
-                0x0800efbe        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efbe                HardFault_Handler
+                0x0800f0c6        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0c6                HardFault_Handler
  .text.MemManage_Handler
-                0x0800efc4        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efc4                MemManage_Handler
+                0x0800f0cc        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0cc                MemManage_Handler
  .text.BusFault_Handler
-                0x0800efca        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efca                BusFault_Handler
+                0x0800f0d2        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0d2                BusFault_Handler
  .text.UsageFault_Handler
-                0x0800efd0        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efd0                UsageFault_Handler
+                0x0800f0d8        0x6 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0d8                UsageFault_Handler
  .text.DebugMon_Handler
-                0x0800efd6        0xe CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efd6                DebugMon_Handler
+                0x0800f0de        0xe CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0de                DebugMon_Handler
+ .text.DMA1_Stream5_IRQHandler
+                0x0800f0ec       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f0ec                DMA1_Stream5_IRQHandler
+ .text.DMA1_Stream6_IRQHandler
+                0x0800f100       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f100                DMA1_Stream6_IRQHandler
  .text.TIM1_BRK_TIM9_IRQHandler
-                0x0800efe4       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800efe4                TIM1_BRK_TIM9_IRQHandler
+                0x0800f114       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f114                TIM1_BRK_TIM9_IRQHandler
  .text.TIM1_UP_TIM10_IRQHandler
-                0x0800eff8       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800eff8                TIM1_UP_TIM10_IRQHandler
+                0x0800f128       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f128                TIM1_UP_TIM10_IRQHandler
  .text.TIM3_IRQHandler
-                0x0800f00c       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f00c                TIM3_IRQHandler
+                0x0800f13c       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f13c                TIM3_IRQHandler
  .text.TIM4_IRQHandler
-                0x0800f020       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f020                TIM4_IRQHandler
+                0x0800f150       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f150                TIM4_IRQHandler
  .text.SPI1_IRQHandler
-                0x0800f034       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f034                SPI1_IRQHandler
+                0x0800f164       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f164                SPI1_IRQHandler
  .text.USART1_IRQHandler
-                0x0800f048       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f048                USART1_IRQHandler
+                0x0800f178       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f178                USART1_IRQHandler
  .text.USART2_IRQHandler
-                0x0800f05c       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f05c                USART2_IRQHandler
+                0x0800f18c       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f18c                USART2_IRQHandler
  .text.TIM8_TRG_COM_TIM14_IRQHandler
-                0x0800f070       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f070                TIM8_TRG_COM_TIM14_IRQHandler
+                0x0800f1a0       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f1a0                TIM8_TRG_COM_TIM14_IRQHandler
  .text.SPI3_IRQHandler
-                0x0800f084       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f084                SPI3_IRQHandler
+                0x0800f1b4       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f1b4                SPI3_IRQHandler
  .text.DMA2_Stream2_IRQHandler
-                0x0800f098       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f098                DMA2_Stream2_IRQHandler
+                0x0800f1c8       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f1c8                DMA2_Stream2_IRQHandler
  .text.OTG_FS_IRQHandler
-                0x0800f0ac       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f0ac                OTG_FS_IRQHandler
+                0x0800f1dc       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f1dc                OTG_FS_IRQHandler
  .text.DMA2_Stream7_IRQHandler
-                0x0800f0c0       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                0x0800f0c0                DMA2_Stream7_IRQHandler
+                0x0800f1f0       0x14 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800f1f0                DMA2_Stream7_IRQHandler
  .text.HAL_MspInit
-                0x0800f0d4       0x58 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
-                0x0800f0d4                HAL_MspInit
+                0x0800f204       0x58 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+                0x0800f204                HAL_MspInit
  .text.HAL_InitTick
-                0x0800f12c       0xf8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
-                0x0800f12c                HAL_InitTick
+                0x0800f25c       0xf8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x0800f25c                HAL_InitTick
  .text.Reset_Handler
-                0x0800f224       0x50 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
-                0x0800f224                Reset_Handler
+                0x0800f354       0x50 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+                0x0800f354                Reset_Handler
  .text.Default_Handler
-                0x0800f274        0x2 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
-                0x0800f274                RTC_Alarm_IRQHandler
-                0x0800f274                HASH_RNG_IRQHandler
-                0x0800f274                EXTI2_IRQHandler
-                0x0800f274                TIM8_CC_IRQHandler
-                0x0800f274                TIM1_CC_IRQHandler
-                0x0800f274                DMA2_Stream5_IRQHandler
-                0x0800f274                DMA1_Stream5_IRQHandler
-                0x0800f274                PVD_IRQHandler
-                0x0800f274                SDIO_IRQHandler
-                0x0800f274                TAMP_STAMP_IRQHandler
-                0x0800f274                CAN2_RX1_IRQHandler
-                0x0800f274                EXTI3_IRQHandler
-                0x0800f274                TIM8_UP_TIM13_IRQHandler
-                0x0800f274                I2C3_ER_IRQHandler
-                0x0800f274                EXTI0_IRQHandler
-                0x0800f274                I2C2_EV_IRQHandler
-                0x0800f274                DMA1_Stream2_IRQHandler
-                0x0800f274                CAN1_RX0_IRQHandler
-                0x0800f274                FPU_IRQHandler
-                0x0800f274                OTG_HS_WKUP_IRQHandler
-                0x0800f274                CAN2_SCE_IRQHandler
-                0x0800f274                TIM6_DAC_IRQHandler
-                0x0800f274                DCMI_IRQHandler
-                0x0800f274                CAN2_RX0_IRQHandler
-                0x0800f274                DMA2_Stream3_IRQHandler
-                0x0800f274                USART6_IRQHandler
-                0x0800f274                USART3_IRQHandler
-                0x0800f274                CAN1_RX1_IRQHandler
-                0x0800f274                UART5_IRQHandler
-                0x0800f274                DMA2_Stream0_IRQHandler
-                0x0800f274                I2C1_EV_IRQHandler
-                0x0800f274                DMA1_Stream6_IRQHandler
-                0x0800f274                DMA1_Stream1_IRQHandler
-                0x0800f274                UART4_IRQHandler
-                0x0800f274                RCC_IRQHandler
-                0x0800f274                TIM8_BRK_TIM12_IRQHandler
-                0x0800f274                Default_Handler
-                0x0800f274                EXTI15_10_IRQHandler
-                0x0800f274                ADC_IRQHandler
-                0x0800f274                DMA1_Stream7_IRQHandler
-                0x0800f274                TIM7_IRQHandler
-                0x0800f274                CAN2_TX_IRQHandler
-                0x0800f274                TIM5_IRQHandler
-                0x0800f274                I2C3_EV_IRQHandler
-                0x0800f274                EXTI9_5_IRQHandler
-                0x0800f274                RTC_WKUP_IRQHandler
-                0x0800f274                ETH_WKUP_IRQHandler
-                0x0800f274                SPI2_IRQHandler
-                0x0800f274                OTG_HS_EP1_IN_IRQHandler
-                0x0800f274                DMA1_Stream0_IRQHandler
-                0x0800f274                CAN1_TX_IRQHandler
-                0x0800f274                EXTI4_IRQHandler
-                0x0800f274                FSMC_IRQHandler
-                0x0800f274                ETH_IRQHandler
-                0x0800f274                OTG_HS_EP1_OUT_IRQHandler
-                0x0800f274                WWDG_IRQHandler
-                0x0800f274                TIM2_IRQHandler
-                0x0800f274                OTG_FS_WKUP_IRQHandler
-                0x0800f274                TIM1_TRG_COM_TIM11_IRQHandler
-                0x0800f274                OTG_HS_IRQHandler
-                0x0800f274                EXTI1_IRQHandler
-                0x0800f274                I2C2_ER_IRQHandler
-                0x0800f274                DMA2_Stream1_IRQHandler
-                0x0800f274                CAN1_SCE_IRQHandler
-                0x0800f274                FLASH_IRQHandler
-                0x0800f274                DMA2_Stream4_IRQHandler
-                0x0800f274                DMA1_Stream4_IRQHandler
-                0x0800f274                I2C1_ER_IRQHandler
-                0x0800f274                DMA2_Stream6_IRQHandler
-                0x0800f274                DMA1_Stream3_IRQHandler
+                0x0800f3a4        0x2 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+                0x0800f3a4                RTC_Alarm_IRQHandler
+                0x0800f3a4                HASH_RNG_IRQHandler
+                0x0800f3a4                EXTI2_IRQHandler
+                0x0800f3a4                TIM8_CC_IRQHandler
+                0x0800f3a4                TIM1_CC_IRQHandler
+                0x0800f3a4                DMA2_Stream5_IRQHandler
+                0x0800f3a4                PVD_IRQHandler
+                0x0800f3a4                SDIO_IRQHandler
+                0x0800f3a4                TAMP_STAMP_IRQHandler
+                0x0800f3a4                CAN2_RX1_IRQHandler
+                0x0800f3a4                EXTI3_IRQHandler
+                0x0800f3a4                TIM8_UP_TIM13_IRQHandler
+                0x0800f3a4                I2C3_ER_IRQHandler
+                0x0800f3a4                EXTI0_IRQHandler
+                0x0800f3a4                I2C2_EV_IRQHandler
+                0x0800f3a4                DMA1_Stream2_IRQHandler
+                0x0800f3a4                CAN1_RX0_IRQHandler
+                0x0800f3a4                FPU_IRQHandler
+                0x0800f3a4                OTG_HS_WKUP_IRQHandler
+                0x0800f3a4                CAN2_SCE_IRQHandler
+                0x0800f3a4                TIM6_DAC_IRQHandler
+                0x0800f3a4                DCMI_IRQHandler
+                0x0800f3a4                CAN2_RX0_IRQHandler
+                0x0800f3a4                DMA2_Stream3_IRQHandler
+                0x0800f3a4                USART6_IRQHandler
+                0x0800f3a4                USART3_IRQHandler
+                0x0800f3a4                CAN1_RX1_IRQHandler
+                0x0800f3a4                UART5_IRQHandler
+                0x0800f3a4                DMA2_Stream0_IRQHandler
+                0x0800f3a4                I2C1_EV_IRQHandler
+                0x0800f3a4                DMA1_Stream1_IRQHandler
+                0x0800f3a4                UART4_IRQHandler
+                0x0800f3a4                RCC_IRQHandler
+                0x0800f3a4                TIM8_BRK_TIM12_IRQHandler
+                0x0800f3a4                Default_Handler
+                0x0800f3a4                EXTI15_10_IRQHandler
+                0x0800f3a4                ADC_IRQHandler
+                0x0800f3a4                DMA1_Stream7_IRQHandler
+                0x0800f3a4                TIM7_IRQHandler
+                0x0800f3a4                CAN2_TX_IRQHandler
+                0x0800f3a4                TIM5_IRQHandler
+                0x0800f3a4                I2C3_EV_IRQHandler
+                0x0800f3a4                EXTI9_5_IRQHandler
+                0x0800f3a4                RTC_WKUP_IRQHandler
+                0x0800f3a4                ETH_WKUP_IRQHandler
+                0x0800f3a4                SPI2_IRQHandler
+                0x0800f3a4                OTG_HS_EP1_IN_IRQHandler
+                0x0800f3a4                DMA1_Stream0_IRQHandler
+                0x0800f3a4                CAN1_TX_IRQHandler
+                0x0800f3a4                EXTI4_IRQHandler
+                0x0800f3a4                FSMC_IRQHandler
+                0x0800f3a4                ETH_IRQHandler
+                0x0800f3a4                OTG_HS_EP1_OUT_IRQHandler
+                0x0800f3a4                WWDG_IRQHandler
+                0x0800f3a4                TIM2_IRQHandler
+                0x0800f3a4                OTG_FS_WKUP_IRQHandler
+                0x0800f3a4                TIM1_TRG_COM_TIM11_IRQHandler
+                0x0800f3a4                OTG_HS_IRQHandler
+                0x0800f3a4                EXTI1_IRQHandler
+                0x0800f3a4                I2C2_ER_IRQHandler
+                0x0800f3a4                DMA2_Stream1_IRQHandler
+                0x0800f3a4                CAN1_SCE_IRQHandler
+                0x0800f3a4                FLASH_IRQHandler
+                0x0800f3a4                DMA2_Stream4_IRQHandler
+                0x0800f3a4                DMA1_Stream4_IRQHandler
+                0x0800f3a4                I2C1_ER_IRQHandler
+                0x0800f3a4                DMA2_Stream6_IRQHandler
+                0x0800f3a4                DMA1_Stream3_IRQHandler
  .text.prv_checksum
-                0x0800f276       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f3a6       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
  .text.prv_pack_frame
-                0x0800f2ce       0x94 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f3fe       0x94 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
  .text.prv_cap_ok
-                0x0800f362       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f492       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
  .text.tue_sts3215_build_ping
-                0x0800f392       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f392                tue_sts3215_build_ping
+                0x0800f4c2       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f4c2                tue_sts3215_build_ping
  .text.tue_sts3215_build_read
-                0x0800f3e6       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f3e6                tue_sts3215_build_read
+                0x0800f516       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f516                tue_sts3215_build_read
  .text.tue_sts3215_build_write_raw
-                0x0800f45c       0xa4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f45c                tue_sts3215_build_write_raw
+                0x0800f58c       0xa4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f58c                tue_sts3215_build_write_raw
  .text.tue_sts3215_build_motion_cmd
-                0x0800f500       0xaa CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f500                tue_sts3215_build_motion_cmd
+                0x0800f630       0xaa CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f630                tue_sts3215_build_motion_cmd
  .text.tue_sts3215_build_reg_write
-                0x0800f5aa       0xa4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f5aa                tue_sts3215_build_reg_write
+                0x0800f6da       0xa4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f6da                tue_sts3215_build_reg_write
  .text.tue_sts3215_build_reset
-                0x0800f64e       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f64e                tue_sts3215_build_reset
+                0x0800f77e       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f77e                tue_sts3215_build_reset
  .text.tue_sts3215_parse_reply
-                0x0800f6a2      0x11a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f6a2                tue_sts3215_parse_reply
+                0x0800f7d2      0x11a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f7d2                tue_sts3215_parse_reply
  .text.tue_sts3215_unpack_s16_le
-                0x0800f7bc       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f7bc                tue_sts3215_unpack_s16_le
+                0x0800f8ec       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f8ec                tue_sts3215_unpack_s16_le
  .text.tue_sts3215_raw_to_milliamps
-                0x0800f7e4       0x2a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f7e4                tue_sts3215_raw_to_milliamps
- *fill*         0x0800f80e        0x2 
+                0x0800f914       0x2a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f914                tue_sts3215_raw_to_milliamps
+ *fill*         0x0800f93e        0x2 
  .text.tue_sts3215_raw_to_volts
-                0x0800f810       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
-                0x0800f810                tue_sts3215_raw_to_volts
+                0x0800f940       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x0800f940                tue_sts3215_raw_to_volts
  .text.prv_prepare_rx
-                0x0800f840       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800f970       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .text.prv_arm_rx
-                0x0800f8b8       0x52 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800f9e8       0x52 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .text.prv_parse_rx_buffer
-                0x0800f90a      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fa3a      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .text.tue_sts3215_hal_init
-                0x0800fa0a       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fa0a                tue_sts3215_hal_init
- *fill*         0x0800fa82        0x2 
+                0x0800fb3a       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fb3a                tue_sts3215_hal_init
+ *fill*         0x0800fbb2        0x2 
  .text.tue_sts3215_hal_register_instance
-                0x0800fa84       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fa84                tue_sts3215_hal_register_instance
+                0x0800fbb4       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fbb4                tue_sts3215_hal_register_instance
  .text.tue_sts3215_hal_send_frame
-                0x0800faa4      0x112 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800faa4                tue_sts3215_hal_send_frame
+                0x0800fbd4      0x112 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fbd4                tue_sts3215_hal_send_frame
  .text.tue_sts3215_hal_process
-                0x0800fbb6       0xea CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fbb6                tue_sts3215_hal_process
+                0x0800fce6       0xea CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fce6                tue_sts3215_hal_process
  .text.tue_sts3215_hal_abort
-                0x0800fca0       0x3a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fca0                tue_sts3215_hal_abort
+                0x0800fdd0       0x3a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fdd0                tue_sts3215_hal_abort
  .text.tue_sts3215_hal_is_idle
-                0x0800fcda       0x32 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fcda                tue_sts3215_hal_is_idle
+                0x0800fe0a       0x32 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fe0a                tue_sts3215_hal_is_idle
  .text.tue_sts3215_hal_tx_cplt_cb
-                0x0800fd0c       0x70 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fd0c                tue_sts3215_hal_tx_cplt_cb
+                0x0800fe3c       0x70 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800fe3c                tue_sts3215_hal_tx_cplt_cb
  .text.tue_sts3215_hal_rx_event_cb
-                0x0800fd7c       0xd0 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fd7c                tue_sts3215_hal_rx_event_cb
+                0x0800feac       0xd0 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800feac                tue_sts3215_hal_rx_event_cb
  .text.tue_sts3215_hal_error_cb
-                0x0800fe4c       0x6a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800fe4c                tue_sts3215_hal_error_cb
- *fill*         0x0800feb6        0x2 
+                0x0800ff7c       0x6a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800ff7c                tue_sts3215_hal_error_cb
+ *fill*         0x0800ffe6        0x2 
  .text.HAL_UART_TxCpltCallback
-                0x0800feb8       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800feb8                HAL_UART_TxCpltCallback
+                0x0800ffe8       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x0800ffe8                HAL_UART_TxCpltCallback
  .text.HAL_UARTEx_RxEventCallback
-                0x0800feec       0x3c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800feec                HAL_UARTEx_RxEventCallback
+                0x08010020       0x44 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x08010020                HAL_UARTEx_RxEventCallback
  .text.HAL_UART_ErrorCallback
-                0x0800ff28       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                0x0800ff28                HAL_UART_ErrorCallback
+                0x08010064       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x08010064                HAL_UART_ErrorCallback
  .text.sts_on_reply
-                0x0800ff5c       0xb2 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- *fill*         0x0801000e        0x2 
+                0x0801009c       0xb2 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ *fill*         0x0801014e        0x2 
  .text.sts_on_error
-                0x08010010       0x8c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010150       0x8c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .text.sts_wait
-                0x0801009c       0xd4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080101dc       0xd4 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .text.sts_xact
-                0x08010170       0xb8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080102b0       0xb8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .text.sts_read
-                0x08010228       0xca CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010368       0xca CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .text.sts_write
-                0x080102f2       0xaa CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010432       0xaa CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .text.sts_pwm_to_raw
-                0x0801039c       0x62 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- *fill*         0x080103fe        0x2 
+                0x080104dc       0x62 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ *fill*         0x0801053e        0x2 
  .text.tue_sts3215_init
-                0x08010400       0xa8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010400                tue_sts3215_init
+                0x08010540       0xa8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010540                tue_sts3215_init
  .text.tue_sts3215_ping
-                0x080104a8       0x56 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080104a8                tue_sts3215_ping
+                0x080105e8       0x56 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080105e8                tue_sts3215_ping
  .text.tue_sts3215_read_raw
-                0x080104fe       0x3c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080104fe                tue_sts3215_read_raw
+                0x0801063e       0x3c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x0801063e                tue_sts3215_read_raw
  .text.tue_sts3215_write_raw
-                0x0801053a       0x44 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x0801053a                tue_sts3215_write_raw
+                0x0801067a       0x44 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x0801067a                tue_sts3215_write_raw
  .text.tue_sts3215_reset
-                0x0801057e       0x56 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x0801057e                tue_sts3215_reset
+                0x080106be       0x56 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080106be                tue_sts3215_reset
  .text.tue_sts3215_read_u8
-                0x080105d4       0x36 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080105d4                tue_sts3215_read_u8
+                0x08010714       0x36 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010714                tue_sts3215_read_u8
  .text.tue_sts3215_write_u8
-                0x0801060a       0x3e CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x0801060a                tue_sts3215_write_u8
+                0x0801074a       0x3e CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x0801074a                tue_sts3215_write_u8
  .text.tue_sts3215_write_u16
-                0x08010648       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010648                tue_sts3215_write_u16
+                0x08010788       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010788                tue_sts3215_write_u16
  .text.tue_sts3215_read_i16
-                0x08010698       0x5c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010698                tue_sts3215_read_i16
+                0x080107d8       0x5c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080107d8                tue_sts3215_read_i16
  .text.tue_sts3215_write_i16
-                0x080106f4       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080106f4                tue_sts3215_write_i16
+                0x08010834       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010834                tue_sts3215_write_i16
  .text.tue_sts3215_write_eeprom_u8
-                0x08010724       0x60 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010724                tue_sts3215_write_eeprom_u8
+                0x08010864       0x60 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010864                tue_sts3215_write_eeprom_u8
  .text.tue_sts3215_lock_eeprom
-                0x08010784       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010784                tue_sts3215_lock_eeprom
+                0x080108c4       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080108c4                tue_sts3215_lock_eeprom
  .text.tue_sts3215_unlock_eeprom
-                0x080107a6       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080107a6                tue_sts3215_unlock_eeprom
+                0x080108e6       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080108e6                tue_sts3215_unlock_eeprom
  .text.tue_sts3215_set_id
-                0x080107c8       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080107c8                tue_sts3215_set_id
+                0x08010908       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010908                tue_sts3215_set_id
  .text.tue_sts3215_set_operation_mode
-                0x080107f8       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080107f8                tue_sts3215_set_operation_mode
+                0x08010938       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010938                tue_sts3215_set_operation_mode
  .text.tue_sts3215_get_operation_mode
-                0x08010828       0x44 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010828                tue_sts3215_get_operation_mode
+                0x08010968       0x44 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010968                tue_sts3215_get_operation_mode
  .text.tue_sts3215_enable_torque
-                0x0801086c       0x26 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x0801086c                tue_sts3215_enable_torque
+                0x080109ac       0x26 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080109ac                tue_sts3215_enable_torque
  .text.tue_sts3215_calibrate_position_to_2048
-                0x08010892       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010892                tue_sts3215_calibrate_position_to_2048
+                0x080109d2       0x22 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080109d2                tue_sts3215_calibrate_position_to_2048
  .text.tue_sts3215_get_torque_enable
-                0x080108b4       0x4e CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080108b4                tue_sts3215_get_torque_enable
+                0x080109f4       0x4e CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x080109f4                tue_sts3215_get_torque_enable
  .text.tue_sts3215_set_acceleration
-                0x08010902       0x26 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010902                tue_sts3215_set_acceleration
+                0x08010a42       0x26 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010a42                tue_sts3215_set_acceleration
  .text.tue_sts3215_set_goal_position_ex
-                0x08010928       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010928                tue_sts3215_set_goal_position_ex
+                0x08010a68       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010a68                tue_sts3215_set_goal_position_ex
  .text.tue_sts3215_set_pwm_runtime
-                0x080109a0       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080109a0                tue_sts3215_set_pwm_runtime
+                0x08010ae0       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010ae0                tue_sts3215_set_pwm_runtime
  .text.tue_sts3215_set_running_speed
-                0x080109d0       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080109d0                tue_sts3215_set_running_speed
+                0x08010b10       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010b10                tue_sts3215_set_running_speed
  .text.tue_sts3215_set_torque_limit
-                0x080109f8       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x080109f8                tue_sts3215_set_torque_limit
+                0x08010b38       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010b38                tue_sts3215_set_torque_limit
  .text.tue_sts3215_get_current_position
-                0x08010a2c       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010a2c                tue_sts3215_get_current_position
+                0x08010b6c       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010b6c                tue_sts3215_get_current_position
  .text.tue_sts3215_get_current_speed
-                0x08010a50       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010a50                tue_sts3215_get_current_speed
+                0x08010b90       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010b90                tue_sts3215_get_current_speed
  .text.tue_sts3215_get_feedback
-                0x08010a74       0xe8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
-                0x08010a74                tue_sts3215_get_feedback
- .text.rd_u16   0x08010b5c       0x2a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.rd_i16   0x08010b86       0x1a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.rd_u32   0x08010ba0       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.rd_i32   0x08010bd8       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.wr_u16   0x08010bf0       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.wr_i16   0x08010c1e       0x1e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.wr_u32   0x08010c3c       0x42 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.wr_i32   0x08010c7e       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- *fill*         0x08010c9a        0x2 
+                0x08010bb4       0xe8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x08010bb4                tue_sts3215_get_feedback
+ .text.rd_u16   0x08010c9c       0x2a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.rd_i16   0x08010cc6       0x1a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.rd_u32   0x08010ce0       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.rd_i32   0x08010d18       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.wr_u16   0x08010d30       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.wr_i16   0x08010d5e       0x1e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.wr_u32   0x08010d7c       0x42 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.wr_i32   0x08010dbe       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ *fill*         0x08010dda        0x2 
  .text.um_to_mm
-                0x08010c9c       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010ddc       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.mm_to_um
-                0x08010ccc       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010e0c       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.tue_usb_crc8
-                0x08010cf8       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08010cf8                tue_usb_crc8
+                0x08010e38       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010e38                tue_usb_crc8
  .text.usb_ring_push
-                0x08010d50       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010e90       0x58 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_ring_pop
-                0x08010da8       0x5c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010ee8       0x5c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_transmit
-                0x08010e04      0x198 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08010f44      0x198 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.tue_usb_on_tx_cplt
-                0x08010f9c       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08010f9c                tue_usb_on_tx_cplt
+                0x080110dc       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x080110dc                tue_usb_on_tx_cplt
  .text.tue_usb_send_ok
-                0x08010fbc       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08010fbc                tue_usb_send_ok
+                0x080110fc       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x080110fc                tue_usb_send_ok
  .text.tue_usb_send_err
-                0x08010fe8       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08010fe8                tue_usb_send_err
+                0x08011128       0x30 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011128                tue_usb_send_err
  .text.usb_reset_parser
-                0x08011018       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011158       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_rx_byte
-                0x08011044      0x178 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011190      0x204 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.on_stepper_idle_cb
-                0x080111bc       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011394       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_check_pending_idle
-                0x080111dc       0xa0 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x080113b4       0xa0 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_task
-                0x0801127c       0x8c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011454       0x8c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.usb_dispatch
-                0x08011308      0x15c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .text.sys_cmd  0x08011464      0x25c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x080114e0      0x18c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .text.sys_cmd  0x0801166c      0x25c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.step_map_err
-                0x080116c0       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x080118c8       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.step_valid_motor
-                0x08011710       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- *fill*         0x0801173e        0x2 
+                0x08011918       0x2e CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ *fill*         0x08011946        0x2 
  .text.step_cmd
-                0x08011740      0xbd8 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08011948      0xbd8 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.servo_map_err
-                0x08012318       0x64 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08012520       0x64 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.servo_cmd
-                0x0801237c      0x8a8 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08012584      0x8a8 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .text.tue_usb_init
-                0x08012c24      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08012c24                tue_usb_init
+                0x08012e2c      0x104 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08012e2c                tue_usb_init
  .text.tue_usb_on_rx
-                0x08012d24       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                0x08012d24                tue_usb_on_rx
+                0x08012f30       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x08012f30                tue_usb_on_rx
+ .text.rx_ring_push
+                0x08012f84       0x64 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.rx_arm   0x08012fe8       0x48 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.rx_clear_flags
+                0x08013030       0x70 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .text.tue_haptic_init
+                0x080130a0       0xb8 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x080130a0                tue_haptic_init
+ .text.tue_haptic_forward
+                0x08013158      0x10c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x08013158                tue_haptic_forward
+ .text.tue_haptic_ingest
+                0x08013264       0xfc CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x08013264                tue_haptic_ingest
+ .text.tue_haptic_uart_tx_cplt_cb
+                0x08013360       0x8c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x08013360                tue_haptic_uart_tx_cplt_cb
+ .text.tue_haptic_uart_rx_event_cb
+                0x080133ec       0xa8 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x080133ec                tue_haptic_uart_rx_event_cb
+ .text.tue_haptic_uart_error_cb
+                0x08013494       0x40 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x08013494                tue_haptic_uart_error_cb
  .text.stepper_abs32
-                0x08012d78       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080134d4       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_delay_us
-                0x08012d94       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080134f0       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_write_dir
-                0x08012de8       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013544       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_apply_dirs
-                0x08012e50       0x40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080135ac       0x40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_emit
-                0x08012e90      0x140 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080135ec      0x140 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_set_interval
-                0x08012fd0       0xc0 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x0801372c       0xc0 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_load_segment
-                0x08013090       0xd8 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080137ec       0xd8 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_advance
-                0x08013168       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080138c4       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_isr
-                0x080131e8      0x224 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013944      0x224 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_queue_space
-                0x0801340c       0x3c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013b68       0x3c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_resync_if_idle
-                0x08013448       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013ba4       0x50 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_cmd_mm_from_steps
-                0x08013498       0xbc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013bf4       0xbc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_plan_enqueue
-                0x08013554      0x248 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013cb0      0x248 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.stepper_plan_move_to
-                0x0801379c      0x228 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08013ef8      0x228 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .text.tue_stepper_default_config
-                0x080139c4       0x40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x080139c4                tue_stepper_default_config
+                0x08014120       0x40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014120                tue_stepper_default_config
  .text.tue_stepper_get_config
-                0x08013a04       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013a04                tue_stepper_get_config
+                0x08014160       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014160                tue_stepper_get_config
  .text.tue_stepper_init
-                0x08013a28      0x1e0 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013a28                tue_stepper_init
+                0x08014184      0x1e0 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014184                tue_stepper_init
  .text.tue_stepper_set_idle_callback
-                0x08013c08       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013c08                tue_stepper_set_idle_callback
+                0x08014364       0x20 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014364                tue_stepper_set_idle_callback
  .text.tue_stepper_enable
-                0x08013c28       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013c28                tue_stepper_enable
+                0x08014384       0x38 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014384                tue_stepper_enable
  .text.tue_stepper_is_enabled
-                0x08013c60       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013c60                tue_stepper_is_enabled
+                0x080143bc       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080143bc                tue_stepper_is_enabled
  .text.tue_stepper_set_position_mm
-                0x08013c78       0xc4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013c78                tue_stepper_set_position_mm
+                0x080143d4       0xc4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080143d4                tue_stepper_set_position_mm
  .text.tue_stepper_get_position_mm
-                0x08013d3c       0xbc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013d3c                tue_stepper_get_position_mm
+                0x08014498       0xbc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014498                tue_stepper_get_position_mm
  .text.tue_stepper_get_target_mm
-                0x08013df8       0x1e CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013df8                tue_stepper_get_target_mm
- *fill*         0x08013e16        0x2 
+                0x08014554       0x1e CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014554                tue_stepper_get_target_mm
+ *fill*         0x08014572        0x2 
  .text.tue_stepper_get_motor_steps
-                0x08013e18       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013e18                tue_stepper_get_motor_steps
+                0x08014574       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014574                tue_stepper_get_motor_steps
  .text.tue_stepper_move_to_xyz_mm
-                0x08013e44       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013e44                tue_stepper_move_to_xyz_mm
+                0x080145a0       0x54 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080145a0                tue_stepper_move_to_xyz_mm
  .text.tue_stepper_move_to_mm
-                0x08013e98       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013e98                tue_stepper_move_to_mm
+                0x080145f4       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080145f4                tue_stepper_move_to_mm
  .text.tue_stepper_move_z_mm
-                0x08013f00       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013f00                tue_stepper_move_z_mm
+                0x0801465c       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x0801465c                tue_stepper_move_z_mm
  .text.tue_stepper_move_by_mm
-                0x08013f68       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013f68                tue_stepper_move_by_mm
+                0x080146c4       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x080146c4                tue_stepper_move_by_mm
  .text.tue_stepper_move_motor_steps
-                0x08013fe8       0xd8 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08013fe8                tue_stepper_move_motor_steps
+                0x08014744       0xd8 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014744                tue_stepper_move_motor_steps
  .text.tue_stepper_start_velocity
-                0x080140c0      0x27c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x080140c0                tue_stepper_start_velocity
+                0x0801481c      0x27c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x0801481c                tue_stepper_start_velocity
  .text.tue_stepper_start_velocity_z
-                0x0801433c      0x204 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x0801433c                tue_stepper_start_velocity_z
+                0x08014a98      0x204 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014a98                tue_stepper_start_velocity_z
  .text.tue_stepper_stop
-                0x08014540       0xd4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08014540                tue_stepper_stop
+                0x08014c9c       0xd4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014c9c                tue_stepper_stop
  .text.tue_stepper_abort
-                0x08014614      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08014614                tue_stepper_abort
+                0x08014d70      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014d70                tue_stepper_abort
  .text.tue_stepper_is_busy
-                0x08014714       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08014714                tue_stepper_is_busy
+                0x08014e70       0x18 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014e70                tue_stepper_is_busy
  .text.tue_stepper_queue_depth
-                0x0801472c       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x0801472c                tue_stepper_queue_depth
+                0x08014e88       0x2c CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014e88                tue_stepper_queue_depth
  .text.tue_stepper_on_timer_elapsed
-                0x08014758       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
-                0x08014758                tue_stepper_on_timer_elapsed
- .text.lroundf  0x0801477c       0x64 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
-                0x0801477c                lroundf
- .text.sqrtf    0x080147e0       0xb0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
-                0x080147e0                sqrtf
+                0x08014eb4       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08014eb4                tue_stepper_on_timer_elapsed
+ .text.lroundf  0x08014ed8       0x64 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
+                0x08014ed8                lroundf
+ .text.sqrtf    0x08014f3c       0xb0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+                0x08014f3c                sqrtf
  .text.__ieee754_sqrtf
-                0x08014890        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
-                0x08014890                __ieee754_sqrtf
- .text.matherr  0x08014898        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
-                0x08014898                matherr
- .text.__errno  0x0801489c        0xc d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
-                0x0801489c                __errno
+                0x08014fec        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
+                0x08014fec                __ieee754_sqrtf
+ .text.matherr  0x08014ff4        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
+                0x08014ff4                matherr
+ .text.__errno  0x08014ff8        0xc d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
+                0x08014ff8                __errno
  .text.__libc_init_array
-                0x080148a8       0x48 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
-                0x080148a8                __libc_init_array
- .text.memcpy   0x080148f0       0x1c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
-                0x080148f0                memcpy
- .text.memset   0x0801490c       0x10 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)
-                0x0801490c                memset
+                0x08015004       0x48 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
+                0x08015004                __libc_init_array
+ .text.memcpy   0x0801504c       0x1c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
+                0x0801504c                memcpy
+ .text.memset   0x08015068       0x10 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)
+                0x08015068                memset
  *(.glue_7)
- .glue_7        0x0801491c        0x0 linker stubs
+ .glue_7        0x08015078        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0801491c        0x0 linker stubs
+ .glue_7t       0x08015078        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0801491c        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08015078        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x0801491c        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x0801491c                _init
- .init          0x08014920        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08015078        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x08015078                _init
+ .init          0x0801507c        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08014928        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x08014928                _fini
- .fini          0x0801492c        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
-                0x08014934                . = ALIGN (0x4)
-                0x08014934                _etext = .
+ .fini          0x08015084        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x08015084                _fini
+ .fini          0x08015088        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08015090                . = ALIGN (0x4)
+                0x08015090                _etext = .
 
-.vfp11_veneer   0x08014934        0x0
- .vfp11_veneer  0x08014934        0x0 linker stubs
+.vfp11_veneer   0x08015090        0x0
+ .vfp11_veneer  0x08015090        0x0 linker stubs
 
-.v4_bx          0x08014934        0x0
- .v4_bx         0x08014934        0x0 linker stubs
+.v4_bx          0x08015090        0x0
+ .v4_bx         0x08015090        0x0 linker stubs
 
-.iplt           0x08014934        0x0
- .iplt          0x08014934        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08015090        0x0
+ .iplt          0x08015090        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08014934      0x20c
-                0x08014934                . = ALIGN (0x4)
+.rodata         0x08015090      0x20c
+                0x08015090                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x08014934        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
- *fill*         0x08014939        0x3 
- .rodata        0x0801493c        0xd cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
- *fill*         0x08014949        0x3 
- .rodata        0x0801494c       0x3e CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
- *fill*         0x0801498a        0x2 
- .rodata        0x0801498c        0x6 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- *fill*         0x08014992        0x2 
- .rodata        0x08014994        0x8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .rodata        0x0801499c       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .rodata        0x080149c0        0xa CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .rodata        0x08015090        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ *fill*         0x08015095        0x3 
+ .rodata        0x08015098        0xd cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ *fill*         0x080150a5        0x3 
+ .rodata        0x080150a8       0x3e CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
+ *fill*         0x080150e6        0x2 
+ .rodata        0x080150e8        0x6 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ *fill*         0x080150ee        0x2 
+ .rodata        0x080150f0        0x8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .rodata        0x080150f8       0x24 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .rodata        0x0801511c        0xa CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  *(.rodata*)
- *fill*         0x080149ca        0x2 
+ *fill*         0x08015126        0x2 
  .rodata.AHBPrescTable
-                0x080149cc       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x080149cc                AHBPrescTable
+                0x08015128       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x08015128                AHBPrescTable
  .rodata.APBPrescTable
-                0x080149dc        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x080149dc                APBPrescTable
+                0x08015138        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x08015138                APBPrescTable
  .rodata.flagBitshiftOffset.9254
-                0x080149e4        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+                0x08015140        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
  .rodata.Task1_attributes
-                0x080149ec       0x24 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
-                0x080149ec                Task1_attributes
+                0x08015148       0x24 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+                0x08015148                Task1_attributes
  .rodata.s_crc8_table
-                0x08014a10      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x0801516c      0x100 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .rodata.s_step_port
-                0x08014b10        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x0801526c        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .rodata.s_step_pin
-                0x08014b1c        0x6 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x08014b22        0x2 
+                0x08015278        0x6 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x0801527e        0x2 
  .rodata.s_dir_port
-                0x08014b24        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x08015280        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .rodata.s_dir_pin
-                0x08014b30        0x6 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x08014b36        0x2 
+                0x0801528c        0x6 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x08015292        0x2 
  .rodata.sqrtf.str1.4
-                0x08014b38        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+                0x08015294        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
                                   0x6 (size before relaxing)
-                0x08014b40                . = ALIGN (0x4)
+                0x0801529c                . = ALIGN (0x4)
 
-.ARM.extab      0x08014b40        0x0
-                0x08014b40                . = ALIGN (0x4)
+.ARM.extab      0x0801529c        0x0
+                0x0801529c                . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08014b40                . = ALIGN (0x4)
+                0x0801529c                . = ALIGN (0x4)
 
-.ARM            0x08014b40        0x8
-                0x08014b40                . = ALIGN (0x4)
-                0x08014b40                __exidx_start = .
+.ARM            0x0801529c        0x8
+                0x0801529c                . = ALIGN (0x4)
+                0x0801529c                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x08014b40        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x08014b48                __exidx_end = .
-                0x08014b48                . = ALIGN (0x4)
+ .ARM.exidx     0x0801529c        0x8 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x080152a4                __exidx_end = .
+                0x080152a4                . = ALIGN (0x4)
 
-.rel.dyn        0x08014b48        0x0
- .rel.iplt      0x08014b48        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x080152a4        0x0
+ .rel.iplt      0x080152a4        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.preinit_array  0x08014b48        0x0
-                0x08014b48                . = ALIGN (0x4)
-                0x08014b48                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x080152a4        0x0
+                0x080152a4                . = ALIGN (0x4)
+                0x080152a4                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08014b48                PROVIDE (__preinit_array_end = .)
-                0x08014b48                . = ALIGN (0x4)
+                0x080152a4                PROVIDE (__preinit_array_end = .)
+                0x080152a4                . = ALIGN (0x4)
 
-.init_array     0x08014b48        0x4
-                0x08014b48                . = ALIGN (0x4)
-                0x08014b48                PROVIDE (__init_array_start = .)
+.init_array     0x080152a4        0x4
+                0x080152a4                . = ALIGN (0x4)
+                0x080152a4                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08014b48        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08014b4c                PROVIDE (__init_array_end = .)
-                0x08014b4c                . = ALIGN (0x4)
+ .init_array    0x080152a4        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x080152a8                PROVIDE (__init_array_end = .)
+                0x080152a8                . = ALIGN (0x4)
 
-.fini_array     0x08014b4c        0x4
-                0x08014b4c                . = ALIGN (0x4)
+.fini_array     0x080152a8        0x4
+                0x080152a8                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08014b4c        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x080152a8        0x4 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end = .)
-                0x08014b50                . = ALIGN (0x4)
-                0x08014b50                _siccmram = LOADADDR (.ccmram)
+                0x080152ac                . = ALIGN (0x4)
+                0x080152ac                _siccmram = LOADADDR (.ccmram)
 
-.ccmram         0x10000000        0x0 load address 0x08014b50
+.ccmram         0x10000000        0x0 load address 0x080152ac
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _sccmram = .
  *(.ccmram)
  *(.ccmram*)
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _eccmram = .
-                0x08014b50                _sidata = LOADADDR (.data)
+                0x080152ac                _sidata = LOADADDR (.data)
 
-.data           0x20000000      0x170 load address 0x08014b50
+.data           0x20000000      0x170 load address 0x080152ac
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -9880,10 +10053,10 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
  *(.RamFunc*)
                 0x20000170                . = ALIGN (0x4)
 
-.igot.plt       0x20000170        0x0 load address 0x08014cc0
+.igot.plt       0x20000170        0x0 load address 0x0801541c
  .igot.plt      0x20000170        0x0 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.tdata          0x20000170        0x0 load address 0x08014cc0
+.tdata          0x20000170        0x0 load address 0x0801541c
  *(.tdata .tdata.* .gnu.linkonce.td.*)
                 0x20000170                . = ALIGN (0x4)
                 0x20000170                _edata = .
@@ -9900,7 +10073,7 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
                 [!provide]                PROVIDE (__data_source_end = __tdata_source_end)
                 [!provide]                PROVIDE (__data_source_size = (__data_source_end - __data_source))
 
-.tbss           0x20000170        0x0 load address 0x08014cc0
+.tbss           0x20000170        0x0 load address 0x0801541c
                 0x20000170                _sbss = .
                 0x20000170                __bss_start__ = _sbss
  *(.tbss .tbss.*)
@@ -9917,7 +10090,7 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
                 [!provide]                PROVIDE (__arm32_tls_tcb_offset = MAX (0x8, __tls_align))
                 [!provide]                PROVIDE (__arm64_tls_tcb_offset = MAX (0x10, __tls_align))
 
-.bss            0x20000170     0x74a0 load address 0x08014cc0
+.bss            0x20000170     0x76d0 load address 0x0801541c
  *(.bss)
  .bss           0x20000170       0x1c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.bss*)
@@ -10042,114 +10215,165 @@ LOAD d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7
  .bss.s_pay_idx
                 0x200055b5        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  *fill*         0x200055b6        0x2 
- .bss.s_tx      0x200055b8       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .bss.s_tx_idx  0x200055e0        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- *fill*         0x200055e1        0x3 
+ .bss.s_raw     0x200055b8       0x14 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .bss.s_raw_idx
+                0x200055cc        0x2 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ *fill*         0x200055ce        0x2 
+ .bss.s_tx      0x200055d0       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .bss.s_tx_idx  0x200055f8        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ *fill*         0x200055f9        0x3 
  .bss.s_latch_x_um
-                0x200055e4        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x200055fc        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss.s_latch_y_um
-                0x200055e8        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x20005600        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss.s_latch_valid
-                0x200055ec        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x20005604        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss.s_wait_idle_pending
-                0x200055ed        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x20005605        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss.s_wait_idle_seq
-                0x200055ee        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- *fill*         0x200055ef        0x1 
+                0x20005606        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ *fill*         0x20005607        0x1 
  .bss.s_wait_idle_start
-                0x200055f0        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x20005608        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .bss.s_wait_idle_timeout
-                0x200055f4        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .bss.s_cfg     0x200055f8       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x2000560c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .bss.g_tue_haptic_timestamp_ms
+                0x20005610        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20005610                g_tue_haptic_timestamp_ms
+ .bss.g_tue_haptic_frame_count
+                0x20005614        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20005614                g_tue_haptic_frame_count
+ .bss.g_tue_haptic_tx_drops
+                0x20005618        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20005618                g_tue_haptic_tx_drops
+ .bss.g_tue_haptic_slip_alerts
+                0x2000561c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x2000561c                g_tue_haptic_slip_alerts
+ .bss.g_tue_haptic_rx_bytes
+                0x20005620        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20005620                g_tue_haptic_rx_bytes
+ .bss.g_tue_haptic_rx_errors
+                0x20005624        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20005624                g_tue_haptic_rx_errors
  .bss.s_initialized
-                0x20005608        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x20005628        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ *fill*         0x20005629        0x3 
+ .bss.s_tx_slots
+                0x2000562c       0x28 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_tx_active
+                0x20005654        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_tx_busy
+                0x20005655        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_tx_pending
+                0x20005656        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ *fill*         0x20005657        0x1 
+ .bss.s_rx_dma_buf
+                0x20005658       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_rx_ring
+                0x200056d8       0x80 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_rx_head
+                0x20005758        0x2 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_rx_tail
+                0x2000575a        0x2 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_rx_last_pos
+                0x2000575c        0x2 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .bss.s_rx_full_seen
+                0x2000575e        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ *fill*         0x2000575f        0x1 
+ .bss.s_cfg     0x20005760       0x10 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_initialized
+                0x20005770        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_enabled
-                0x20005609        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x2000560a        0x2 
- .bss.s_queue   0x2000560c      0x200 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_head    0x2000580c        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_tail    0x2000580d        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x20005771        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x20005772        0x2 
+ .bss.s_queue   0x20005774      0x200 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_head    0x20005974        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_tail    0x20005975        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_running
-                0x2000580e        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x2000580f        0x1 
+                0x20005976        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x20005977        0x1 
  .bss.s_idle_sem
-                0x20005810        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x20005978        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_idle_cb
-                0x20005814        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_num     0x20005818        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_acc     0x20005824        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_sign    0x20005830        0x3 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x20005833        0x1 
+                0x2000597c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_num     0x20005980        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_acc     0x2000598c        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_sign    0x20005998        0x3 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x2000599b        0x1 
  .bss.s_masters
-                0x20005834        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_v_peak  0x20005838        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_v_sq    0x2000583c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x2000599c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_v_peak  0x200059a0        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_v_sq    0x200059a4        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_v_min_sq
-                0x20005840        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_accel   0x20005844        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_total   0x20005848        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .bss.s_idx     0x2000584c        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x200059a8        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_accel   0x200059ac        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_total   0x200059b0        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .bss.s_idx     0x200059b4        0x4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_continuous
-                0x20005850        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x200059b8        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_stopping
-                0x20005851        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- *fill*         0x20005852        0x2 
+                0x200059b9        0x1 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ *fill*         0x200059ba        0x2 
  .bss.s_pos_steps
-                0x20005854        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x200059bc        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .bss.s_cmd_steps
-                0x20005860        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x200059c8        0xc CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  *(COMMON)
- COMMON         0x2000586c        0x4 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
-                0x2000586c                uwTick
- COMMON         0x20005870       0x40 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
-                0x20005870                xQueueRegistry
- COMMON         0x200058b0      0x4e4 CMakeFiles/MM_control.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x200058b0                hpcd_USB_OTG_FS
- COMMON         0x20005d94      0x2dc CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
-                0x20005d94                hUsbDeviceFS
- COMMON         0x20006070      0x200 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x20006070                USBD_StrDesc
- COMMON         0x20006270     0x1000 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
-                0x20006270                UserRxBufferFS
-                0x20006a70                UserTxBufferFS
- COMMON         0x20007270        0x4 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
-                0x20007270                Task1Handle
- COMMON         0x20007274       0x28 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
-                0x20007274                hcan1
- COMMON         0x2000729c       0x54 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
-                0x2000729c                hi2c1
- COMMON         0x200072f0       0xb0 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
-                0x200072f0                hspi3
-                0x20007348                hspi1
- COMMON         0x200073a0       0xd8 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
-                0x200073a0                htim4
-                0x200073e8                htim3
-                0x20007430                htim1
- COMMON         0x20007478      0x150 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
-                0x20007478                hdma_usart1_tx
-                0x200074d8                hdma_usart1_rx
-                0x20007538                huart1
-                0x20007580                huart2
- COMMON         0x200075c8       0x48 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
-                0x200075c8                htim14
-                0x20007610                . = ALIGN (0x4)
-                0x20007610                _ebss = .
-                0x20007610                __bss_end__ = _ebss
+ COMMON         0x200059d4        0x4 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+                0x200059d4                uwTick
+ COMMON         0x200059d8       0x40 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+                0x200059d8                xQueueRegistry
+ COMMON         0x20005a18      0x4e4 CMakeFiles/MM_control.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x20005a18                hpcd_USB_OTG_FS
+ COMMON         0x20005efc      0x2dc CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
+                0x20005efc                hUsbDeviceFS
+ COMMON         0x200061d8      0x200 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x200061d8                USBD_StrDesc
+ COMMON         0x200063d8     0x1000 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x200063d8                UserRxBufferFS
+                0x20006bd8                UserTxBufferFS
+ COMMON         0x200073d8        0x4 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+                0x200073d8                Task1Handle
+ COMMON         0x200073dc       0x28 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+                0x200073dc                hcan1
+ COMMON         0x20007404       0x54 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+                0x20007404                hi2c1
+ COMMON         0x20007458       0xb0 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+                0x20007458                hspi3
+                0x200074b0                hspi1
+ COMMON         0x20007508       0xd8 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+                0x20007508                htim4
+                0x20007550                htim3
+                0x20007598                htim1
+ COMMON         0x200075e0      0x210 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                0x200075e0                hdma_usart2_rx
+                0x20007640                hdma_usart1_tx
+                0x200076a0                hdma_usart1_rx
+                0x20007700                hdma_usart2_tx
+                0x20007760                huart1
+                0x200077a8                huart2
+ COMMON         0x200077f0       0x48 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x200077f0                htim14
+ COMMON         0x20007838        0x8 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                0x20007838                g_tue_haptic_payload
+                0x20007840                . = ALIGN (0x4)
+                0x20007840                _ebss = .
+                0x20007840                __bss_end__ = _ebss
                 [!provide]                PROVIDE (__bss_end = .)
                 [!provide]                PROVIDE (__non_tls_bss_start = ADDR (.bss))
                 [!provide]                PROVIDE (__bss_start = __tbss_start)
                 [!provide]                PROVIDE (__bss_size = (__bss_end - __bss_start))
 
 ._user_heap_stack
-                0x20007610      0x600 load address 0x08014cc0
-                0x20007610                . = ALIGN (0x8)
+                0x20007840      0x600 load address 0x0801541c
+                0x20007840                . = ALIGN (0x8)
                 [!provide]                PROVIDE (end = .)
-                0x20007610                PROVIDE (_end = .)
-                0x20007810                . = (. + _Min_Heap_Size)
- *fill*         0x20007610      0x200 
-                0x20007c10                . = (. + _Min_Stack_Size)
- *fill*         0x20007810      0x400 
-                0x20007c10                . = ALIGN (0x8)
+                0x20007840                PROVIDE (_end = .)
+                0x20007a40                . = (. + _Min_Heap_Size)
+ *fill*         0x20007840      0x200 
+                0x20007e40                . = (. + _Min_Stack_Size)
+ *fill*         0x20007a40      0x400 
+                0x20007e40                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a:*(*)
@@ -10258,41 +10482,43 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .ARM.attributes
                 0x00000997       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .ARM.attributes
-                0x000009cb       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x000009cb       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
  .ARM.attributes
-                0x000009ff       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
+                0x000009ff       0x34 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
  .ARM.attributes
-                0x00000a33       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+                0x00000a33       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
  .ARM.attributes
-                0x00000a67       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
+                0x00000a67       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
  .ARM.attributes
-                0x00000a9b       0x32 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_lib_ver.o)
+                0x00000a9b       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
  .ARM.attributes
-                0x00000acd       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
+                0x00000acf       0x32 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_lib_ver.o)
  .ARM.attributes
-                0x00000b01       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+                0x00000b01       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
  .ARM.attributes
-                0x00000b1f       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+                0x00000b35       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x00000b3d       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+                0x00000b53       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x00000b5b       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+                0x00000b71       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
  .ARM.attributes
-                0x00000b79       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x00000b8f       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
  .ARM.attributes
-                0x00000bad       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+                0x00000bad       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x00000bcb       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
+                0x00000be1       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x00000bff       0x32 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-impure.o)
+                0x00000bff       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
  .ARM.attributes
-                0x00000c31       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
+                0x00000c33       0x32 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x00000c65       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
+                0x00000c65       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
  .ARM.attributes
-                0x00000c99       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)
+                0x00000c99       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x00000ccd       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
+                0x00000ccd       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x00000d01       0x1e d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
 
 .comment        0x00000000       0x75
  .comment       0x00000000       0x75 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
@@ -10342,9 +10568,10 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .comment       0x00000075       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .comment       0x00000075       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .comment       0x00000075       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .comment       0x00000075       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
  .comment       0x00000075       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_info     0x00000000    0x41ae0
+.debug_info     0x00000000    0x438b3
  .debug_info    0x00000000      0x5a4 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_info    0x000005a4     0x2c7a cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_info    0x0000321e     0x15c7 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10375,26 +10602,27 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_info    0x00028139     0x1064 CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
  .debug_info    0x0002919d      0xdfc CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
  .debug_info    0x00029f99     0x1886 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_info    0x0002b81f     0x2020 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_info    0x0002d83f      0x54c CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
- .debug_info    0x0002dd8b      0x9e5 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_info    0x0002e770      0x927 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
- .debug_info    0x0002f097      0x59c CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
- .debug_info    0x0002f633      0xa7d CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
- .debug_info    0x000300b0      0xceb CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
- .debug_info    0x00030d9b     0x1042 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
- .debug_info    0x00031ddd      0xcd7 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_info    0x00032ab4     0x129a CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_info    0x00033d4e      0x5b9 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_info    0x00034307      0xc8a CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_info    0x00034f91       0x22 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
- .debug_info    0x00034fb3     0x1681 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_info    0x00036634     0x1674 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_info    0x00037ca8     0x40b7 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_info    0x0003bd5f     0x3241 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_info    0x0003efa0     0x2b40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_info    0x0002b81f     0x2033 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_info    0x0002d852      0x54c CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
+ .debug_info    0x0002dd9e      0x9e5 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_info    0x0002e783      0x927 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+ .debug_info    0x0002f0aa      0x5b9 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+ .debug_info    0x0002f663      0xa7d CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+ .debug_info    0x000300e0      0xceb CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+ .debug_info    0x00030dcb     0x1042 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+ .debug_info    0x00031e0d      0xcfb CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+ .debug_info    0x00032b08     0x12d8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_info    0x00033de0      0x5b9 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_info    0x00034399      0xc8a CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_info    0x00035023       0x22 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+ .debug_info    0x00035045     0x1681 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_info    0x000366c6     0x1763 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_info    0x00037e29     0x40b7 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_info    0x0003bee0     0x336d CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_info    0x0003f24d     0x1b26 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_info    0x00040d73     0x2b40 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_abbrev   0x00000000     0x7a27
+.debug_abbrev   0x00000000     0x7e73
  .debug_abbrev  0x00000000      0x145 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_abbrev  0x00000145      0x25e cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_abbrev  0x000003a3      0x266 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10425,26 +10653,27 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_abbrev  0x00004987      0x235 CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
  .debug_abbrev  0x00004bbc      0x2ec CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
  .debug_abbrev  0x00004ea8      0x321 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_abbrev  0x000051c9      0x2de CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_abbrev  0x000054a7      0x14e CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
- .debug_abbrev  0x000055f5      0x1ae CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_abbrev  0x000057a3      0x1c4 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
- .debug_abbrev  0x00005967      0x11b CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
- .debug_abbrev  0x00005a82      0x1bb CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
- .debug_abbrev  0x00005c3d      0x1c4 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
- .debug_abbrev  0x00005e01      0x215 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
- .debug_abbrev  0x00006016      0x1d7 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_abbrev  0x000061ed      0x1e1 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_abbrev  0x000063ce      0x126 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_abbrev  0x000064f4      0x1bf CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_abbrev  0x000066b3       0x12 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
- .debug_abbrev  0x000066c5      0x312 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_abbrev  0x000069d7      0x386 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_abbrev  0x00006d5d      0x396 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_abbrev  0x000070f3      0x48a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_abbrev  0x0000757d      0x4aa CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_abbrev  0x000051c9      0x2f8 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_abbrev  0x000054c1      0x14e CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
+ .debug_abbrev  0x0000560f      0x1ae CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_abbrev  0x000057bd      0x1c4 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+ .debug_abbrev  0x00005981      0x126 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+ .debug_abbrev  0x00005aa7      0x1bb CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+ .debug_abbrev  0x00005c62      0x1c4 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+ .debug_abbrev  0x00005e26      0x215 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+ .debug_abbrev  0x0000603b      0x1d7 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+ .debug_abbrev  0x00006212      0x1e1 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_abbrev  0x000063f3      0x126 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_abbrev  0x00006519      0x1bf CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_abbrev  0x000066d8       0x12 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+ .debug_abbrev  0x000066ea      0x312 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_abbrev  0x000069fc      0x386 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_abbrev  0x00006d82      0x396 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_abbrev  0x00007118      0x48a CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_abbrev  0x000075a2      0x427 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_abbrev  0x000079c9      0x4aa CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_aranges  0x00000000     0x2a90
+.debug_aranges  0x00000000     0x2b18
  .debug_aranges
                 0x00000000       0x28 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_aranges
@@ -10524,25 +10753,27 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_aranges
                 0x00002180       0x38 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
  .debug_aranges
-                0x000021b8       0xa8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                0x000021b8       0xb8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
  .debug_aranges
-                0x00002260       0x20 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+                0x00002270       0x20 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
  .debug_aranges
-                0x00002280       0x30 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x00002290       0x30 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
  .debug_aranges
-                0x000022b0       0x28 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+                0x000022c0       0x28 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
  .debug_aranges
-                0x000022d8      0x108 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+                0x000022e8      0x108 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
  .debug_aranges
-                0x000023e0       0x98 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                0x000023f0       0x98 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
  .debug_aranges
-                0x00002478      0x398 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+                0x00002488      0x398 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
  .debug_aranges
-                0x00002810      0x128 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                0x00002820      0x128 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
  .debug_aranges
-                0x00002938      0x158 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+                0x00002948       0x78 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_aranges
+                0x000029c0      0x158 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_ranges   0x00000000     0x2810
+.debug_ranges   0x00000000     0x2888
  .debug_ranges  0x00000000       0x18 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_ranges  0x00000018      0x3c0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_ranges  0x000003d8      0x158 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10582,17 +10813,18 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_ranges  0x00001f08       0x28 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
  .debug_ranges  0x00001f30       0x38 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
  .debug_ranges  0x00001f68       0x28 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_ranges  0x00001f90       0x98 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_ranges  0x00002028       0x10 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_ranges  0x00002038       0x20 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_ranges  0x00002058       0x20 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
- .debug_ranges  0x00002078       0xf8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_ranges  0x00002170       0xb8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_ranges  0x00002228      0x388 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_ranges  0x000025b0      0x118 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_ranges  0x000026c8      0x148 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_ranges  0x00001f90       0xa8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_ranges  0x00002038       0x10 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_ranges  0x00002048       0x20 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_ranges  0x00002068       0x20 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+ .debug_ranges  0x00002088       0xf8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_ranges  0x00002180       0xb8 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_ranges  0x00002238      0x388 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_ranges  0x000025c0      0x118 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_ranges  0x000026d8       0x68 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_ranges  0x00002740      0x148 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_macro    0x00000000    0x2a0f6
+.debug_macro    0x00000000    0x2a51a
  .debug_macro   0x00000000      0x220 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x00000220      0xa9c cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x00000cbc       0x2e cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
@@ -10728,32 +10960,35 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_macro   0x00026b7e       0x16 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .debug_macro   0x00026b94       0x10 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .debug_macro   0x00026ba4       0x76 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_macro   0x00026c1a      0x1a9 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_macro   0x00026dc3      0x502 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x000272c5      0x169 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x0002742e       0x66 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x00027494       0xdd CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_macro   0x00027571      0x239 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
- .debug_macro   0x000277aa      0x32a CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_macro   0x00027ad4       0x6c CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_macro   0x00027b40      0x239 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
- .debug_macro   0x00027d79      0x239 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
- .debug_macro   0x00027fb2      0x239 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
- .debug_macro   0x000281eb      0x239 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
- .debug_macro   0x00028424      0x239 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
- .debug_macro   0x0002865d      0x239 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_macro   0x00028896      0x239 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_macro   0x00028acf      0x22f CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_macro   0x00028cfe      0x220 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_macro   0x00028f1e      0x145 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_macro   0x00029063       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_macro   0x0002907f      0x31b CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_macro   0x0002939a      0x33b CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_macro   0x000296d5      0x50d CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_macro   0x00029be2      0x1e1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_macro   0x00029dc3      0x333 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_macro   0x00026c1a      0x1b1 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_macro   0x00026dcb      0x4e6 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_macro   0x000272b1      0x169 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002741a       0x66 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_macro   0x00027480       0xdd CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002755d      0x239 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
+ .debug_macro   0x00027796      0x32a CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x00027ac0       0x6c CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x00027b2c      0x239 CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+ .debug_macro   0x00027d65      0x239 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+ .debug_macro   0x00027f9e      0x239 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+ .debug_macro   0x000281d7      0x239 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+ .debug_macro   0x00028410      0x239 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+ .debug_macro   0x00028649      0x239 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+ .debug_macro   0x00028882      0x239 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_macro   0x00028abb      0x22f CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_macro   0x00028cea      0x220 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_macro   0x00028f0a      0x145 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_macro   0x0002904f       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_macro   0x0002906b      0x334 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_macro   0x0002939f       0x76 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_macro   0x00029415      0x33b CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_macro   0x00029750      0x520 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_macro   0x00029c70      0x1e1 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_macro   0x00029e51      0x37a CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x0002a1cb       0x1c CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_macro   0x0002a1e7      0x333 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_line     0x00000000    0x2fbb1
+.debug_line     0x00000000    0x30867
  .debug_line    0x00000000      0x721 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_line    0x00000721     0x36b8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_line    0x00003dd9     0x1989 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10784,26 +11019,27 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_line    0x000213a4      0x9de CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
  .debug_line    0x00021d82      0xa76 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
  .debug_line    0x000227f8      0xb4f CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_line    0x00023347      0xc23 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
- .debug_line    0x00023f6a      0x6f4 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
- .debug_line    0x0002465e      0x946 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
- .debug_line    0x00024fa4      0x71c CMakeFiles/MM_control.dir/Core/Src/can.c.obj
- .debug_line    0x000256c0      0x6ac CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
- .debug_line    0x00025d6c      0x718 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
- .debug_line    0x00026484      0x79c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
- .debug_line    0x00026c20      0x95a CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
- .debug_line    0x0002757a      0x7d6 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_line    0x00027d50      0x853 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_line    0x000285a3      0x6af CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_line    0x00028c52      0x728 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_line    0x0002937a       0xaa CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
- .debug_line    0x00029424      0xab3 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_line    0x00029ed7      0xc0d CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_line    0x0002aae4     0x1d7a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_line    0x0002c85e     0x1bb8 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_line    0x0002e416     0x179b CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_line    0x00023347      0xc05 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+ .debug_line    0x00023f4c      0x6f4 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
+ .debug_line    0x00024640      0x946 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+ .debug_line    0x00024f86      0x71c CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+ .debug_line    0x000256a2      0x6b1 CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+ .debug_line    0x00025d53      0x718 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+ .debug_line    0x0002646b      0x79c CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+ .debug_line    0x00026c07      0x95a CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+ .debug_line    0x00027561      0x827 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+ .debug_line    0x00027d88      0x883 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_line    0x0002860b      0x6af CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_line    0x00028cba      0x728 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_line    0x000293e2       0xaa CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+ .debug_line    0x0002948c      0xab3 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_line    0x00029f3f      0xc3b CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_line    0x0002ab7a     0x1d7a CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_line    0x0002c8f4     0x1c0f CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_line    0x0002e503      0xbc9 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_line    0x0002f0cc     0x179b CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
 
-.debug_str      0x00000000    0xe6d2c
+.debug_str      0x00000000    0xe72b6
  .debug_str     0x00000000    0xca136 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
                               0xca3c2 (size before relaxing)
  .debug_str     0x000ca136     0x135f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
@@ -10834,74 +11070,76 @@ OUTPUT(MM_control.elf elf32-littlearm)
                               0xcac60 (size before relaxing)
  .debug_str     0x000cffee      0x7f1 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
                               0xcad8c (size before relaxing)
- .debug_str     0x000d07df     0x5487 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
+ .debug_str     0x000d07df     0x547a cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
                               0xcf7f8 (size before relaxing)
- .debug_str     0x000d5c66      0x17e cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
+ .debug_str     0x000d5c59      0x17e cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
                               0xcf66f (size before relaxing)
- .debug_str     0x000d5de4       0xfa cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
+ .debug_str     0x000d5dd7       0xfa cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
                               0xcf5bf (size before relaxing)
- .debug_str     0x000d5ede      0x5b1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
+ .debug_str     0x000d5ed1      0x5b1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
                               0xcfed5 (size before relaxing)
- .debug_str     0x000d648f     0x389b cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+ .debug_str     0x000d6482     0x389b cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
                                0xa591 (size before relaxing)
- .debug_str     0x000d9d2a     0x1903 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+ .debug_str     0x000d9d1d     0x1903 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
                                0xbeba (size before relaxing)
- .debug_str     0x000db62d     0x1c21 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ .debug_str     0x000db620     0x1c21 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
                                0xca1c (size before relaxing)
- .debug_str     0x000dd24e      0x698 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ .debug_str     0x000dd241      0x698 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
                                0xc48b (size before relaxing)
- .debug_str     0x000dd8e6     0x1eb6 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+ .debug_str     0x000dd8d9     0x1eb6 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
                               0xd4490 (size before relaxing)
- .debug_str     0x000df79c      0x36c cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+ .debug_str     0x000df78f      0x36c cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
                                0xae84 (size before relaxing)
- .debug_str     0x000dfb08      0x848 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_str     0x000dfafb      0x848 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
                                0x86f6 (size before relaxing)
- .debug_str     0x000e0350      0x195 CMakeFiles/MM_control.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_str     0x000e0343      0x195 CMakeFiles/MM_control.dir/USB_DEVICE/Target/usbd_conf.c.obj
                               0xd0594 (size before relaxing)
- .debug_str     0x000e04e5      0x15c CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_str     0x000e04d8      0x15c CMakeFiles/MM_control.dir/USB_DEVICE/App/usb_device.c.obj
                               0xcf94e (size before relaxing)
- .debug_str     0x000e0641      0x297 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_str     0x000e0634      0x297 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_desc.c.obj
                               0xcf4de (size before relaxing)
- .debug_str     0x000e08d8     0x22a1 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
-                              0xd226e (size before relaxing)
- .debug_str     0x000e2b79      0xab9 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
-                              0xd4e38 (size before relaxing)
- .debug_str     0x000e3632       0x51 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
+ .debug_str     0x000e08cb     0x22c5 CMakeFiles/MM_control.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                              0xd2292 (size before relaxing)
+ .debug_str     0x000e2b90      0xae0 CMakeFiles/MM_control.dir/Core/Src/main.c.obj
+                              0xd4a8f (size before relaxing)
+ .debug_str     0x000e3670       0x51 CMakeFiles/MM_control.dir/Core/Src/gpio.c.obj
                               0xca93b (size before relaxing)
- .debug_str     0x000e3683       0x87 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
-                              0xd1c75 (size before relaxing)
- .debug_str     0x000e370a       0x5a CMakeFiles/MM_control.dir/Core/Src/can.c.obj
+ .debug_str     0x000e36c1       0x87 CMakeFiles/MM_control.dir/Core/Src/freertos.c.obj
+                              0xd1c99 (size before relaxing)
+ .debug_str     0x000e3748       0x5a CMakeFiles/MM_control.dir/Core/Src/can.c.obj
                               0xcabba (size before relaxing)
- .debug_str     0x000e3764       0x4f CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
+ .debug_str     0x000e37a2       0x4f CMakeFiles/MM_control.dir/Core/Src/dma.c.obj
                               0xcad89 (size before relaxing)
- .debug_str     0x000e37b3       0x5a CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
+ .debug_str     0x000e37f1       0x5a CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
                               0xcae3b (size before relaxing)
- .debug_str     0x000e380d       0x67 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
+ .debug_str     0x000e384b       0x67 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
                               0xcb299 (size before relaxing)
- .debug_str     0x000e3874       0xa1 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
+ .debug_str     0x000e38b2       0xa1 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
                               0xcb57d (size before relaxing)
- .debug_str     0x000e3915       0x96 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
-                              0xcb2ef (size before relaxing)
- .debug_str     0x000e39ab      0x1c0 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
-                              0xcb58d (size before relaxing)
- .debug_str     0x000e3b6b       0x51 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_str     0x000e3953       0x96 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+                              0xcb30d (size before relaxing)
+ .debug_str     0x000e39e9      0x1f0 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+                              0xcb5db (size before relaxing)
+ .debug_str     0x000e3bd9       0x51 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
                               0xcad8c (size before relaxing)
- .debug_str     0x000e3bbc       0x90 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_str     0x000e3c2a       0x90 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
                               0xcae67 (size before relaxing)
- .debug_str     0x000e3c4c       0x59 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
+ .debug_str     0x000e3cba       0x59 CMakeFiles/MM_control.dir/startup_stm32f407xx.s.obj
                                  0x99 (size before relaxing)
- .debug_str     0x000e3ca5      0x5b2 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_str     0x000e3d13      0x5b2 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
                                0x860c (size before relaxing)
- .debug_str     0x000e4257      0x410 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
-                              0xcf1e5 (size before relaxing)
- .debug_str     0x000e4667     0x10ed CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_str     0x000e42c5      0x760 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+                              0xcf550 (size before relaxing)
+ .debug_str     0x000e4a25     0x10ed CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
                               0xd052f (size before relaxing)
- .debug_str     0x000e5754      0xf66 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
-                              0xd3f36 (size before relaxing)
- .debug_str     0x000e66ba      0x672 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_str     0x000e5b12      0xf76 CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+                              0xd42c2 (size before relaxing)
+ .debug_str     0x000e6a88      0x208 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+                              0xd08d9 (size before relaxing)
+ .debug_str     0x000e6c90      0x626 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
                               0xcf164 (size before relaxing)
 
-.debug_frame    0x00000000     0xb634
+.debug_frame    0x00000000     0xb828
  .debug_frame   0x00000000       0x58 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_frame   0x00000058     0x11c0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_frame   0x00001218      0x638 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10940,25 +11178,26 @@ OUTPUT(MM_control.elf elf32-littlearm)
  .debug_frame   0x00008c40       0x74 CMakeFiles/MM_control.dir/Core/Src/i2c.c.obj
  .debug_frame   0x00008cb4       0x90 CMakeFiles/MM_control.dir/Core/Src/spi.c.obj
  .debug_frame   0x00008d44       0xe8 CMakeFiles/MM_control.dir/Core/Src/tim.c.obj
- .debug_frame   0x00008e2c       0x90 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
- .debug_frame   0x00008ebc      0x1f8 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_frame   0x000090b4       0x34 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_frame   0x000090e8       0x74 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_frame   0x0000915c      0x48c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
- .debug_frame   0x000095e8      0x264 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
- .debug_frame   0x0000984c     0x1030 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
- .debug_frame   0x0000a87c      0x50c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
- .debug_frame   0x0000ad88      0x5d4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
- .debug_frame   0x0000b35c       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
- .debug_frame   0x0000b390       0x50 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
- .debug_frame   0x0000b3e0       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
- .debug_frame   0x0000b400       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
- .debug_frame   0x0000b420       0xac d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x0000b4cc       0x50 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_frame   0x0000b51c       0x24 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_frame   0x0000b540       0x2c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000b56c       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x0000b5a0       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x0000b5c0       0x2c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
- .debug_frame   0x0000b5ec       0x28 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000b614       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00008e2c       0x94 CMakeFiles/MM_control.dir/Core/Src/usart.c.obj
+ .debug_frame   0x00008ec0      0x230 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_frame   0x000090f0       0x34 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_frame   0x00009124       0x74 CMakeFiles/MM_control.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_frame   0x00009198      0x48c CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_protocol.c.obj
+ .debug_frame   0x00009624      0x264 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215_hal.c.obj
+ .debug_frame   0x00009888     0x1030 CMakeFiles/MM_control.dir/Core/Src/tue_sts3215.c.obj
+ .debug_frame   0x0000a8b8      0x50c CMakeFiles/MM_control.dir/Core/Src/tue_usb_binary.c.obj
+ .debug_frame   0x0000adc4      0x1b8 CMakeFiles/MM_control.dir/Core/Src/tue_haptic_bridge.c.obj
+ .debug_frame   0x0000af7c      0x5d4 CMakeFiles/MM_control.dir/Core/Src/tue_stepper.c.obj
+ .debug_frame   0x0000b550       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-sf_lround.o)
+ .debug_frame   0x0000b584       0x50 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+ .debug_frame   0x0000b5d4       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
+ .debug_frame   0x0000b5f4       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x0000b614       0xac d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x0000b6c0       0x50 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x0000b710       0x24 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x0000b734       0x2c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000b760       0x34 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000b794       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x0000b7b4       0x2c d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x0000b7e0       0x28 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000b808       0x20 d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(lib_a-memset.o)

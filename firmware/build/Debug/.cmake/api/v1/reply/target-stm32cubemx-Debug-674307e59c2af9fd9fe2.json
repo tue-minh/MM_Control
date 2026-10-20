@@ -27,7 +27,7 @@
 	"codemodelVersion" : 
 	{
 		"major" : 2,
-		"minor" : 10
+		"minor" : 11
 	},
 	"id" : "stm32cubemx::@768a070a0fe75716b479",
 	"name" : "stm32cubemx",

@@ -27,6 +27,7 @@
 #include "cmsis_os2.h"
 #include "usart.h"
 #include "tue_stepper.h"
+#include "tue_haptic_bridge.h"
 #include "usbd_cdc_if.h"
 #include "usbd_cdc.h"
 
@@ -70,6 +71,8 @@ static tue_usb_rx_state_t s_state = ST_WAIT_SOF1;
 static tue_usb_frame_t    s_rx;
 static uint8_t            s_hdr_idx = 0U;    /* header bytes collected     */
 static uint8_t            s_pay_idx = 0U;    /* payload bytes collected    */
+static uint8_t            s_raw[TUE_USB_MAX_FRAME]; /* exact wire bytes     */
+static uint16_t           s_raw_idx = 0U;
 
 /* Transmit double buffer. */
 static uint8_t            s_tx[2][TUE_USB_FRAME_MAX];
@@ -91,7 +94,8 @@ static uint32_t           s_wait_idle_timeout = 0U;
 /* Private function prototypes -----------------------------------------------*/
 static void     usb_task(void *argument);
 static void     usb_rx_byte(uint8_t byte);
-static void     usb_dispatch(const tue_usb_frame_t *f);
+static void     usb_dispatch(const tue_usb_frame_t *f, const uint8_t *raw,
+                             uint16_t raw_len);
 static void     usb_transmit(uint8_t frame_type, uint32_t can_id, uint8_t seq,
                              const uint8_t *payload, uint8_t dlc);
 static void     usb_check_pending_idle(void);
@@ -319,6 +323,7 @@ static void usb_reset_parser(void)
     s_state   = ST_WAIT_SOF1;
     s_hdr_idx = 0U;
     s_pay_idx = 0U;
+    s_raw_idx = 0U;
 }
 
 static void usb_rx_byte(uint8_t byte)
@@ -334,6 +339,9 @@ static void usb_rx_byte(uint8_t byte)
         if (byte == TUE_USB_SOF2) {
             memset(&s_rx, 0, sizeof(s_rx));
             s_hdr_idx = 0U;
+            s_raw[0] = TUE_USB_SOF1;
+            s_raw[1] = TUE_USB_SOF2;
+            s_raw_idx = 2U;
             s_state = ST_HEADER;
         } else if (byte != TUE_USB_SOF1) {
             s_state = ST_WAIT_SOF1;
@@ -344,6 +352,7 @@ static void usb_rx_byte(uint8_t byte)
     case ST_HEADER:
         /* Header wire order: TYPE, CAN_ID[0..3], DLC, SEQ. */
         ((uint8_t *)&s_rx)[s_hdr_idx++] = byte;
+        s_raw[s_raw_idx++] = byte;
         if (s_hdr_idx >= TUE_USB_HEADER_SIZE) {
             if (s_rx.dlc > TUE_USB_MAX_DLC) {
                 usb_reset_parser(); /* ERR_BAD_FORMAT: DLC out of range */
@@ -356,6 +365,7 @@ static void usb_rx_byte(uint8_t byte)
 
     case ST_PAYLOAD:
         s_rx.payload[s_pay_idx++] = byte;
+        s_raw[s_raw_idx++] = byte;
         if (s_pay_idx >= s_rx.dlc) {
             s_state = ST_CRC;
         }
@@ -369,12 +379,14 @@ static void usb_rx_byte(uint8_t byte)
             break;
         }
         s_rx.crc8 = byte;
+        s_raw[s_raw_idx++] = byte;
         s_state = ST_EOF1;
         break;
     }
 
     case ST_EOF1:
         if (byte == TUE_USB_EOF1) {
+            s_raw[s_raw_idx++] = byte;
             s_state = ST_EOF2;
         } else if (byte == TUE_USB_SOF1) {
             s_state = ST_WAIT_SOF2; /* candidate new frame */
@@ -385,7 +397,8 @@ static void usb_rx_byte(uint8_t byte)
 
     case ST_EOF2:
         if (byte == TUE_USB_EOF2) {
-            usb_dispatch(&s_rx);
+            s_raw[s_raw_idx++] = byte;
+            usb_dispatch(&s_rx, s_raw, s_raw_idx);
             usb_reset_parser();
         } else {
             usb_reset_parser(); /* framing mismatch: drop */
@@ -448,7 +461,8 @@ static void usb_task(void *argument)
     }
 }
 
-static void usb_dispatch(const tue_usb_frame_t *f)
+static void usb_dispatch(const tue_usb_frame_t *f, const uint8_t *raw,
+                         uint16_t raw_len)
 {
     /* Only host requests are acted upon. */
     if (f->frame_type != (uint8_t)TUE_USB_FRAME_REQ) {
@@ -467,6 +481,14 @@ static void usb_dispatch(const tue_usb_frame_t *f)
         err = step_cmd(f, out, &out_dlc);
     } else if (f->can_id >= TUE_USB_CAN_SERVO_PING && f->can_id <= TUE_USB_CAN_SERVO_RESET) {
         err = servo_cmd(f, out, &out_dlc);
+    } else if (f->can_id == TUE_USB_CAN_HAPTIC_TELEMETRY) {
+        /* Unified tactile telemetry: cache locally and forward the exact
+         * 20-byte frame to the UART slave. Fire-and-forget streaming: no
+         * USB acknowledgement is generated so the host stays at 100 Hz. */
+        if ((f->dlc == TUE_HAPTIC_PAYLOAD_LEN) && (raw_len == TUE_HAPTIC_FRAME_LEN)) {
+            (void)tue_haptic_ingest(raw, raw_len);
+        }
+        return;
     } else if (TUE_USB_CAN_ID_IS_RESERVED(f->can_id)) {
         err = (int)TUE_USB_ERR_NOT_SUPPORTED;
     } else {
@@ -1078,6 +1100,9 @@ void tue_usb_init(void)
     /* The STEP commands drive the three stepper motors through the TIM1 step
      * clock. Idempotent: main() already calls it at boot. */
     tue_stepper_init();
+
+    /* Slave haptic link: USART2 @ 250 kbaud, TX DMA + circular RX DMA. */
+    (void)tue_haptic_init();
 
     const osSemaphoreAttr_t sem_attr = { .name = "usb_rx" };
     s_rx_sem = osSemaphoreNew(1U, 0U, &sem_attr);

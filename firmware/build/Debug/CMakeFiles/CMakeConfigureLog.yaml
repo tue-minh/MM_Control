@@ -7370,3 +7370,1318 @@ events:
       CMAKE_SYSTEM_PROGRAM_PATH:
         - "/bin"
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineSystem.cmake:213 (message)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      The target system is: Generic -  - arm
+      The host system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:67 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc"
+    candidate_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/"
+      - "C:/Python314/Scripts/"
+      - "C:/Python314/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/nodejs/"
+      - "C:/ProgramData/chocolatey/bin/"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Users/nguye/.config/opencode/"
+      - "D:/windows-arm-none-eabi-master/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Tailscale/"
+      - "C:/Users/nguye/OneDrive/Desktop/dfu-util-0.9-win64/"
+      - "C:/Users/nguye/AppData/Local/agy/bin/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/nguye/AppData/Local/Microsoft/WindowsApps/"
+      - "D:/Microsoft VS Code/bin/"
+      - "C:/Users/nguye/AppData/Roaming/npm/"
+      - "C:/Users/nguye/AppData/Local/Programs/superfile/"
+    searched_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc.com"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc.exe"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc"
+      - "C:/Python314/arm-none-eabi-gcc.com"
+      - "C:/Python314/arm-none-eabi-gcc.exe"
+      - "C:/Python314/arm-none-eabi-gcc"
+      - "C:/Windows/System32/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/arm-none-eabi-gcc"
+      - "C:/Windows/arm-none-eabi-gcc.com"
+      - "C:/Windows/arm-none-eabi-gcc.exe"
+      - "C:/Windows/arm-none-eabi-gcc"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc.com"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc.com"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc.com"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc.com"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc.exe"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc.com"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc.com"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc.exe"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc"
+      - "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.com"
+    found: "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.exe 
+      Build flags: -mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage
+      Id flags:  
+      
+      The output was:
+      1
+      d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/ld.exe: d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\\libc.a(lib_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x16): undefined reference to `_exit'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.exe 
+      Build flags: -mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.su"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/4.4.0-rc2/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:57 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-g++"
+    candidate_directories:
+      - "D:/windows-arm-none-eabi-master/bin/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/"
+      - "C:/Python314/Scripts/"
+      - "C:/Python314/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/nodejs/"
+      - "C:/ProgramData/chocolatey/bin/"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Users/nguye/.config/opencode/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Tailscale/"
+      - "C:/Users/nguye/OneDrive/Desktop/dfu-util-0.9-win64/"
+      - "C:/Users/nguye/AppData/Local/agy/bin/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/nguye/AppData/Local/Microsoft/WindowsApps/"
+      - "D:/Microsoft VS Code/bin/"
+      - "C:/Users/nguye/AppData/Roaming/npm/"
+      - "C:/Users/nguye/AppData/Local/Programs/superfile/"
+    searched_directories:
+      - "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.com"
+    found: "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:71 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-g++"
+    candidate_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/"
+      - "C:/Python314/Scripts/"
+      - "C:/Python314/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/nodejs/"
+      - "C:/ProgramData/chocolatey/bin/"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Users/nguye/.config/opencode/"
+      - "D:/windows-arm-none-eabi-master/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Tailscale/"
+      - "C:/Users/nguye/OneDrive/Desktop/dfu-util-0.9-win64/"
+      - "C:/Users/nguye/AppData/Local/agy/bin/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/nguye/AppData/Local/Microsoft/WindowsApps/"
+      - "D:/Microsoft VS Code/bin/"
+      - "C:/Users/nguye/AppData/Roaming/npm/"
+      - "C:/Users/nguye/AppData/Local/Programs/superfile/"
+    searched_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-g++.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-g++.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-g++"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-g++.com"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-g++.exe"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-g++"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-g++.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-g++.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-g++"
+      - "C:/Python314/Scripts/arm-none-eabi-g++.com"
+      - "C:/Python314/Scripts/arm-none-eabi-g++.exe"
+      - "C:/Python314/Scripts/arm-none-eabi-g++"
+      - "C:/Python314/arm-none-eabi-g++.com"
+      - "C:/Python314/arm-none-eabi-g++.exe"
+      - "C:/Python314/arm-none-eabi-g++"
+      - "C:/Windows/System32/arm-none-eabi-g++.com"
+      - "C:/Windows/System32/arm-none-eabi-g++.exe"
+      - "C:/Windows/System32/arm-none-eabi-g++"
+      - "C:/Windows/arm-none-eabi-g++.com"
+      - "C:/Windows/arm-none-eabi-g++.exe"
+      - "C:/Windows/arm-none-eabi-g++"
+      - "C:/Windows/System32/wbem/arm-none-eabi-g++.com"
+      - "C:/Windows/System32/wbem/arm-none-eabi-g++.exe"
+      - "C:/Windows/System32/wbem/arm-none-eabi-g++"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-g++.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-g++.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-g++"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-g++.com"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-g++.exe"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-g++"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-g++.com"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-g++.exe"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-g++"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-g++.com"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-g++.exe"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-g++"
+      - "C:/Program Files/nodejs/arm-none-eabi-g++.com"
+      - "C:/Program Files/nodejs/arm-none-eabi-g++.exe"
+      - "C:/Program Files/nodejs/arm-none-eabi-g++"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-g++.com"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-g++.exe"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-g++"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-g++.com"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-g++.exe"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-g++"
+      - "C:/Program Files/dotnet/arm-none-eabi-g++.com"
+      - "C:/Program Files/dotnet/arm-none-eabi-g++.exe"
+      - "C:/Program Files/dotnet/arm-none-eabi-g++"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-g++.com"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-g++.exe"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-g++"
+      - "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.com"
+    found: "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe 
+      Build flags: -mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-fno-rtti;-fno-exceptions;-fno-threadsafe-statics
+      Id flags:  
+      
+      The output was:
+      1
+      d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/ld.exe: d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\\libc.a(lib_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x16): undefined reference to `_exit'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe 
+      Build flags: -mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-Wall;-fdata-sections;-ffunction-sections;-fstack-usage;-fno-rtti;-fno-exceptions;-fno-threadsafe-statics
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.su"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/4.4.0-rc2/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:120 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-bh43nw"
+      binary: "C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-bh43nw"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: " -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage"
+      CMAKE_C_FLAGS_DEBUG: "-O0 -g3"
+      CMAKE_EXE_LINKER_FLAGS: "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -T \"C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/STM32F407XX_FLASH.ld\" --specs=nano.specs -Wl,-Map=MM_control.map -Wl,--gc-sections -Wl,--print-memory-usage"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: 'C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-bh43nw'
+        
+        Run Build Command(s): C:/ProgramData/chocolatey/bin/ninja.exe -v cmTC_132f1
+        [1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage  -std=gnu11   -v -o CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-gcc.exe
+        Target: arm-none-eabi
+        Configured with: /tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw --libexecdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib --infodir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/arm-none-eabi --with-libiconv-prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-gmp=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpfr=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpc=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-isl=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-libelf=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for Arm Embedded Processors 8-2018-q4-major' --with-multilib-list=rmprofile
+        Thread model: single
+        gcc version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+         d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/cc1.exe -quiet -v -imultilib thumb/v7e-m+fp/hard -iprefix d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/ -isysroot d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -march=armv7e-m+fp -auxbase-strip CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj -Wall -std=gnu11 -version -fstack-usage -fdata-sections -ffunction-sections -fstack-usage -o C:\\Users\\nguye\\AppData\\Local\\Temp\\ccdfxQ4A.s
+        GNU C11 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)
+        	compiled by GNU C version 5.3.1 20160211, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include"
+        ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib/gcc/arm-none-eabi/8.2.1/../../../../include"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include-fixed"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include"
+        ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include-fixed
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        GNU C11 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)
+        	compiled by GNU C version 5.3.1 20160211, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: f8f174a3f0bb53ea8dadde1387222c4f
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+         d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv7e-m -mfloat-abi=hard -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mfpu=fpv4-sp-d16 -meabi=5 -o CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj C:\\Users\\nguye\\AppData\\Local\\Temp\\ccdfxQ4A.s
+        GNU assembler version 2.31.51 (arm-none-eabi) using BFD version (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 2.31.51.20181213
+        COMPILER_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/;d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f libcmTC_132f1.a && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ar.exe qc libcmTC_132f1.a  CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ranlib.exe libcmTC_132f1.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:252 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include] ==> [D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed] ==> [D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include] ==> [D:/windows-arm-none-eabi-master/arm-none-eabi/include]
+        implicit include dirs: [D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include;D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include-fixed;D:/windows-arm-none-eabi-master/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:288 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-g\\+\\+\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(arm-none-eabi-g\\+\\+\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-bh43nw']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/ProgramData/chocolatey/bin/ninja.exe -v cmTC_132f1]
+        ignore line: [[1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage  -std=gnu11   -v -o CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-gcc.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw --libexecdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib --infodir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/arm-none-eabi --with-libiconv-prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-gmp=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpfr=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpc=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-isl=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-libelf=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for Arm Embedded Processors 8-2018-q4-major' --with-multilib-list=rmprofile]
+        ignore line: [Thread model: single]
+        ignore line: [gcc version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (GNU Tools for Arm Embedded Processors 8-2018-q4-major) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [ d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/cc1.exe -quiet -v -imultilib thumb/v7e-m+fp/hard -iprefix d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/ -isysroot d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -march=armv7e-m+fp -auxbase-strip CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj -Wall -std=gnu11 -version -fstack-usage -fdata-sections -ffunction-sections -fstack-usage -o C:\\Users\\nguye\\AppData\\Local\\Temp\\ccdfxQ4A.s]
+        ignore line: [GNU C11 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 5.3.1 20160211  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include"]
+        ignore line: [ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib/gcc/arm-none-eabi/8.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C11 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 5.3.1 20160211  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: f8f174a3f0bb53ea8dadde1387222c4f]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [ d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv7e-m -mfloat-abi=hard -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mfpu=fpv4-sp-d16 -meabi=5 -o CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj C:\\Users\\nguye\\AppData\\Local\\Temp\\ccdfxQ4A.s]
+        ignore line: [GNU assembler version 2.31.51 (arm-none-eabi) using BFD version (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 2.31.51.20181213]
+        ignore line: [COMPILER_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f libcmTC_132f1.a && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ar.exe qc libcmTC_132f1.a  CMakeFiles/cmTC_132f1.dir/CMakeCCompilerABI.c.obj && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ranlib.exe libcmTC_132f1.a && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:120 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-4tk394"
+      binary: "C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-4tk394"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics"
+      CMAKE_CXX_FLAGS_DEBUG: "-O0 -g3"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -T \"C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/STM32F407XX_FLASH.ld\" --specs=nano.specs -Wl,-Map=MM_control.map -Wl,--gc-sections -Wl,--print-memory-usage"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: 'C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-4tk394'
+        
+        Run Build Command(s): C:/ProgramData/chocolatey/bin/ninja.exe -v cmTC_c2416
+        [1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics    -v -o CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp"
+        Using built-in specs.
+        COLLECT_GCC=D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe
+        Target: arm-none-eabi
+        Configured with: /tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw --libexecdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib --infodir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/arm-none-eabi --with-libiconv-prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-gmp=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpfr=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpc=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-isl=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-libelf=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for Arm Embedded Processors 8-2018-q4-major' --with-multilib-list=rmprofile
+        Thread model: single
+        gcc version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+         d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/cc1plus.exe -quiet -v -imultilib thumb/v7e-m+fp/hard -iprefix d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/ -isysroot d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -march=armv7e-m+fp -auxbase-strip CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj -Wall -version -fstack-usage -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics -o C:\\Users\\nguye\\AppData\\Local\\Temp\\ccYq10XZ.s
+        GNU C++14 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)
+        	compiled by GNU C version 5.3.1 20160211, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include"
+        ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib/gcc/arm-none-eabi/8.2.1/../../../../include"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include-fixed"
+        ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include"
+        ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include-fixed
+         d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        GNU C++14 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)
+        	compiled by GNU C version 5.3.1 20160211, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 287978f0ec3b9e8e2953d36c47e13f87
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+         d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv7e-m -mfloat-abi=hard -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mfpu=fpv4-sp-d16 -meabi=5 -o CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\nguye\\AppData\\Local\\Temp\\ccYq10XZ.s
+        GNU assembler version 2.31.51 (arm-none-eabi) using BFD version (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 2.31.51.20181213
+        COMPILER_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/thumb/v7e-m+fp/hard/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/;d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/;d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp'
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f libcmTC_c2416.a && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ar.exe qc libcmTC_c2416.a  CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ranlib.exe libcmTC_c2416.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:252 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+          add: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1] ==> [D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard] ==> [D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward] ==> [D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1/backward]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include] ==> [D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed] ==> [D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+        collapse include dir [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include] ==> [D:/windows-arm-none-eabi-master/arm-none-eabi/include]
+        implicit include dirs: [D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1;D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard;D:/windows-arm-none-eabi-master/arm-none-eabi/include/c++/8.2.1/backward;D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include;D:/windows-arm-none-eabi-master/lib/gcc/arm-none-eabi/8.2.1/include-fixed;D:/windows-arm-none-eabi-master/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:288 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-g\\+\\+\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(arm-none-eabi-g\\+\\+\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/nguye/OneDrive/Desktop/MM_Control/firmware/build/Debug/CMakeFiles/CMakeScratch/TryCompile-4tk394']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/ProgramData/chocolatey/bin/ninja.exe -v cmTC_c2416]
+        link line: [[1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics    -v -o CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp"] ==> linker [[1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe]
+        ignore line: [[1/2] D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics    -v -o CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-g++.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw --libexecdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib --infodir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/arm-none-eabi --with-libiconv-prefix=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-gmp=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpfr=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-mpc=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-isl=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-libelf=/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for Arm Embedded Processors 8-2018-q4-major' --with-multilib-list=rmprofile]
+        ignore line: [Thread model: single]
+        ignore line: [gcc version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (GNU Tools for Arm Embedded Processors 8-2018-q4-major) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [ d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/cc1plus.exe -quiet -v -imultilib thumb/v7e-m+fp/hard -iprefix d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/ -isysroot d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -march=armv7e-m+fp -auxbase-strip CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj -Wall -version -fstack-usage -fdata-sections -ffunction-sections -fstack-usage -fno-rtti -fno-exceptions -fno-threadsafe-statics -o C:\\Users\\nguye\\AppData\\Local\\Temp\\ccYq10XZ.s]
+        ignore line: [GNU C++14 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 5.3.1 20160211  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include"]
+        ignore line: [ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/tmp/jenkins/jenkins-GCC-8-build_toolchain_docker-519_20181216_1544945247/install-mingw/lib/gcc/arm-none-eabi/8.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "d:/windows-arm-none-eabi-master/lib/gcc/../../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring nonexistent directory "d:\\windows-arm-none-eabi-master\\bin\\../arm-none-eabi/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7e-m+fp/hard]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/include-fixed]
+        ignore line: [ d:\\windows-arm-none-eabi-master\\bin\\../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C++14 (GNU Tools for Arm Embedded Processors 8-2018-q4-major) version 8.2.1 20181213 (release) [gcc-8-branch revision 267074] (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 5.3.1 20160211  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 287978f0ec3b9e8e2953d36c47e13f87]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [ d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv7e-m -mfloat-abi=hard -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mfpu=fpv4-sp-d16 -meabi=5 -o CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\nguye\\AppData\\Local\\Temp\\ccYq10XZ.s]
+        ignore line: [GNU assembler version 2.31.51 (arm-none-eabi) using BFD version (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 2.31.51.20181213]
+        ignore line: [COMPILER_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/thumb/v7e-m+fp/hard/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [d:/windows-arm-none-eabi-master/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-fstack-usage' '-mcpu=cortex-m4' '-mfpu=fpv4-sp-d16' '-mfloat-abi=hard' '-Wall' '-fdata-sections' '-ffunction-sections' '-fstack-usage' '-fno-rtti' '-fno-exceptions' '-fno-threadsafe-statics' '-v' '-o' 'CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mthumb' '-march=armv7e-m+fp']
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f libcmTC_c2416.a && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ar.exe qc libcmTC_c2416.a  CMakeFiles/cmTC_c2416.dir/CMakeCXXCompilerABI.cpp.obj && D:\\windows-arm-none-eabi-master\\bin\\arm-none-eabi-ranlib.exe libcmTC_c2416.a && cd ."]
+        ignore line: []
+        ignore line: []
+        linker tool for 'CXX': [1/2] D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe 
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:334 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Running the CXX compiler's linker: "[1/2] D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe" "-v"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:334 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Running the CXX compiler's linker: "[1/2] D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe" "-V"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:334 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:28 (project)"
+    message: |
+      Running the CXX compiler's linker: "[1/2] D:/windows-arm-none-eabi-master/bin/arm-none-eabi-g++.exe" "--version"
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:64 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:32 (enable_language)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc"
+    candidate_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/"
+      - "C:/Python314/Scripts/"
+      - "C:/Python314/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/nodejs/"
+      - "C:/ProgramData/chocolatey/bin/"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Users/nguye/.config/opencode/"
+      - "D:/windows-arm-none-eabi-master/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Tailscale/"
+      - "C:/Users/nguye/OneDrive/Desktop/dfu-util-0.9-win64/"
+      - "C:/Users/nguye/AppData/Local/agy/bin/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/nguye/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/nguye/AppData/Local/Microsoft/WindowsApps/"
+      - "D:/Microsoft VS Code/bin/"
+      - "C:/Users/nguye/AppData/Roaming/npm/"
+      - "C:/Users/nguye/AppData/Local/Programs/superfile/"
+      - "/bin/"
+    searched_directories:
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/arm-none-eabi-gcc"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/STMicroelectronics/stlink_server/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/CMake/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/st-arm-clang/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/Ninja/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STLink-gdb-server/bin/arm-none-eabi-gcc"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc.com"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc.exe"
+      - "D:/Stm32CubeCLT/STM32CubeCLT_1.21.0/STM32CubeProgrammer/bin/arm-none-eabi-gcc"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc.com"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc.exe"
+      - "C:/Python314/Scripts/arm-none-eabi-gcc"
+      - "C:/Python314/arm-none-eabi-gcc.com"
+      - "C:/Python314/arm-none-eabi-gcc.exe"
+      - "C:/Python314/arm-none-eabi-gcc"
+      - "C:/Windows/System32/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/arm-none-eabi-gcc"
+      - "C:/Windows/arm-none-eabi-gcc.com"
+      - "C:/Windows/arm-none-eabi-gcc.exe"
+      - "C:/Windows/arm-none-eabi-gcc"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/wbem/arm-none-eabi-gcc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/arm-none-eabi-gcc"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc.com"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc.exe"
+      - "C:/Windows/System32/OpenSSH/arm-none-eabi-gcc"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc.com"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/Git/cmd/arm-none-eabi-gcc"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc.com"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/CMake/bin/arm-none-eabi-gcc"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc.com"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/nodejs/arm-none-eabi-gcc"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc.com"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc.exe"
+      - "C:/ProgramData/chocolatey/bin/arm-none-eabi-gcc"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc.com"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc.exe"
+      - "C:/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/arm-none-eabi-gcc"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc.com"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/dotnet/arm-none-eabi-gcc"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc.com"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc.exe"
+      - "C:/Users/nguye/.config/opencode/arm-none-eabi-gcc"
+      - "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.com"
+    found: "D:/windows-arm-none-eabi-master/bin/arm-none-eabi-gcc.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files (x86)\\STMicroelectronics\\stlink_server"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\st-arm-clang\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\Ninja\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\GNU-tools-for-STM32\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STLink-gdb-server\\bin"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\STM32CubeProgrammer\\bin"
+        - "C:\\Python314\\Scripts\\"
+        - "C:\\Python314\\"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Users\\nguye\\.config\\opencode"
+        - "D:\\windows-arm-none-eabi-master\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+        - "C:\\Users\\nguye\\AppData\\Local\\agy\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\nguye\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "D:\\Microsoft VS Code\\bin"
+        - "C:\\Users\\nguye\\AppData\\Roaming\\npm"
+        - "D:\\Stm32CubeCLT\\STM32CubeCLT_1.21.0\\CMake\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Users\\nguye\\AppData\\Local\\Programs\\superfile\\"
+        - "C:\\Users\\nguye\\OneDrive\\Desktop\\dfu-util-0.9-win64"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/MM_control"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:1328 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:174 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:32 (enable_language)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      arm-none-eabi-gcc.exe (GNU Tools for Arm Embedded Processors 8-2018-q4-major) 8.2.1 20181213 (release) [gcc-8-branch revision 267074]
+      Copyright (C) 2018 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+...

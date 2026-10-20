@@ -153,9 +153,80 @@ class ServoFeedbackHealth:
 
 @dataclass
 class ServoFeedback:
-    """Complete combined STS3215 telemetry feedback."""
+    """Composite STS3215 feedback from both telemetry frames."""
     dynamics: ServoFeedbackDynamics
     health: ServoFeedbackHealth
+
+
+# ==============================================================================
+# Haptic Telemetry Data Model (0x300)
+# ==============================================================================
+
+@dataclass
+class HapticPayload:
+    """
+    Unified 8-byte tactile payload forwarded verbatim to the ESP32 slave.
+
+    Physical units are used on the Python side; the wire format is documented in
+    docs/USB_BINARY_PROTOCOL.md (section 5.1).
+    """
+    fz_left_n: float = 0.0          # 0.1 N / LSB, 0..25.5 N (chamber D)
+    fz_right_n: float = 0.0         # 0.1 N / LSB, 0..25.5 N (chamber E)
+    f_shear_avg_n: float = 0.0      # 0.1 N / LSB, 0..25.5 N
+    weight_tip: float = 0.0         # 0.0..1.0, zone A
+    weight_mid: float = 0.0         # 0.0..1.0, zone B
+    weight_base: float = 0.0        # 0.0..1.0, zone C
+    left_contact: bool = False
+    right_contact: bool = False
+    slip_alert: bool = False
+    tare_active: bool = False
+    frame_counter: int = 0
+
+    def status_flags(self) -> int:
+        return (
+            (0x01 if self.left_contact else 0)
+            | (0x02 if self.right_contact else 0)
+            | (0x04 if self.slip_alert else 0)
+            | (0x08 if self.tare_active else 0)
+        )
+
+    def to_bytes(self) -> bytes:
+        def force(v: float) -> int:
+            return max(0, min(255, int(round(float(v) * 10.0))))
+
+        def weight(v: float) -> int:
+            return max(0, min(255, int(round(float(v) * 255.0))))
+
+        return struct.pack(
+            "<BBBBBBBB",
+            force(self.fz_left_n),
+            force(self.fz_right_n),
+            force(self.f_shear_avg_n),
+            weight(self.weight_tip),
+            weight(self.weight_mid),
+            weight(self.weight_base),
+            self.status_flags(),
+            self.frame_counter & 0xFF,
+        )
+
+    @classmethod
+    def from_bytes(cls, payload: bytes) -> "HapticPayload":
+        if len(payload) != 8:
+            raise ValueError("HAPTIC payload must be exactly 8 bytes")
+        fz_l, fz_r, shear, wt, wm, wb, flags, counter = struct.unpack("<BBBBBBBB", payload)
+        return cls(
+            fz_left_n=fz_l / 10.0,
+            fz_right_n=fz_r / 10.0,
+            f_shear_avg_n=shear / 10.0,
+            weight_tip=wt / 255.0,
+            weight_mid=wm / 255.0,
+            weight_base=wb / 255.0,
+            left_contact=bool(flags & 0x01),
+            right_contact=bool(flags & 0x02),
+            slip_alert=bool(flags & 0x04),
+            tare_active=bool(flags & 0x08),
+            frame_counter=counter,
+        )
 
 
 # ==============================================================================
@@ -305,6 +376,11 @@ class Encoders:
     @staticmethod
     def servo_reset(servo_id: int) -> bytes:
         return struct.pack("<B", servo_id & 0xFF)
+
+    # --- Haptic telemetry (0x300) ---
+    @staticmethod
+    def haptic_telemetry(payload: HapticPayload) -> bytes:
+        return payload.to_bytes()
 
 
 # ==============================================================================
@@ -539,3 +615,8 @@ class Decoders:
         if len(payload) < 2:
             return (0, 0)
         return struct.unpack("<BB", payload[:2])
+
+    # --- Haptic telemetry (0x300) ---
+    @staticmethod
+    def haptic_telemetry(payload: bytes) -> HapticPayload:
+        return HapticPayload.from_bytes(payload)

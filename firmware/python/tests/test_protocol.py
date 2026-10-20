@@ -19,6 +19,7 @@ from tue_usb import (
     Frame,
     FrameParser,
     FrameType,
+    HapticPayload,
     LedState,
     PositionXYZ,
     ServoMode,
@@ -51,8 +52,12 @@ class TestProtocol(unittest.TestCase):
         self.assertTrue(is_reserved_can_id(0x3ABC))
         self.assertTrue(is_reserved_can_id(0x30000000))
 
-        # Check that none of the defined CanId enum values are reserved
+        # Check that none of the defined CanId enum values are reserved,
+        # except the haptic stream that deliberately lives in the custom range.
+        self.assertEqual(CanId.HAPTIC_TELEMETRY, 0x300)
         for cid in CanId:
+            if cid is CanId.HAPTIC_TELEMETRY:
+                continue
             self.assertFalse(
                 is_reserved_can_id(cid.value),
                 f"CanId {cid.name} (0x{cid.value:X}) collides with reserved range!"
@@ -201,6 +206,40 @@ class TestProtocol(unittest.TestCase):
             self.assertEqual(fb.dynamics.servo_id, 1)
             self.assertEqual(fb.dynamics.position, 1500)
             self.assertAlmostEqual(fb.health.voltage_v, 12.0, places=1)
+
+    def test_07_haptic_telemetry_roundtrip(self):
+        """Verify the 0x300 haptic payload encoding and fire-and-forget frame."""
+        original = HapticPayload(
+            fz_left_n=12.3,
+            fz_right_n=4.5,
+            f_shear_avg_n=1.0,
+            weight_tip=0.5,
+            weight_mid=1.0,
+            weight_base=0.0,
+            left_contact=True,
+            slip_alert=True,
+            frame_counter=77,
+        )
+        raw = Encoders.haptic_telemetry(original)
+        self.assertEqual(len(raw), 8)
+        self.assertEqual(raw[0], 123)
+        self.assertEqual(raw[3], 128)  # 0.5 * 255 = 127.5 -> 128
+        self.assertEqual(raw[6], 0x05) # left contact + slip alert
+
+        decoded = Decoders.haptic_telemetry(raw)
+        self.assertAlmostEqual(decoded.fz_left_n, 12.3, places=3)
+        self.assertAlmostEqual(decoded.fz_right_n, 4.5, places=3)
+        self.assertTrue(decoded.left_contact)
+        self.assertTrue(decoded.slip_alert)
+        self.assertFalse(decoded.tare_active)
+        self.assertEqual(decoded.frame_counter, 77)
+
+        with TueUsbClient(mock=True) as client:
+            frame = client.send_haptic_telemetry(original)
+            self.assertEqual(frame.can_id, CanId.HAPTIC_TELEMETRY)
+            self.assertEqual(frame.frame_type, FrameType.REQ)
+            self.assertTrue(frame.is_crc_valid())
+            self.assertEqual(len(frame.to_bytes()), 20)
 
 
 if __name__ == "__main__":

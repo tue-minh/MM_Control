@@ -34,6 +34,7 @@ extern "C" {
 
 extern UART_HandleTypeDef huart1;
 
+/* USART2 = dedicated haptic telemetry link to the ESP32 slave (250 kbaud). */
 extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN Private defines */

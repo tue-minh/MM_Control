@@ -103,10 +103,31 @@ against the reference vector.
 | `0x100 – 0x17F` | System management (SYS) |
 | `0x200 – 0x27F` | CoreXY + Z tool motion (STEP) |
 | `0x280 – 0x2FF` | Raw per-motor stepping (RAW) |
-| `0x300 – 0x3FF` | **RESERVED — user custom** |
+| `0x300 – 0x3FF` | **RESERVED — user custom** (`0x300` = haptic telemetry) |
 | `0x400 – 0x4FF` | STS3215 bus servos (SERVO) |
 | `0x500 – 0x57F` | Sensors & inputs (reserved) |
 | `0x600 – 0x6FF` | DC motors / actuators (reserved) |
+
+### 5.1 Haptic telemetry stream (`0x300`)
+
+`0x300` carries the unified 20-byte tactile frame from the host. The MCU does
+**not** acknowledge it: the frame is stored in a local telemetry cache and
+forwarded byte-for-byte to the ESP32 slave on **USART2** (PD5/PD6, 250 kbaud
+8-N-1) using TX DMA. See [`Core/Src/tue_haptic_bridge.c`](../Core/Src/tue_haptic_bridge.c).
+
+| Field | Bytes | Encoding |
+|:--|:--:|:--|
+| `fz_left` | 0 | `0.1 N / LSB`, `0..25.5 N` (chamber D) |
+| `fz_right` | 1 | `0.1 N / LSB`, `0..25.5 N` (chamber E) |
+| `f_shear_avg` | 2 | `0.1 N / LSB`, `0..25.5 N` (slip / weight) |
+| `weight_tip` | 3 | `0..255 → 0.0..1.0` (zone A) |
+| `weight_mid` | 4 | `0..255 → 0.0..1.0` (zone B) |
+| `weight_base` | 5 | `0..255 → 0.0..1.0` (zone C) |
+| `status_flags` | 6 | bit0 left contact, bit1 right contact, bit2 slip alert, bit3 tare |
+| `frame_counter` | 7 | `0..255` rolling counter |
+
+Frames with `can_id != 0x300` or `dlc != 8` inside the reserved range still
+return `ERR_NOT_SUPPORTED`.
 
 ---
 
@@ -224,7 +245,9 @@ frames without a serial port.
 | Check | Method |
 |:--|:--|
 | CRC-8 `0x4B` on `"123456789"` | C (`tue_usb_crc8_selftest`) + Python (`crc.self_test`) |
-| No command in `0x3..` | Compile-time `_Static_assert` + Python `is_reserved` cross-check |
+| No internal command in `0x3..` | Compile-time `_Static_assert` + Python `is_reserved` cross-check |
+| Haptic `0x300` passthrough | `tue_haptic_ingest()` re-validates SOF/EOF/ID/DLC/CRC before UART DMA |
+| USART2 TX/RX DMA | TX normal (20 B/frame), RX circular 128 B with IDLE termination |
 | Resync after corrupt/dropped bytes | `FrameParser` fuzz + bad-CRC/EOF tests |
 | Enums match firmware | `tests/test_protocol.py` parses `Core/Inc/tue_usb_binary.h` |
 | Round-trip latency | `python/examples/bench_test.py` (option `b`) |

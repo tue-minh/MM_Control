@@ -1,0 +1,12 @@
+tue_haptic_bridge.c:53:13:rx_ring_push	24	static
+tue_haptic_bridge.c:64:13:rx_arm	8	static
+tue_haptic_bridge.c:74:13:rx_clear_flags	24	static
+tue_haptic_bridge.c:86:6:tue_haptic_init	8	static
+tue_haptic_bridge.c:117:6:tue_haptic_forward	40	static
+tue_haptic_bridge.c:157:6:tue_haptic_ingest	48	static
+tue_haptic_bridge.c:201:6:tue_haptic_reset_stats	4	static
+tue_haptic_bridge.c:224:10:tue_haptic_rx_available	4	static
+tue_haptic_bridge.c:229:6:tue_haptic_rx_pop	16	static
+tue_haptic_bridge.c:243:6:tue_haptic_uart_tx_cplt_cb	24	static
+tue_haptic_bridge.c:264:6:tue_haptic_uart_rx_event_cb	24	static
+tue_haptic_bridge.c:297:6:tue_haptic_uart_error_cb	16	static
