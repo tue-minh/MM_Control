@@ -1,17 +1,25 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tue-acsi"
+name = "tue-usb"
 version = "1.0.0"
-description = "Host-side client for the TUE ACSI command protocol (STM32F407 MM_Control USB CDC)"
+description = "Deterministic binary CAN-over-USB protocol driver and PyQt6 GUI for STM32F407 motor control"
 readme = "README.md"
-requires-python = ">=3.8"
-dependencies = ["pyserial>=3.5"]
+authors = [{ name = "TUE Robotics Team" }]
+license = { text = "MIT" }
+dependencies = [
+    "pyserial>=3.5",
+]
 
 [project.optional-dependencies]
-test = ["pytest>=7.0.0"]
+gui = [
+    "PyQt6>=6.5.0",
+]
+dev = [
+    "pytest>=7.0",
+]
 
-[tool.setuptools]
-packages = ["tue_acsi"]
+[project.scripts]
+tue-gui = "gui.app:run_app"

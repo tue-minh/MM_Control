@@ -33,6 +33,7 @@ extern "C" {
 #include "tue_sts3215_regs.h"
 #include "tue_sts3215_protocol.h"
 #include "tue_sts3215_hal.h"
+#include "cmsis_os2.h"
 
 /* Configuration -------------------------------------------------------------*/
 #define STS3215_DEFAULT_TIMEOUT_MS      20U
@@ -95,6 +96,7 @@ typedef struct {
     tue_sts3215_reply_t  replies[TUE_STS3215_MAX_REPLIES];
     tue_sts3215_status_t xfer_status;
     uint8_t              last_servo_status;
+    osSemaphoreId_t      sem;
 } tue_sts3215_t;
 
 /* Core lifecycle & configuration --------------------------------------------*/

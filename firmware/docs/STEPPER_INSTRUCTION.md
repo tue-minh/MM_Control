@@ -3,7 +3,7 @@
 > **Platform**: STM32F407VET6 (`MM_Control`)
 > **Firmware**: [`Core/Inc/tue_stepper.h`](../Core/Inc/tue_stepper.h), [`Core/Src/tue_stepper.c`](../Core/Src/tue_stepper.c)
 > **Timing source**: TIM1 update interrupt (1 µs tick)
-> **Related**: [`docs/ACSI_PROTOCOL.md`](ACSI_PROTOCOL.md), [`docs/STS3215_INSTRUCTION.md`](STS3215_INSTRUCTION.md)
+> **Related**: [`docs/USB_BINARY_PROTOCOL.md`](USB_BINARY_PROTOCOL.md), [`docs/STS3215_INSTRUCTION.md`](STS3215_INSTRUCTION.md)
 
 ---
 
@@ -378,3 +378,36 @@ Firmware build: clean (`-Wall -Wextra`), links with FLASH 77 216 B / RAM 30 920 
 
 **Not verified:** anything electrical — actual pulse timing on the pins, driver
 behaviour, motor torque and real motion. Those need the board.
+
+---
+
+## 11. Host communication (USB binary protocol)
+
+The board exposes the stepper library over USB CDC using the **binary
+CAN-over-USB protocol**; see [`docs/USB_BINARY_PROTOCOL.md`](USB_BINARY_PROTOCOL.md)
+for the full wire specification. `tue_stepper` is reached through the tool-motion
+CAN IDs `0x200–0x21A` and the raw-motor IDs `0x280–0x281`:
+
+| CAN ID | Command | Units on the wire |
+|:--|:--|:--|
+| `0x200` | `STEP_GET_INFO` | steps/mm (`u16`), steps/s (`u16`) |
+| `0x201` | `STEP_GET_STATUS` | busy/enabled/queue depth (`u8`) |
+| `0x202` | `STEP_ENABLE` | `u8` (`0` off, `1` on, `0xFF` query) |
+| `0x203` / `0x204` | `STEP_GET_POS_XY` / `_Z` | signed `i32` **micrometres** to/from `tue_stepper_get_position_mm` |
+| `0x205` / `0x206` | `STEP_GET_TGT_XY` / `_Z` | signed `i32` um (`tue_stepper_get_target_mm`) |
+| `0x207` / `0x208` | `STEP_SETPOS_XY` / `_Z` | signed `i32` um (`tue_stepper_set_position_mm`) |
+| `0x210` + `0x211` | `STEP_MOVE_COORDS` + `STEP_MOVE_EXEC` | `x,y` um then `z` um, feed `u16` mm/s, accel `u16` mm/s² → `tue_stepper_move_to_xyz_mm` |
+| `0x212` | `STEP_MOVE_XY` | signed `i32` um, default speed → `tue_stepper_move_to_mm` |
+| `0x213` | `STEP_MOVE_Z` | signed `i32` um, feed/accel `u16` → `tue_stepper_move_z_mm` |
+| `0x214` | `STEP_MOVE_REL_XY` | signed `i32` um → `tue_stepper_move_by_mm` |
+| `0x215` | `STEP_SET_SPEED` | feed `u16` mm/s, accel `u16` mm/s² |
+| `0x216` / `0x217` | `STEP_JOG_XY` / `_Z` | `i16` mm/s velocities, `u16` mm/s² accel → `tue_stepper_start_velocity(_z)` |
+| `0x218` / `0x219` | `STEP_STOP` / `STEP_ABORT` | — (`tue_stepper_stop` / `_abort`) |
+| `0x21A` | `STEP_WAIT_IDLE` | `u32` timeout ms → `tue_stepper_wait_idle` |
+| `0x280` / `0x281` | `STEP_RAW_GET_STEPS` / `STEP_RAW_MOVE` | motor id `1..3`; `i32` steps, `u16` mm/s |
+
+Units: distances travel as **signed 32-bit micrometres** (`1 mm = 1000 um`),
+feed/accel as **`u16` mm/s and mm/s²**, jog velocities as **`i16` mm/s**. The host
+library works in millimetres and converts at the boundary. Moves are queued and
+acknowledged immediately — poll `STEP_GET_STATUS` or call `STEP_WAIT_IDLE` before
+assuming arrival.

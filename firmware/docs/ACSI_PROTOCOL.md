@@ -1,9 +1,17 @@
-# TUE ACSI Protocol — Instruction Manual
+# TUE ACSI Protocol — Instruction Manual (SUPERSEDED)
+
+> [!WARNING]
+> **This document is superseded and kept for historical reference only.**
+> The ASCII `tue_acsi` protocol and the `python/tue_acsi` host library have been
+> replaced by the **binary CAN-over-USB protocol**. Use
+> [`docs/USB_BINARY_PROTOCOL.md`](USB_BINARY_PROTOCOL.md) and
+> [`python/tue_usb`](../python/tue_usb) instead. The legacy firmware sources may
+> still exist on disk but are no longer built or wired into the application.
 
 > **Platform**: STM32F407VET6 (`MM_Control`) over **USB CDC (Virtual COM Port)**
-> **Firmware**: [`Core/Inc/tue_acsi.h`](../Core/Inc/tue_acsi.h), [`Core/Src/tue_acsi.c`](../Core/Src/tue_acsi.c)
-> **Host library**: [`python/tue_acsi`](../python/tue_acsi)
-> **Related**: [`docs/MEMORY_TABLE.md`](MEMORY_TABLE.md), [`docs/STS3215_INSTRUCTION.md`](STS3215_INSTRUCTION.md)
+> **Firmware**: [`Core/Inc/tue_acsi.h`](../Core/Inc/tue_acsi.h), [`Core/Src/tue_acsi.c`](../Core/Src/tue_acsi.c) (legacy)
+> **Host library**: `python/tue_acsi` (removed; see `python/tue_usb`)
+> **Related**: [`docs/USB_BINARY_PROTOCOL.md`](USB_BINARY_PROTOCOL.md), [`docs/MEMORY_TABLE.md`](MEMORY_TABLE.md), [`docs/STS3215_INSTRUCTION.md`](STS3215_INSTRUCTION.md)
 
 ---
 

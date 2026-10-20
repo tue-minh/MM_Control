@@ -1,565 +1,206 @@
-"""Unit tests for the ACSI protocol and client.
-
-No hardware and no ``pyserial`` needed: the client runs against an in-memory
-fake serial port.
+"""
+Comprehensive unit tests for the TUE USB Binary Protocol library.
 """
 
 import os
-import re
 import sys
-import types
 import unittest
+import struct
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Ensure parent directory (python/) is in sys.path when test script is executed directly
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
 
-from tue_acsi.defs import (  # noqa: E402
-    Code,
-    Dir,
-    ServoFault,
-    ServoField,
-    StepField,
-    StepId,
-    SysField,
-    Target,
+from tue_usb import (
+    CanId,
+    ErrorCode,
+    Frame,
+    FrameParser,
+    FrameType,
+    LedState,
+    PositionXYZ,
+    ServoMode,
+    ServoTorque,
+    TueUsbClient,
+    crc8_sae_j1850,
+    crc8_selftest,
+    is_reserved_can_id,
     mm_to_um,
     um_to_mm,
-)
-from tue_acsi.exceptions import (  # noqa: E402
-    AcsiDeviceError,
-    AcsiFormatError,
-    AcsiTimeout,
-)
-from tue_acsi.protocol import (  # noqa: E402
-    build_body,
-    decode,
-    encode,
-    encode_line,
+    Decoders,
+    Encoders,
 )
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-ACSI_HEADER = os.path.join(REPO_ROOT, "Core", "Inc", "tue_acsi.h")
 
+class TestProtocol(unittest.TestCase):
 
-def firmware_enum(type_name: str):
-    """Parse ``typedef enum { ... } <type_name>;`` out of the firmware header.
+    def test_01_crc8_selftest(self):
+        """Validate SAE J1850 CRC-8 implementation."""
+        self.assertTrue(crc8_selftest())
+        self.assertEqual(crc8_sae_j1850(b"123456789"), 0x4B)
+        self.assertEqual(crc8_sae_j1850(b""), 0x00)
 
-    Used to prove the host-side enums cannot drift away from the C ones.
-    """
-    with open(ACSI_HEADER, encoding="utf-8", errors="replace") as handle:
-        text = handle.read()
-    end = text.index(f"}} {type_name};")
-    begin = text.rindex("typedef enum {", 0, end)
-    members = {}
-    for line in text[begin:end].splitlines():
-        line = re.sub(r"/\*.*?\*/", "", line).strip().rstrip(",")
-        if "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        key, value = key.strip(), value.strip()
-        if key and value.isdigit():
-            members[key] = int(value)
-    return members
+    def test_02_reserved_can_ids(self):
+        """Firmware rule: no internal command may use 0x3..."""
+        self.assertTrue(is_reserved_can_id(0x300))
+        self.assertTrue(is_reserved_can_id(0x350))
+        self.assertTrue(is_reserved_can_id(0x3FF))
+        self.assertTrue(is_reserved_can_id(0x3000))
+        self.assertTrue(is_reserved_can_id(0x3ABC))
+        self.assertTrue(is_reserved_can_id(0x30000000))
 
+        # Check that none of the defined CanId enum values are reserved
+        for cid in CanId:
+            self.assertFalse(
+                is_reserved_can_id(cid.value),
+                f"CanId {cid.name} (0x{cid.value:X}) collides with reserved range!"
+            )
 
-# SYS INFO response: board "MM_Control", fw "1.0", sent as literal text.
-INFO_BODY = "4 0 0 MM_Control 1.0"
-
-
-class TestEncoding(unittest.TestCase):
-    def test_build_body(self):
-        self.assertEqual(
-            build_body(Target.SERVO, 1, Dir.SET, ServoField.POS, 2048),
-            "1 1 1 2 2048",
+    def test_03_frame_roundtrip(self):
+        """Serialize and deserialize a Frame and check byte exactness."""
+        f = Frame(
+            frame_type=FrameType.REQ,
+            can_id=CanId.SYS_PING,
+            payload=b"\x12\x34\x56\x78",
+            seq=42
         )
-
-    def test_encode_line_has_no_checksum(self):
-        self.assertEqual(
-            encode_line(Target.SERVO, 1, Dir.GET, ServoField.PING),
-            "1 1 0 1",
-        )
-
-    def test_encode_bytes_terminator(self):
-        self.assertEqual(
-            encode(Target.SYS, 0, Dir.SET, SysField.LED, 0, 1),
-            b"4 0 1 6 0 1\n",
-        )
-
-    def test_requests_are_numbers_only(self):
-        line = encode_line(Target.SERVO, 2, Dir.SET, ServoField.POS, 2048)
-        self.assertTrue(all(part.lstrip("-").isdigit() for part in line.split()))
-
-
-class TestDecoding(unittest.TestCase):
-    def test_decode_ok(self):
-        resp = decode("1 1 0 2048")
-        self.assertTrue(resp.ok)
-        self.assertEqual((resp.target, resp.device_id), (1, 1))
-        self.assertEqual(resp.payload, [2048])
-        self.assertEqual(resp.value, 2048)
-
-    def test_decode_feedback(self):
-        resp = decode("1 1 0 2048 0 0 120 30 0 0 0")
-        self.assertEqual(resp.payload, [2048, 0, 0, 120, 30, 0, 0, 0])
-
-    def test_decode_error_frame(self):
-        resp = decode("1 1 6")
-        self.assertFalse(resp.ok)
-        self.assertEqual(resp.error_code, 6)
-        self.assertEqual(resp.error_name, "BUS_TIMEOUT")
-
-    def test_decode_info_text(self):
-        resp = decode(INFO_BODY)
-        self.assertEqual(resp.payload, ["MM_Control", "1.0"])
-
-    def test_decode_strips_line_ending(self):
-        self.assertEqual(decode("1 1 0 1\r\n").payload, [1])
-
-    def test_non_numeric_header_raises(self):
-        with self.assertRaises(AcsiFormatError):
-            decode("SERVO 1 0 2")
-
-    def test_truncated_raises(self):
-        with self.assertRaises(AcsiFormatError):
-            decode("1 1")
-
-
-class FakeSerial:
-    """Minimal in-memory stand-in for ``serial.Serial``."""
-
-    def __init__(self, *_args, **_kwargs):
-        self.written = bytearray()
-        self._resp = bytearray()
-
-    def queue(self, line: str) -> None:
-        self._resp += (line + "\n").encode("ascii")
-
-    def write(self, data: bytes) -> int:
-        self.written += data
-        return len(data)
-
-    def read(self, size: int = 1) -> bytes:
-        if not self._resp:
-            return b""
-        out = bytes(self._resp[:size])
-        del self._resp[:size]
-        return out
-
-    def reset_input_buffer(self) -> None:  # keep queued data for the test
-        pass
-
-    def flush(self) -> None:
-        pass
-
-    def close(self) -> None:
-        pass
-
-
-class TestClientAgainstFakeSerial(unittest.TestCase):
-    def setUp(self):
-        self.fake = FakeSerial()
-        module = types.ModuleType("serial")
-        module.Serial = lambda *_a, **_k: self.fake
-        sys.modules["serial"] = module
-
-        from tue_acsi.client import AcsiClient
-
-        self.client = AcsiClient("FAKE")
-
-    def test_request_bytes_and_parse(self):
-        self.fake.queue("1 1 0 1")
-        self.assertEqual(self.client.servo_ping(1), 1)
-        self.assertEqual(bytes(self.fake.written), b"1 1 0 1\n")
-
-    def test_set_pos_request_bytes(self):
-        self.fake.queue("1 1 0 2048")
-        self.assertEqual(self.client.servo_set_pos(2048, 1), 2048)
-        self.assertEqual(bytes(self.fake.written), b"1 1 1 2 2048\n")
-
-    def test_device_error_raised(self):
-        self.fake.queue("1 1 6")
-        with self.assertRaises(AcsiDeviceError) as ctx:
-            self.client.servo_get_pos(1)
-        self.assertEqual(ctx.exception.code, 6)
-        self.assertEqual(ctx.exception.name, "BUS_TIMEOUT")
-
-    def test_sys_info_reads_text(self):
-        self.fake.queue(INFO_BODY)
-        self.assertEqual(self.client.sys_info(), {"board": "MM_Control", "fw": "1.0"})
-
-
-class TestStepProtocol(unittest.TestCase):
-    """Codes, units and frames of the STEP target (tue_stepper over ACSI)."""
-
-    def test_field_codes_match_firmware(self):
-        # must stay in sync with tue_acsi_step_field_t in Core/Inc/tue_acsi.h
-        self.assertEqual([int(f) for f in StepField], list(range(1, 18)))
-        self.assertEqual([int(i) for i in StepId], [0, 1, 2, 3])
-        self.assertEqual(int(StepField.INFO), 1)
-        self.assertEqual(int(StepField.MOVE), 6)
-        self.assertEqual(int(StepField.MOVE2D), 7)
-        self.assertEqual(int(StepField.MOVEZ), 8)
-        self.assertEqual(int(StepField.JOG), 10)
-        self.assertEqual(int(StepField.STOP), 12)
-        self.assertEqual(int(StepField.ABORT), 13)
-        self.assertEqual(int(StepField.STEPS), 15)
-        self.assertEqual(int(StepField.RAW), 16)
-        self.assertEqual(int(StepField.WAIT), 17)
-        self.assertEqual(int(StepId.TOOL), 0)
-        self.assertEqual(int(StepId.M1), 1)
-        self.assertEqual(int(StepId.M2), 2)
-        self.assertEqual(int(StepId.M3), 3)
-
-    def test_error_codes_match_firmware(self):
-        # tue_acsi_code_t: 12 QUEUE_FULL, 13 TIMEOUT
-        self.assertEqual(int(Code.QUEUE_FULL), 12)
-        self.assertEqual(int(Code.TIMEOUT), 13)
-        self.assertEqual(Code(12).name, "QUEUE_FULL")
-        self.assertEqual(Code(13).name, "TIMEOUT")
-
-    def test_mm_um_conversion(self):
-        self.assertEqual(mm_to_um(50.0), 50000)
-        self.assertEqual(mm_to_um(-2.5), -2500)
-        self.assertEqual(mm_to_um(0.0), 0)
-        self.assertEqual(mm_to_um(0.003125), 3)   # one XY step (320 steps/mm)
-        self.assertEqual(mm_to_um(0.000625), 1)   # one Z step (1600 steps/mm)
-        self.assertEqual(um_to_mm(50000), 50.0)
-        self.assertEqual(um_to_mm(-320), -0.32)
-        self.assertEqual(um_to_mm(mm_to_um(12.345)), 12.345)
-
-    def test_move_frame_is_numbers_only(self):
-        line = encode_line(
-            Target.STEP,
-            StepId.TOOL,
-            Dir.SET,
-            StepField.MOVE,
-            mm_to_um(50.0),
-            mm_to_um(30.0),
-            mm_to_um(10.0),
-            mm_to_um(60.0),
-            mm_to_um(600.0),
-        )
-        self.assertEqual(line, "2 0 1 6 50000 30000 10000 60000 600000")
-        self.assertTrue(all(part.lstrip("-").isdigit() for part in line.split()))
-
-    def test_raw_frame_addresses_one_motor(self):
-        line = encode_line(
-            Target.STEP,
-            StepId.M1,
-            Dir.SET,
-            StepField.RAW,
-            3200,
-            mm_to_um(20.0),
-            mm_to_um(200.0),
-        )
-        self.assertEqual(line, "2 1 1 16 3200 20000 200000")
-
-    @unittest.skipUnless(os.path.exists(ACSI_HEADER), "firmware header not available")
-    def test_field_codes_match_c_header(self):
-        members = firmware_enum("tue_acsi_step_field_t")
-        self.assertEqual(len(members), len(StepField))
-        for name, value in members.items():
-            short = name[len("TUE_ACSI_STEP_"):]
-            self.assertEqual(int(StepField[short]), value, name)
-
-    @unittest.skipUnless(os.path.exists(ACSI_HEADER), "firmware header not available")
-    def test_error_codes_match_c_header(self):
-        members = firmware_enum("tue_acsi_code_t")
-        self.assertEqual(len(members), len(Code))
-        for name, value in members.items():
-            short = name[len("TUE_ACSI_ERR_"):] if name.startswith("TUE_ACSI_ERR_") \
-                else name[len("TUE_ACSI_"):]
-            self.assertEqual(int(Code[short]), value, name)
-
-    @unittest.skipUnless(os.path.exists(ACSI_HEADER), "firmware header not available")
-    def test_target_codes_match_c_header(self):
-        members = firmware_enum("tue_acsi_target_t")
-        for name, value in members.items():
-            short = name[len("TUE_ACSI_TARGET_"):]
-            self.assertEqual(int(Target[short]), value, name)
-
-    def test_all_ids_are_numbers_only(self):
-        # request frames must never carry text, whatever the frame says
-        for motor in (StepId.M1, StepId.M2, StepId.M3):
-            line = encode_line(Target.STEP, motor, Dir.GET, StepField.STEPS)
-            self.assertTrue(all(part.lstrip("-").isdigit() for part in line.split()))
-
-
-class TestStepClientAgainstFakeSerial(unittest.TestCase):
-    """Exact request bytes and response decoding for the STEP target."""
-
-    def setUp(self):
-        self.fake = FakeSerial()
-        module = types.ModuleType("serial")
-        module.Serial = lambda *_a, **_k: self.fake
-        sys.modules["serial"] = module
-
-        from tue_acsi.client import AcsiClient
-
-        self.client = AcsiClient("FAKE")
-
-    def assert_sent(self, expected: str) -> None:
-        """Assert the whole request line."""
-        self.assertEqual(bytes(self.fake.written), (expected + "\n").encode("ascii"))
-
-    def sent_body(self) -> str:
-        """The request line as written (trailing newline removed)."""
-        return bytes(self.fake.written).decode("ascii").strip()
-
-    # -- moves ---------------------------------------------------------------
-    def test_move_request_bytes_and_echo(self):
-        self.fake.queue("2 0 0 50000 30000 10000")
-        pos = self.client.step_move(50.0, 30.0, 10.0, feed=60.0, accel=600.0)
-        self.assert_sent("2 0 1 6 50000 30000 10000 60000 600000")
-        self.assertEqual(pos, {"x": 50.0, "y": 30.0, "z": 10.0})
-
-    def test_move_xy_request_bytes(self):
-        self.fake.queue("2 0 0 20000 20000")
-        self.assertEqual(
-            self.client.step_move_xy(20.0, 20.0, feed=30.0, accel=300.0),
-            {"x": 20.0, "y": 20.0},
-        )
-        self.assert_sent("2 0 1 7 20000 20000 30000 300000")
-
-    def test_move_z_request_bytes(self):
-        self.fake.queue("2 0 0 15000")
-        self.assertEqual(self.client.step_move_z(15.0, feed=10.0, accel=200.0), 15.0)
-        self.assert_sent("2 0 1 8 15000 10000 200000")
-
-    def test_move_rel_request_bytes(self):
-        self.fake.queue("2 0 0 -5000 5000")
-        self.assertEqual(
-            self.client.step_move_rel(-5.0, 5.0, feed=30.0, accel=300.0),
-            {"x": -5.0, "y": 5.0},
-        )
-        self.assertEqual(self.sent_body(), "2 0 1 9 -5000 5000 30000 300000")
-
-    # -- jogs ----------------------------------------------------------------
-    def test_jog_x_request_bytes(self):
-        self.fake.queue("2 0 0 20000 0")
-        self.assertEqual(self.client.step_jog_x(20.0, accel=500.0), {"x": 20.0, "y": 0.0})
-        self.assertEqual(self.sent_body(), "2 0 1 10 20000 0 500000")
-
-    def test_jog_z_keeps_the_sign(self):
-        self.fake.queue("2 0 0 -5000")
-        self.assertEqual(self.client.step_jog_z(-5.0, accel=300.0), -5.0)
-        self.assert_sent("2 0 1 11 -5000 300000")
-
-    # -- stops ---------------------------------------------------------------
-    def test_stop_and_abort_request_bytes(self):
-        self.fake.queue("2 0 0 1")
-        self.assertEqual(self.client.step_stop(), 1)
-        self.assert_sent("2 0 1 12")
-
-        self.fake.written.clear()
-        self.fake.queue("2 0 0 0")
-        self.assertEqual(self.client.step_abort(), 0)
-        self.assert_sent("2 0 1 13")
-
-    # -- queries -------------------------------------------------------------
-    def test_position_decodes_um_to_mm(self):
-        self.fake.queue("2 0 0 50000 30000 10000")
-        self.assertEqual(self.client.step_position(), {"x": 50.0, "y": 30.0, "z": 10.0})
-        self.assertEqual(self.sent_body(), "2 0 0 2")
-
-    def test_target_uses_its_own_field(self):
-        self.fake.queue("2 0 0 50000 30000 10000")
-        self.assertEqual(self.client.step_target()["y"], 30.0)
-        self.assertEqual(self.sent_body(), "2 0 0 3")
-
-    def test_info_parsing(self):
-        self.fake.queue("2 0 0 320 1600 400 50000")
-        self.assertEqual(
-            self.client.step_info(),
-            {
-                "xy_steps_per_mm": 320,
-                "z_steps_per_mm": 1600,
-                "min_rate": 400,
-                "max_rate": 50000,
-            },
-        )
-        self.assertEqual(self.sent_body(), "2 0 0 1")
-
-    def test_status_and_busy(self):
-        self.fake.queue("2 0 0 1 1")
-        self.assertEqual(self.client.step_status(), {"busy": 1, "enabled": 1})
-        self.assertEqual(self.sent_body(), "2 0 0 4")
-
-        self.fake.written.clear()
-        self.fake.queue("2 0 0 0 1")
-        self.assertFalse(self.client.step_is_busy())
-
-    def test_enable_request_bytes(self):
-        self.fake.queue("2 0 0 1")
-        self.assertEqual(self.client.step_enable(True), 1)
-        self.assert_sent("2 0 1 5 1")
-
-        self.fake.written.clear()
-        self.fake.queue("2 0 0 0")
-        self.assertEqual(self.client.step_enable(False), 0)
-        self.assertEqual(self.sent_body(), "2 0 1 5 0")
-
-    # -- per-motor -----------------------------------------------------------
-    def test_motor_steps_addresses_the_motor(self):
-        self.fake.queue("2 3 0 -8000")
-        self.assertEqual(self.client.step_motor_steps(StepId.M3), -8000)
-        self.assert_sent("2 3 0 15")
-
-    def test_raw_move_request_bytes(self):
-        self.fake.queue("2 1 0 3200")
-        self.assertEqual(self.client.step_raw(StepId.M1, 3200, 20.0, 200.0), 3200)
-        self.assert_sent("2 1 1 16 3200 20000 200000")
-
-    def test_set_position_request_bytes(self):
-        self.fake.queue("2 0 0 0 0 0")
-        self.assertEqual(
-            self.client.step_set_position(0.0, 0.0, 0.0),
-            {"x": 0.0, "y": 0.0, "z": 0.0},
-        )
-        self.assert_sent("2 0 1 14 0 0 0")
-
-    # -- wait ----------------------------------------------------------------
-    def test_wait_returns_elapsed_ms(self):
-        self.fake.queue("2 0 0 412")
-        self.assertEqual(self.client.step_wait(5000), 412)
-        self.assert_sent("2 0 1 17 5000")
-
-    def test_wait_forever_still_sends_the_argument(self):
-        self.fake.queue("2 0 0 0")
-        self.assertEqual(self.client.step_wait(), 0)
-        self.assertEqual(self.sent_body(), "2 0 1 17 0")
-
-    def test_wait_read_deadline_is_used(self):
-        # nothing queued: the client must give up after the requested deadline
-        with self.assertRaises(AcsiTimeout):
-            self.client.step_wait(5000, read_timeout=0.05)
-
-    # -- errors --------------------------------------------------------------
-    def test_queue_full_reported(self):
-        self.fake.queue("2 0 12")
-        with self.assertRaises(AcsiDeviceError) as ctx:
-            self.client.step_move(1.0, 2.0, 3.0, feed=10.0, accel=100.0)
-        self.assertEqual(ctx.exception.code, 12)
-        self.assertEqual(ctx.exception.name, "QUEUE_FULL")
-
-    def test_bad_argument_reported(self):
-        self.fake.queue("2 0 5")
-        with self.assertRaises(AcsiDeviceError) as ctx:
-            self.client.step_move(1.0, 2.0, 3.0, feed=0.0, accel=0.0)
-        self.assertEqual(ctx.exception.name, "BAD_ARG")
-
-    def test_wait_timeout_reported(self):
-        self.fake.queue("2 0 13")
-        with self.assertRaises(AcsiDeviceError) as ctx:
-            self.client.step_wait(10)
-        self.assertEqual(ctx.exception.name, "TIMEOUT")
-
-    def test_busy_reported(self):
-        self.fake.queue("2 0 9")
-        with self.assertRaises(AcsiDeviceError) as ctx:
-            self.client.step_move(1.0, 2.0, 3.0, feed=10.0, accel=100.0)
-        self.assertEqual(ctx.exception.name, "BUSY")
-
-
-class TestServoClientAgainstFakeSerial(unittest.TestCase):
-    """Exact request bytes for the full SERVO field set (tue_sts3215 over ACSI)."""
-
-    def setUp(self):
-        self.fake = FakeSerial()
-        module = types.ModuleType("serial")
-        module.Serial = lambda *_a, **_k: self.fake
-        sys.modules["serial"] = module
-
-        from tue_acsi.client import AcsiClient
-
-        self.client = AcsiClient("FAKE")
-
-    def sent_body(self) -> str:
-        """The request line as written (trailing newline removed)."""
-        return bytes(self.fake.written).decode("ascii").strip()
-
-    def test_set_acc(self):
-        self.fake.queue("1 1 0 50")
-        self.assertEqual(self.client.servo_set_acc(50, 1), 50)
-        self.assertEqual(self.sent_body(), "1 1 1 4 50")
-
-    def test_get_acc(self):
-        self.fake.queue("1 1 0 50")
-        self.assertEqual(self.client.servo_get_acc(1), 50)
-        self.assertEqual(self.sent_body(), "1 1 0 4")
-
-    def test_get_torque(self):
-        self.fake.queue("1 1 0 1")
-        self.assertEqual(self.client.servo_get_torque(1), 1)
-        self.assertEqual(self.sent_body(), "1 1 0 5")
-
-    def test_torque_limit_roundtrip(self):
-        self.fake.queue("1 1 0 1000")
-        self.assertEqual(self.client.servo_set_torque_limit(1000, 1), 1000)
-        self.assertEqual(self.sent_body(), "1 1 1 6 1000")
-
-        self.fake.written.clear()
-        self.fake.queue("1 1 0 1000")
-        self.assertEqual(self.client.servo_get_torque_limit(1), 1000)
-        self.assertEqual(self.sent_body(), "1 1 0 6")
-
-    def test_mode_get(self):
-        self.fake.queue("1 1 0 0")
-        self.assertEqual(self.client.servo_get_mode(1), 0)
-        self.assertEqual(self.sent_body(), "1 1 0 7")
-
-    def test_pwm_signed(self):
-        self.fake.queue("1 1 0 -500")
-        self.assertEqual(self.client.servo_set_pwm(-500, 1), -500)
-        self.assertEqual(self.sent_body(), "1 1 1 8 -500")
-
-    def test_id_roundtrip(self):
-        self.fake.queue("1 1 0 3")
-        self.assertEqual(self.client.servo_set_id(3, 1), 3)
-        self.assertEqual(self.sent_body(), "1 1 1 11 3")
-
-    def test_baud_roundtrip(self):
-        self.fake.queue("1 1 0 0")
-        self.assertEqual(self.client.servo_set_baud(0, 1), 0)
-        self.assertEqual(self.sent_body(), "1 1 1 12 0")
-
-    def test_limits_returns_tuple(self):
-        self.fake.queue("1 1 0 0 4095")
-        self.assertEqual(self.client.servo_get_limits(1), (0, 4095))
-        self.assertEqual(self.sent_body(), "1 1 0 13")
-
-    def test_set_limits_bytes(self):
-        self.fake.queue("1 1 0 0")
-        self.assertEqual(self.client.servo_set_limits(0, 4095, 1), 0)
-        self.assertEqual(self.sent_body(), "1 1 1 13 0 4095")
-
-    def test_scalar_reads(self):
-        for field, method in (
-            (14, "servo_get_temp"),
-            (15, "servo_get_volt"),
-            (16, "servo_get_load"),
-            (17, "servo_get_current"),
-        ):
-            self.fake.written.clear()
-            self.fake.queue("1 1 0 42")
-            self.assertEqual(getattr(self.client, method)(1), 42)
-            self.assertEqual(self.sent_body(), f"1 1 0 {field}")
-
-    def test_moving(self):
-        self.fake.queue("1 1 0 1")
-        self.assertTrue(self.client.servo_is_moving(1))
-        self.assertEqual(self.sent_body(), "1 1 0 19")
-
-    def test_reset(self):
-        self.fake.queue("1 1 0 1")
-        self.assertEqual(self.client.servo_reset(1), 1)
-        self.assertEqual(self.sent_body(), "1 1 1 20")
-
-    def test_fault_mask(self):
-        self.assertEqual(int(ServoFault.OVERLOAD), 0x20)
-        faults = ServoFault(0x21)
-        self.assertIn(ServoFault.VOLTAGE, faults)
-        self.assertIn(ServoFault.OVERLOAD, faults)
-        self.assertNotIn(ServoFault.SENSOR, faults)
+        raw = f.to_bytes()
+
+        self.assertEqual(raw[0], 0xAA)
+        self.assertEqual(raw[1], 0x55)
+        self.assertEqual(raw[-2], 0x55)
+        self.assertEqual(raw[-1], 0xAA)
+        self.assertEqual(len(raw), 12 + 4)  # 16 bytes
+
+        parsed = Frame.from_bytes(raw)
+        self.assertEqual(parsed.frame_type, FrameType.REQ)
+        self.assertEqual(parsed.can_id, CanId.SYS_PING)
+        self.assertEqual(parsed.payload, b"\x12\x34\x56\x78")
+        self.assertEqual(parsed.seq, 42)
+        self.assertTrue(parsed.is_crc_valid())
+
+    def test_04_stream_parser_fuzz_and_resync(self):
+        """Test stream parser recovery over noisy, fragmented, or concatenated bytes."""
+        parser = FrameParser()
+
+        f1 = Frame(FrameType.REQ, CanId.SYS_INFO, b"", seq=1)
+        f2 = Frame(FrameType.REQ, CanId.STEP_GET_POS_XY, b"", seq=2)
+
+        garbage = b"\x00\xFF\xAA\xAA\x12\x34\x55\xAA\x01\x02\x03"
+        stream = garbage + f1.to_bytes() + b"\xDE\xAD" + f2.to_bytes() + b"\xBE\xEF"
+
+        # Feed 1 byte at a time to test fragmentation
+        frames = []
+        for b in stream:
+            res = parser.feed_byte(b)
+            if res is not None:
+                frames.append(res)
+
+        self.assertEqual(len(frames), 2)
+        self.assertEqual(frames[0].can_id, CanId.SYS_INFO)
+        self.assertEqual(frames[0].seq, 1)
+        self.assertEqual(frames[1].can_id, CanId.STEP_GET_POS_XY)
+        self.assertEqual(frames[1].seq, 2)
+
+    def test_05_payload_encoders_decoders(self):
+        """Verify SYS, STEP, and SERVO payload packing/unpacking."""
+        # 1. System
+        p_ping = Encoders.sys_ping(0xCAFEBABE)
+        self.assertEqual(Decoders.sys_ping(p_ping), 0xCAFEBABE)
+
+        raw_info = struct.pack("<BBBB I", 1, 2, 3, 4, 0x12345678)
+        info = Decoders.sys_info(raw_info)
+        self.assertEqual(info.hw_id, 1)
+        self.assertEqual(info.hw_rev, 2)
+        self.assertEqual(info.fw_major, 3)
+        self.assertEqual(info.fw_minor, 4)
+        self.assertEqual(info.build_flags, 0x12345678)
+
+        # 2. Stepper
+        p_xy = Encoders.step_move_xy(12.345, -67.890)
+        x, y = Decoders.step_pos_xy(p_xy)
+        self.assertAlmostEqual(x, 12.345, places=3)
+        self.assertAlmostEqual(y, -67.890, places=3)
+
+        p_z = Encoders.step_move_z(45.678, feed_mm_s=25, accel_mm_s2=250)
+        z = Decoders.step_pos_z(p_z)
+        self.assertAlmostEqual(z, 45.678, places=3)
+
+        # 3. Servo
+        p_spos = Encoders.servo_set_pos(1, pos=2048, speed=500, accel=30)
+        self.assertEqual(len(p_spos), 6)
+        s_id_req, accel_req, pos_req, spd_req = struct.unpack("<BBhh", p_spos)
+        self.assertEqual(s_id_req, 1)
+        self.assertEqual(accel_req, 30)
+        self.assertEqual(pos_req, 2048)
+        self.assertEqual(spd_req, 500)
+
+        # Test response decoder
+        resp_spos = struct.pack("<Bh", 1, 2048)
+        s_id, pos = Decoders.servo_pos(resp_spos)
+        self.assertEqual(s_id, 1)
+        self.assertEqual(pos, 2048)
+
+        # Dual telemetry frames
+        raw_dyn = struct.pack("<BhhhB", 1, 2048, 120, -350, 1)
+        dyn = Decoders.servo_fb_dynamics(raw_dyn)
+        self.assertEqual(dyn.servo_id, 1)
+        self.assertEqual(dyn.position, 2048)
+        self.assertEqual(dyn.speed, 120)
+        self.assertEqual(dyn.load_raw, -350)
+        self.assertAlmostEqual(dyn.load_percent, -35.0, places=1)
+        self.assertTrue(dyn.is_moving)
+
+        raw_hlt = struct.pack("<BBbBhH", 1, 118, 38, 0x01, 250, 0)
+        hlt = Decoders.servo_fb_health(raw_hlt)
+        self.assertEqual(hlt.servo_id, 1)
+        self.assertAlmostEqual(hlt.voltage_v, 11.8, places=1)
+        self.assertEqual(hlt.temperature_c, 38)
+        self.assertEqual(hlt.current_ma, 250)
+        self.assertIn("VOLTAGE", hlt.alarms)
+
+    def test_06_mock_client_transactions(self):
+        """Verify TueUsbClient high-level API in mock mode."""
+        with TueUsbClient(mock=True) as client:
+            self.assertTrue(client.is_connected())
+
+            # System
+            echo_tok = client.ping(0xAABBCCDD)
+            self.assertEqual(echo_tok, 0xAABBCCDD)
+
+            info = client.get_info()
+            self.assertEqual(info.hw_id, 1)
+
+            uid = client.get_uid()
+            self.assertEqual(uid.hex_string, "11223344-55667788-99AABBCC")
+
+            led_state = client.set_led(0, LedState.ON)
+            self.assertEqual(led_state, 1)
+
+            # Stepper
+            cfg = client.step_get_config()
+            self.assertEqual(cfg.xy_steps_per_mm, 80)
+
+            client.step_setpos_xy(10.0, 20.0)
+            x, y = client.step_get_pos_xy()
+            self.assertAlmostEqual(x, 10.0, places=3)
+            self.assertAlmostEqual(y, 20.0, places=3)
+
+            client.step_move_rel_xy(5.0, -2.0)
+            x, y = client.step_get_pos_xy()
+            self.assertAlmostEqual(x, 15.0, places=3)
+            self.assertAlmostEqual(y, 18.0, places=3)
+
+            # Servo
+            client.servo_set_pos(1, 1500)
+            self.assertEqual(client.servo_get_pos(1), 1500)
+
+            fb = client.servo_get_feedback(1)
+            self.assertEqual(fb.dynamics.servo_id, 1)
+            self.assertEqual(fb.dynamics.position, 1500)
+            self.assertAlmostEqual(fb.health.voltage_v, 12.0, places=1)
 
 
 if __name__ == "__main__":

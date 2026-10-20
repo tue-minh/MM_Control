@@ -33,6 +33,7 @@
 
 #include <math.h>
 #include <string.h>
+#include "cmsis_os2.h"
 
 /* Private defines -----------------------------------------------------------*/
 #define TUE_STEPPER_USE_DWT 1
@@ -59,6 +60,8 @@ static tue_stepper_segment_t s_queue[TUE_STEPPER_QUEUE_SIZE];
 static volatile uint8_t      s_head = 0U;
 static volatile uint8_t      s_tail = 0U;
 static volatile bool         s_running = false;
+static osSemaphoreId_t       s_idle_sem = NULL;
+static tue_stepper_idle_cb_t s_idle_cb  = NULL;
 
 /* Active segment state (ISR). */
 static int32_t  s_num[TUE_STEPPER_MOTOR_COUNT];
@@ -235,6 +238,12 @@ static void stepper_advance(void)
     /* Nothing else queued: shut the step clock down. */
     s_running = false;
     HAL_TIM_Base_Stop_IT(&htim1);
+    if (s_idle_sem != NULL) {
+        (void)osSemaphoreRelease(s_idle_sem);
+    }
+    if (s_idle_cb != NULL) {
+        s_idle_cb();
+    }
 }
 
 static void stepper_isr(void)
@@ -369,6 +378,9 @@ static tue_stepper_status_t stepper_plan_enqueue(const int32_t dsteps[TUE_STEPPE
 
     if (!s_running) {
         s_running = true;
+        if (s_idle_sem != NULL) {
+            (void)osSemaphoreAcquire(s_idle_sem, 0U);
+        }
         stepper_load_segment(s_tail);
         stepper_set_interval();
         HAL_TIM_Base_Start_IT(&htim1);
@@ -502,7 +514,17 @@ void tue_stepper_init(void)
     (void)HAL_TIM_Base_Init(&htim1);
     __HAL_TIM_SET_COUNTER(&htim1, 0U);
 
+    if (s_idle_sem == NULL) {
+        const osSemaphoreAttr_t sem_attr = { .name = "step_idle" };
+        s_idle_sem = osSemaphoreNew(1U, 1U, &sem_attr);
+    }
+
     s_initialized = true;
+}
+
+void tue_stepper_set_idle_callback(tue_stepper_idle_cb_t cb)
+{
+    s_idle_cb = cb;
 }
 
 void tue_stepper_enable(bool enable)
@@ -826,6 +848,13 @@ void tue_stepper_abort(void)
         s_cmd_steps[i] = s_pos_steps[i];
     }
 
+    if (s_idle_sem != NULL) {
+        (void)osSemaphoreRelease(s_idle_sem);
+    }
+    if (s_idle_cb != NULL) {
+        s_idle_cb();
+    }
+
     __set_PRIMASK(primask);
 }
 
@@ -836,14 +865,23 @@ bool tue_stepper_is_busy(void)
     return s_running;
 }
 
+uint8_t tue_stepper_queue_depth(void)
+{
+    return (uint8_t)((s_head + TUE_STEPPER_QUEUE_SIZE - s_tail) % TUE_STEPPER_QUEUE_SIZE);
+}
+
 tue_stepper_status_t tue_stepper_wait_idle(uint32_t timeout_ms)
 {
-    uint32_t start = HAL_GetTick();
-    while (s_running) {
-        if ((timeout_ms != 0U) && ((HAL_GetTick() - start) >= timeout_ms)) {
+    if (!s_running) {
+        return TUE_STEPPER_OK;
+    }
+    if (s_idle_sem != NULL && osKernelGetState() == osKernelRunning) {
+        uint32_t wait = (timeout_ms == 0U) ? osWaitForever : timeout_ms;
+        if (osSemaphoreAcquire(s_idle_sem, wait) != osOK) {
             return TUE_STEPPER_ERR_TIMEOUT;
         }
-        HAL_Delay(1U);
+        (void)osSemaphoreRelease(s_idle_sem);
+        return TUE_STEPPER_OK;
     }
     return TUE_STEPPER_OK;
 }

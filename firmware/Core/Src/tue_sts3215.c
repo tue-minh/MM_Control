@@ -43,6 +43,10 @@ static void sts_on_reply(const tue_sts3215_reply_t *reply, uint8_t reply_idx,
     if (status == TUE_STS3215_PROTO_ERR_SERVO_FAULT) {
         dev->xfer_status = TUE_STS3215_ERR_STATUS;
     }
+
+    if (dev->sem != NULL) {
+        (void)osSemaphoreRelease(dev->sem);
+    }
 }
 
 static void sts_on_error(tue_sts3215_hal_error_t err, void *ctx)
@@ -69,6 +73,10 @@ static void sts_on_error(tue_sts3215_hal_error_t err, void *ctx)
             break;
     }
     dev->xfer_done = true;
+
+    if (dev->sem != NULL) {
+        (void)osSemaphoreRelease(dev->sem);
+    }
 }
 
 /* Blocking transaction core -------------------------------------------------*/
@@ -76,26 +84,34 @@ static void sts_on_error(tue_sts3215_hal_error_t err, void *ctx)
 static tue_sts3215_status_t sts_wait(tue_sts3215_t *dev, bool expect_reply,
                                      uint8_t expected_replies, uint32_t timeout_ms)
 {
-    uint32_t start = HAL_GetTick();
-    for (;;) {
-        tue_sts3215_hal_process(&dev->hal);
-
-        if (!expect_reply) {
-            if (tue_sts3215_hal_is_idle(&dev->hal)) {
-                return TUE_STS3215_OK;
+    if (!expect_reply) {
+        uint32_t start = HAL_GetTick();
+        while (!tue_sts3215_hal_is_idle(&dev->hal)) {
+            if ((HAL_GetTick() - start) >= (timeout_ms + 1U)) {
+                tue_sts3215_hal_abort(&dev->hal);
+                return TUE_STS3215_ERR_TIMEOUT;
             }
-        } else if (dev->reply_count >= expected_replies) {
-            return dev->xfer_status;
-        } else if (dev->xfer_done) {
-            return dev->xfer_status; /* error path (timeout / DMA) */
+            if (dev->sem != NULL) {
+                (void)osSemaphoreAcquire(dev->sem, 1U);
+            }
         }
-
-        if ((HAL_GetTick() - start) >= (timeout_ms + 1U)) {
-            tue_sts3215_hal_abort(&dev->hal);
-            return TUE_STS3215_ERR_TIMEOUT;
-        }
-        osDelay(1U);
+        return TUE_STS3215_OK;
     }
+
+    /* Event-driven: wait for DMA RX complete interrupt to release the semaphore.
+     * ZERO polling, ZERO osDelay: task is suspended by RTOS until reply arrives. */
+    while ((dev->reply_count < expected_replies) && !dev->xfer_done) {
+        if (dev->sem != NULL) {
+            if (osSemaphoreAcquire(dev->sem, timeout_ms) != osOK) {
+                tue_sts3215_hal_abort(&dev->hal);
+                return TUE_STS3215_ERR_TIMEOUT;
+            }
+        } else {
+            tue_sts3215_hal_process(&dev->hal);
+        }
+    }
+
+    return dev->xfer_status;
 }
 
 static tue_sts3215_status_t sts_xact(tue_sts3215_t *dev,
@@ -229,6 +245,9 @@ tue_sts3215_status_t tue_sts3215_init(tue_sts3215_t *dev, UART_HandleTypeDef *hu
     tue_sts3215_hal_init(&dev->hal, huart, dev->timeout_ms,
                          sts_on_reply, sts_on_error, dev);
     tue_sts3215_hal_register_instance(&dev->hal);
+
+    const osSemaphoreAttr_t sem_attr = { .name = "sts_sem" };
+    dev->sem = osSemaphoreNew(1U, 0U, &sem_attr);
 
     if (s_default_dev == NULL) {
         s_default_dev = dev;

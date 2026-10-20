@@ -14,7 +14,7 @@
 
 ## 1. Overview & Architecture
 
-The **TUE STS3215 Driver** controls Feetech STS-series serial bus servos (such as the STS3215) on the STM32F407VET6. It is a three-layer port of the reference C library in `reference_for_sts325/`, wrapped by a blocking facade that stays API-compatible with the ACSI servo command set.
+The **TUE STS3215 Driver** controls Feetech STS-series serial bus servos (such as the STS3215) on the STM32F407VET6. It is a three-layer port of the reference C library in `reference_for_sts325/`, wrapped by a blocking facade that stays API-compatible with the TUE binary servo command set.
 
 ### Layer Map
 | Layer | Files | Depends on | Responsibility |
@@ -22,7 +22,7 @@ The **TUE STS3215 Driver** controls Feetech STS-series serial bus servos (such a
 | Registers | `Core/Inc/tue_sts3215_regs.h` | — | Register map, protocol constants, enums, fault masks, defaults, unit conversions |
 | Protocol | `Core/Inc/tue_sts3215_protocol.h`, `Core/Src/tue_sts3215_protocol.c` | `regs.h` + libc | Pure packet builders + reply parser (host-testable, zero STM32 dependency) |
 | HAL | `Core/Inc/tue_sts3215_hal.h`, `Core/Src/tue_sts3215_hal.c` | `main.h` | Async half-duplex DMA state machine + weak HAL callback overrides |
-| Facade | `Core/Inc/tue_sts3215.h`, `Core/Src/tue_sts3215.c` | all above + `cmsis_os2.h` | Typed, blocking API consumed by `tue_acsi.c` |
+| Facade | `Core/Inc/tue_sts3215.h`, `Core/Src/tue_sts3215.c` | all above + `cmsis_os2.h` | Typed, blocking API consumed by `tue_usb_binary.c` |
 
 ### Key Highlights
 - **Three clean layers**: register/protocol knowledge is `STM32`-free and unit-testable on a host; the HAL owns the hardware; the facade offers the ergonomic typed API.
@@ -307,3 +307,40 @@ Switch operating modes using `tue_sts3215_set_operation_mode(&g_servo_bus, id, m
    Open-loop voltage drive. Duty cycle -1000 to +1000 via `tue_sts3215_set_pwm_runtime`.
 4. **Stepper Servo Mode (`STS3215_MODE_STEPPER = 3`)**:
    Multi-turn continuous stepping with position tracking (-32766 to +32766 steps).
+
+---
+
+## 8. Host Communication (USB Binary Protocol)
+
+The servo bus is exposed over USB CDC through the **binary CAN-over-USB
+protocol** — see [`docs/USB_BINARY_PROTOCOL.md`](USB_BINARY_PROTOCOL.md) for the
+full spec. The STS3215 command set uses CAN IDs `0x400`–`0x415`:
+
+| CAN ID | Command | Facade call |
+|:--|:--|:--|
+| `0x400` | `SERVO_PING` | `tue_sts3215_ping` |
+| `0x401` | `SERVO_SET_POS` | `tue_sts3215_set_goal_position_ex` |
+| `0x402` | `SERVO_GET_POS` | `tue_sts3215_get_current_position` |
+| `0x403` | `SERVO_SET_SPEED` | `tue_sts3215_set_acceleration` + `tue_sts3215_set_running_speed` |
+| `0x404` | `SERVO_GET_SPEED` | `tue_sts3215_get_current_speed` |
+| `0x405` | `SERVO_TORQUE` | `tue_sts3215_enable_torque` / `tue_sts3215_calibrate_position_to_2048` |
+| `0x406` | `SERVO_TLIM` | `tue_sts3215_set_torque_limit` |
+| `0x407` | `SERVO_MODE` | `tue_sts3215_set_operation_mode` / `_get_` |
+| `0x408` | `SERVO_PWM` | `tue_sts3215_set_pwm_runtime` |
+| `0x410` | `SERVO_GET_FB` | `tue_sts3215_get_feedback` → **dual 8-byte burst** |
+| `0x412` | `SERVO_MEM_READ` | `tue_sts3215_read_raw` |
+| `0x413` | `SERVO_MEM_WRITE` | `tue_sts3215_write_raw` |
+| `0x414` | `SERVO_SET_ID` | `tue_sts3215_set_id` |
+| `0x415` | `SERVO_RESET` | `tue_sts3215_reset` |
+
+### Dual-frame telemetry burst (`SERVO_GET_FB`, `0x410`)
+
+`SERVO_GET_FB` answers with **two 8-byte frames sharing the request `SEQ`**:
+
+* `0x410 SERVO_FB_DYNAMICS` — `id u8, pos i16, spd i16, load i16, moving u8`
+* `0x411 SERVO_FB_HEALTH` — `id u8, volt u8 (0.1 V), temp i8 (°C), status u8, cur i16, res u16`
+
+The 15 bytes of actual telemetry (position, speed, load, voltage, temperature,
+status, current) arrive across the two frames; the `status` byte is the hardware
+error bitmask documented in §6. Host side, `TueUsbClient.servo_get_feedback()`
+reassembles both frames into one dictionary.

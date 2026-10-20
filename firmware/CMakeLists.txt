@@ -48,7 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/tue_sts3215_protocol.c
     Core/Src/tue_sts3215_hal.c
     Core/Src/tue_sts3215.c
-    Core/Src/tue_acsi.c
+    Core/Src/tue_usb_binary.c
     Core/Src/tue_stepper.c
 )
 

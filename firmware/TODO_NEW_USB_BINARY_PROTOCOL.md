@@ -210,7 +210,7 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
 ## 5. Implementation Roadmap & Action List
 
 ### Phase 1: Specifications & Protocol Module Definition (Firmware)
-- [ ] **Action 1.1**: Define header `Core/Inc/tue_usb_binary.h`:
+- [x] **Action 1.1**: Define header `Core/Inc/tue_usb_binary.h`:
   - Declare binary constants: `TUE_USB_SOF1 = 0xAA`, `TUE_USB_SOF2 = 0x55`, `TUE_USB_EOF1 = 0x55`, `TUE_USB_EOF2 = 0xAA`.
   - Declare enums for `FRAME_TYPE` (`REQ`, `RESP_OK`, `RESP_ERR`, `ASYNC_EVENT`).
   - Declare enums for Status/Error codes (`ERR_OK`, `ERR_CRC`, `ERR_BAD_FORMAT`, `ERR_UNKNOWN_CAN_ID`, etc.).
@@ -227,7 +227,7 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
         uint8_t  crc8;
     } tue_usb_frame_t;
     ```
-- [ ] **Action 1.2**: Implement CRC-8 SAE J1850 engine in `Core/Src/tue_usb_binary.c`:
+- [x] **Action 1.2**: Implement CRC-8 SAE J1850 engine in `Core/Src/tue_usb_binary.c`:
   - Embed 256-entry lookup table `s_crc8_table[256]` for single-cycle table lookup per byte.
   - Implement `uint8_t tue_usb_crc8(const uint8_t *data, size_t len)`.
   - Validate with known test vectors (`"123456789"` $\rightarrow$ `0x4B`).
@@ -235,14 +235,14 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
 ---
 
 ### Phase 2: Frame Parsing & State Machine Engine (Firmware)
-- [ ] **Action 2.1**: Implement defensive streaming state machine in `Core/Src/tue_usb_binary.c`:
+- [x] **Action 2.1**: Implement defensive streaming state machine in `Core/Src/tue_usb_binary.c`:
   ```
   STATE_WAIT_SOF1 -> STATE_WAIT_SOF2 -> STATE_HEADER -> STATE_PAYLOAD -> STATE_CRC -> STATE_EOF1 -> STATE_EOF2
   ```
   - State machine runs in FreeRTOS task context draining incoming ring buffer.
   - Tolerates arbitrary USB packet fragmentation, concatenation, and line noise.
   - Automatically resets to `STATE_WAIT_SOF1` if EOF bytes do not match `0x55 0xAA` or if CRC fails.
-- [ ] **Action 2.2**: Implement thread-safe USB transmit engine:
+- [x] **Action 2.2**: Implement thread-safe USB transmit engine:
   - Allocate static transmit buffer for frame generation.
   - Serialize frame: `[0xAA, 0x55, TYPE, ID_LE(4), DLC, SEQ, PAYLOAD(DLC), CRC8, 0x55, 0xAA]`.
   - Non-blocking transmit with retry/poll on `hcdc->TxState == 0` and RTOS delay.
@@ -251,14 +251,14 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
 ---
 
 ### Phase 3: Subsystem Command Dispatchers (Firmware)
-- [ ] **Action 3.1**: System Command Dispatcher (`0x100`–`0x107`):
+- [x] **Action 3.1**: System Command Dispatcher (`0x100`–`0x107`):
   - Handle `SYS_PING` (return echo token).
   - Handle `SYS_INFO` (return packed HW ID, version, capabilities).
   - Handle `SYS_UID_PART1` & `SYS_UID_PART2` (read `HAL_GetUIDw0..w2`).
   - Handle `SYS_UPTIME` (read `HAL_GetTick()`).
   - Handle `SYS_LED_CTRL` (read/write `LED_MCU_GPIO_Port`, `LED_MCU_Pin`).
   - Handle `SYS_RESET` (verify `0xDEADBEEF`, send response, delay 20ms, call `HAL_NVIC_SystemReset()`).
-- [ ] **Action 3.2**: Stepper Command Dispatcher (`0x200`–`0x281`):
+- [x] **Action 3.2**: Stepper Command Dispatcher (`0x200`–`0x281`):
   - Bind to `tue_stepper.h`:
     - `STEP_GET_INFO` $\rightarrow$ `tue_stepper_get_config()`.
     - `STEP_GET_STATUS` $\rightarrow$ `tue_stepper_is_busy()`, `tue_stepper_is_enabled()`.
@@ -275,7 +275,7 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
     - `STEP_WAIT_IDLE` $\rightarrow$ `tue_stepper_wait_idle()`.
     - `STEP_RAW_GET_STEPS` $\rightarrow$ `tue_stepper_get_motor_steps()`.
     - `STEP_RAW_MOVE` $\rightarrow$ `tue_stepper_move_motor_steps()`.
-- [ ] **Action 3.3**: STS3215 Servo Command Dispatcher (`0x400`–`0x415`):
+- [x] **Action 3.3**: STS3215 Servo Command Dispatcher (`0x400`–`0x415`):
   - Bind to `tue_sts3215.h`:
     - `SERVO_PING` $\rightarrow$ `tue_sts3215_ping()`.
     - `SERVO_SET_POS` $\rightarrow$ `tue_sts3215_set_goal_position_ex()`.
@@ -295,36 +295,36 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
 ---
 
 ### Phase 4: Firmware Integration & Build System
-- [ ] **Action 4.1**: Connect CDC Receive Interrupt:
+- [x] **Action 4.1**: Connect CDC Receive Interrupt:
   - In `USB_DEVICE/App/usbd_cdc_if.c`: Replace `tue_acsi_on_cdc_rx(Buf, *Len);` with `tue_usb_on_rx(Buf, *Len);`.
-- [ ] **Action 4.2**: Replace Task Init in `Core/Src/freertos.c`:
+- [x] **Action 4.2**: Replace Task Init in `Core/Src/freertos.c`:
   - In `StartDefaultTask()`: Replace `tue_acsi_init();` with `tue_usb_init();`.
-- [ ] **Action 4.3**: Update `CMakeLists.txt`:
+- [x] **Action 4.3**: Update `CMakeLists.txt`:
   - Replace `Core/Src/tue_acsi.c` with `Core/Src/tue_usb_binary.c`.
   - Verify clean compilation with arm-none-eabi-gcc.
 
 ---
 
 ### Phase 5: Python API Library Rebuild (`python/`)
-- [ ] **Action 5.1**: Package Architecture:
+- [x] **Action 5.1**: Package Architecture:
   - Deprecate/rename `python/tue_acsi` to `python/tue_usb` (or provide unified `tue_usb` package).
   - Update `python/pyproject.toml` with project name `tue-usb` and entry points.
-- [ ] **Action 5.2**: Implement `python/tue_usb/crc.py`:
+- [x] **Action 5.2**: Implement `python/tue_usb/crc.py`:
   - Implement fast table-driven CRC-8 SAE J1850 with `crc8_sae_j1850(data: bytes) -> int`.
   - Add self-test validating against known CRC vectors.
-- [ ] **Action 5.3**: Implement `python/tue_usb/defs.py`:
+- [x] **Action 5.3**: Implement `python/tue_usb/defs.py`:
   - Define `FrameType(IntEnum)`: `REQ = 1`, `RESP_OK = 2`, `RESP_ERR = 3`, `ASYNC_EVENT = 4`.
   - Define `ErrorCode(IntEnum)`: `OK = 0`, `ERR_CRC = 1`, `ERR_BAD_FORMAT = 2`, etc.
   - Define `CanId(IntEnum)`: All allocated IDs for System (`0x100..`), Stepper (`0x200..`), Servo (`0x400..`).
   - Ensure CAN IDs `0x3...` are marked as `RESERVED_CUSTOM_COMM`.
-- [ ] **Action 5.4**: Implement `python/tue_usb/protocol.py`:
+- [x] **Action 5.4**: Implement `python/tue_usb/protocol.py`:
   - Implement `encode_frame(frame_type, can_id, dlc, seq, payload) -> bytes`.
   - Implement `FrameParser` class:
     - Buffers incoming serial byte streams.
     - Scans for `0xAA 0x55`.
     - Parses header, extracts payload, verifies SAE J1850 CRC-8, verifies `0x55 0xAA`.
     - Yields validated `Frame` objects.
-- [ ] **Action 5.5**: Implement `python/tue_usb/client.py` (`TueUsbClient`):
+- [x] **Action 5.5**: Implement `python/tue_usb/client.py` (`TueUsbClient`):
   - Serial connection management via `pyserial`.
   - Monotonic sequence number counter (`self._seq`).
   - Thread-safe or synchronous `transact(can_id, payload, timeout) -> Frame`.
@@ -332,24 +332,24 @@ Distances on the wire are encoded as **signed 32-bit micrometres** (`1 mm = 1000
     - **System**: `ping()`, `get_info()`, `get_uid()`, `get_uptime()`, `set_led()`, `reset_mcu()`.
     - **Stepper**: `step_enable()`, `step_get_status()`, `step_get_position()`, `step_move_xyz()`, `step_move_xy()`, `step_move_z()`, `step_move_rel()`, `step_jog_xy()`, `step_stop()`, `step_abort()`, `step_wait()`.
     - **STS3215 Servo**: `servo_ping()`, `servo_set_pos()`, `servo_get_pos()`, `servo_set_speed()`, `servo_torque_enable()`, `servo_get_feedback()`, `servo_read_reg()`, `servo_write_reg()`.
-- [ ] **Action 5.6**: Rebuild Examples & Demos:
+- [x] **Action 5.6**: Rebuild Examples & Demos:
   - Update `python/examples/bench_test.py` for binary packet roundtrip latency benchmarking.
   - Update `python/examples/stepper_demo.py` and `servo_demo.py`.
-- [ ] **Action 5.7**: Unit & Mock Test Suite:
+- [x] **Action 5.7**: Unit & Mock Test Suite:
   - Rebuild `python/tests/test_protocol.py` with 100% coverage of binary frame packing, parsing, CRC verification, and simulated serial exchanges.
 
 ---
 
 ### Phase 6: Documentation & Specification Update (`docs/`)
-- [ ] **Action 6.1**: Create `docs/USB_BINARY_PROTOCOL.md`:
+- [x] **Action 6.1**: Create `docs/USB_BINARY_PROTOCOL.md`:
   - Comprehensive specification of the binary CAN-over-USB protocol, framing, CRC-8, and payload definitions.
-- [ ] **Action 6.2**: Update `docs/STEPPER_INSTRUCTION.md`:
+- [x] **Action 6.2**: Update `docs/STEPPER_INSTRUCTION.md`:
   - Update the host communication section to reference CAN IDs `0x200`–`0x281` and binary payload units.
-- [ ] **Action 6.3**: Update `docs/STS3215_INSTRUCTION.md`:
+- [x] **Action 6.3**: Update `docs/STS3215_INSTRUCTION.md`:
   - Update servo host communication section to reference CAN IDs `0x400`–`0x415` and 8-byte telemetry bursts.
-- [ ] **Action 6.4**: Update `python/README.md`:
+- [x] **Action 6.4**: Update `python/README.md`:
   - Document installation, API usage, examples, and performance comparison against the legacy ASCII protocol.
-- [ ] **Action 6.5**: Archive / Deprecate `docs/ACSI_PROTOCOL.md`:
+- [x] **Action 6.5**: Archive / Deprecate `docs/ACSI_PROTOCOL.md`:
   - Mark `ACSI_PROTOCOL.md` as superseded by the new binary protocol.
 
 ---

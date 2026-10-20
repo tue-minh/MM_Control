@@ -145,6 +145,9 @@ void tue_stepper_enable(bool enable);
 /** @return true when the drivers are energised. */
 bool tue_stepper_is_enabled(void);
 
+/** Number of motion segments currently pending in the planner queue. */
+uint8_t tue_stepper_queue_depth(void);
+
 /* --- Position ------------------------------------------------------------- */
 
 /** Overwrite the logical position of the tool. Call only while idle. */
@@ -229,6 +232,13 @@ bool tue_stepper_is_busy(void);
  * @param  timeout_ms  0 = wait forever.
  */
 tue_stepper_status_t tue_stepper_wait_idle(uint32_t timeout_ms);
+
+typedef void (*tue_stepper_idle_cb_t)(void);
+
+/**
+ * @brief  Register callback invoked when motion stops (called in ISR or task context).
+ */
+void tue_stepper_set_idle_callback(tue_stepper_idle_cb_t cb);
 
 /* --- ISR hook ------------------------------------------------------------- */
 
